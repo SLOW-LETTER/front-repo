@@ -1,1 +1,1 @@
-# front-repo
+# frontend-repo
