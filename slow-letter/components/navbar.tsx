@@ -27,6 +27,7 @@ export default function NavBar() {
             position: absolute;
             top: 0.52rem;
             left: 1.5rem;
+            z-index: 20;
           }
         `}
       </style>

@@ -1,11 +1,16 @@
 import { Props } from "../types/children-type";
 import NavBar from "./navbar";
+import { useRouter } from "next/router";
+import Sidebar from "./sidebar";
+import Link from "next/link";
 
 export default function Layout({ children }: Props) {
+  const router = useRouter();
   return (
     <>
       <div className="page-background">
         <NavBar />
+        {router.pathname === "/mypage" ? <Sidebar /> : null}
         {children}
       </div>
       <style jsx>
@@ -18,7 +23,15 @@ export default function Layout({ children }: Props) {
             position: absolute;
             top: 0px;
             left: 0px;
-            overflow: hidden;
+          }
+
+          .side-bar-cover {
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background: #ffffff;
+            position: absolute;
           }
         `}
       </style>
