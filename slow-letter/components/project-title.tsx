@@ -1,4 +1,20 @@
-export default function ProjectTitle() {
+interface Props {
+  containerTop: string;
+  containerLeft: string;
+  titleTop: string;
+  titleLeft: string;
+  subtitleTop: string;
+  subtitleLeft: string;
+}
+
+export default function ProjectTitle({
+  containerTop,
+  containerLeft,
+  titleTop,
+  titleLeft,
+  subtitleTop,
+  subtitleLeft,
+}: Props) {
   return (
     <>
       <div className="project-title-container">
@@ -16,16 +32,16 @@ export default function ProjectTitle() {
             height: 20rem;
             opacity: 1;
             position: absolute;
-            top: 12rem;
-            left: 10rem;
+            top: ${containerTop};
+            left: ${containerLeft};
           }
           .project-title {
             width: 20rem;
             height: 15rem;
             color: rgba(53, 99, 233, 1);
             position: absolute;
-            top: 0;
-            left: 0;
+            top: ${titleTop};
+            left: ${titleLeft};
             font-family: Plus Jakarta Sans;
             font-weight: Bold;
             font-size: 7rem;
@@ -37,8 +53,8 @@ export default function ProjectTitle() {
             width: 20rem;
             color: rgba(53, 99, 233, 0.6000000238418579);
             position: absolute;
-            top: 16rem;
-            left: 0;
+            top: ${subtitleTop};
+            left: ${subtitleLeft};
             font-family: Plus Jakarta Sans;
             font-weight: Bold;
             font-size: 2rem;
