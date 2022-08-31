@@ -1,12 +1,12 @@
 import ProjectTitle from "../components/project-title";
 import Button from "../components/button";
-import Image from "next/image";
+import Earth from "../components/earth";
 
 export default function Home() {
   return (
     <>
       <div className="earth-globe">
-        <Image src="/earth-globe.svg" layout="fill" alt="temp" />
+        <Earth />
       </div>
       <ProjectTitle />
       <div className="button-container">
@@ -16,13 +16,12 @@ export default function Home() {
       <style jsx>
         {`
           .earth-globe {
-            width: 70rem;
-            height: 45rem;
+            width: 40rem;
+            height: 100%;
             opacity: 1;
             position: absolute;
-            top: 1rem;
-            left: 10rem;
-            transform: rotate(-2deg);
+            top: 3.5rem;
+            right: 0;
           }
           .button-container {
             width: 25rem;
