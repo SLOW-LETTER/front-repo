@@ -19,6 +19,7 @@ export default function Layout({ children }: Props) {
             top: 0px;
             left: 0px;
             overflow: hidden;
+            z-index: -1;
           }
         `}
       </style>

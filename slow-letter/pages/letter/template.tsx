@@ -1,19 +1,14 @@
-import Image from "next/image";
+import Button from "../../components/button";
+import CustomCarousel from "../../components/custom-carousel";
+import Steps from "../../components/steps";
 
 export default function Template() {
-  const onClick = (event: any) => {
-    const [, className] = event.target.className.split(" ");
-    
-    console.log(className);
-  };
   return (
     <div className="whole-container">
-      <div className="carousel-container">
-        <div className="carousel-item-4" onClick={onClick}></div>
-        <div className="carousel-item-3" onClick={onClick}></div>
-        <div className="carousel-item-5" onClick={onClick}></div>
-        <div className="carousel-item-2" onClick={onClick}></div>
-        <div className="carousel-item-1" onClick={onClick}></div>
+      <Steps />
+      <CustomCarousel />
+      <div className="button-container">
+        <Button text="Next" />
       </div>
       <style jsx>
         {`
@@ -25,57 +20,16 @@ export default function Template() {
             align-items: center;
             justify-content: center;
           }
-          .carousel-container {
+          .button-container {
             position: absolute;
-            width: 70%;
-            height: 25rem;
-            border-radius: 40px;
+            width: 12rem;
+            height: 4rem;
+            top: 39rem;
+            left: 65rem;
             display: flex;
             align-items: center;
             justify-content: center;
-          }
-          .carousel-item-1 {
-            position: absolute;
-            width: 40rem;
-            height: 20rem;
-            border-radius: 40px;
-            background: url("/carousel-item-1.svg");
-          }
-          .carousel-item-2 {
-            position: absolute;
-            left: 22rem;
-            width: 30rem;
-            height: 15rem;
-            border-radius: 40px;
-            background: url("/carousel-item-2.svg");
-            filter: blur(0.5px);
-          }
-          .carousel-item-5 {
-            position: absolute;
-            left: 4rem;
-            width: 30rem;
-            height: 15rem;
-            border-radius: 40px;
-            background: url("/carousel-item-5.svg");
-            filter: blur(0.5px);
-          }
-          .carousel-item-3 {
-            position: absolute;
-            left: 35rem;
-            width: 20rem;
-            height: 10rem;
-            border-radius: 40px;
-            background: url("/carousel-item-3.svg");
-            filter: blur(1px);
-          }
-          .carousel-item-4 {
-            position: absolute;
-            left: 1.5rem;
-            width: 20rem;
-            height: 10rem;
-            border-radius: 40px;
-            background: url("/carousel-item-4.svg");
-            filter: blur(1px);
+
           }
         `}
       </style>
