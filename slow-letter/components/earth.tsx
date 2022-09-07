@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Canvas, useLoader } from "react-three-fiber";
+import { Canvas, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Environment, OrbitControls } from "@react-three/drei";
 

@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import Layout from "../components/layout";
 import "../styles/globals.css";
+import { ChakraProvider } from "@chakra-ui/react";
 
 export default function Myapp({ Component, pageProps }: AppProps) {
   return (
@@ -11,9 +12,11 @@ export default function Myapp({ Component, pageProps }: AppProps) {
         <title>Slow Letter</title>
         <link rel="icon" href="/project-logo.svg" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ChakraProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
     </>
   );
 }
