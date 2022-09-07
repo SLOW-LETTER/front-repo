@@ -20,15 +20,15 @@ function Step({isActive, isDone, text, processIdx}: Props) {
       <style jsx>{`
         .step {
           width: 10rem;
-          height: 6rem;
+          height: 5rem;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
         }
         .step-outer {
-          width: 32px;
-          height: 32px;
+          width: 1.5rem;
+          height: 1.5rem;
           top: 0.5rem;
           background: #f0f0f0;
           box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -44,8 +44,8 @@ function Step({isActive, isDone, text, processIdx}: Props) {
         }
         .step-inner {
           position: absolute;
-          width: 24px;
-          height: 24px;
+          width: 1rem;
+          height: 1rem;
           background: #BFBFBF;
           border: 5px solid #BFBFBF;
           border-radius: 15.883px;
@@ -55,10 +55,10 @@ function Step({isActive, isDone, text, processIdx}: Props) {
         }
         .step-inner-active {
           position: absolute;
-          width: 24px;
-          height: 24px;
+          width: 1rem;
+          height: 1rem;
           background: #FFFFFF;
-          border: 5px solid #3563E9;
+          border: 2px solid #3563E9;
           border-radius: 15.883px;
           display: flex;
           align-items: center;
@@ -67,11 +67,11 @@ function Step({isActive, isDone, text, processIdx}: Props) {
         .number {
           position: absolute;
           width: .7rem;
-          height: 1.4rem;
+          height: 1.1rem;
           font-family: "Roboto";
           font-style: normal;
           font-weight: 700;
-          font-size: 1.2rem;
+          font-size: .9rem;
           color: #ffffff;
           text-align: center;
         }
@@ -79,27 +79,27 @@ function Step({isActive, isDone, text, processIdx}: Props) {
           position: absolute;
           width: 0;
           height: 0;
-          top: 2.8rem;
-          border-bottom: 0.5rem solid #BFBFBF;
-          border-top: 0.5rem solid transparent;
-          border-left: 0.5rem solid transparent;
-          border-right: 0.5rem solid transparent;
+          top: 2.5rem;
+          border-bottom: 0.3rem solid #BFBFBF;
+          border-top: 0.3rem solid transparent;
+          border-left: 0.3rem solid transparent;
+          border-right: 0.3rem solid transparent;
         }
         .step-text-crown-active {
           position: absolute;
           width: 0;
           height: 0;
-          top: 2.8rem;
-          border-bottom: 0.5rem solid #3563E9;
-          border-top: 0.5rem solid transparent;
-          border-left: 0.5rem solid transparent;
-          border-right: 0.5rem solid transparent;
+          top: 2.5rem;
+          border-bottom: 0.3rem solid #3563E9;
+          border-top: 0.3rem solid transparent;
+          border-left: 0.3rem solid transparent;
+          border-right: 0.3rem solid transparent;
         }
         .step-text-box {
           position: absolute;
-          width: 7rem;
-          height: 2rem;
-          top: 4rem;
+          width: 6rem;
+          height: 1.5rem;
+          top: 3.2rem;
           background: #f0f0f0;
           box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
           border-radius: 26px;
@@ -109,9 +109,9 @@ function Step({isActive, isDone, text, processIdx}: Props) {
         }
         .step-text-box-active {
           position: absolute;
-          width: 7rem;
-          height: 2rem;
-          top: 4rem;
+          width: 6rem;
+          height: 1.5rem;
+          top: 3.2rem;
           background: #3563E9;
           box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
           border-radius: 26px;
@@ -163,13 +163,13 @@ export default function Steps() {
           .steps-container {
             position: absolute;
             width: 50rem;
-            height: 7rem;
-            top: 8rem;
+            height: 5rem;
+            top: 7rem;
             left: 15rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8rem;
+            gap: 6rem;
           }
         `}
       </style>

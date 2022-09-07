@@ -1,5 +1,5 @@
 import ProjectTitle from "../components/project-title";
-import Button from "../components/button";
+import CustomButton from "../components/custom-button";
 import Earth from "../components/earth";
 
 export default function Home() {
@@ -15,8 +15,8 @@ export default function Home() {
   subtitleTop="16rem"
   subtitleLeft="0" />
       <div className="button-container">
-        <Button text="Sign in" />
-        <Button text="Sign up" />
+        <CustomButton buttonSize="" text="Sign in" />
+        <CustomButton buttonSize="" text="Sign up" />
       </div>
       <style jsx>
         {`
