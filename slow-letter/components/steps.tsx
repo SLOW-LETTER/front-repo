@@ -1,21 +1,42 @@
+import { Icon } from "@chakra-ui/react";
+import { MdCheck } from "react-icons/md";
+
 interface Props {
-  isActive: boolean,
-  isDone: boolean,
-  text: string
-  processIdx: number
+  isActive?: boolean;
+  isDone?: boolean;
+  text?: string;
+  processIdx?: number;
 }
 
-function Step({isActive, isDone, text, processIdx}: Props) {
+export function Step({ isActive, isDone, text, processIdx }: Props) {
   return (
     <div className="step">
       <div className="step-outer">
-        <div className={isActive ? "step-inner-active" : "step-inner"}>
-          <div className={isActive ? "" :"number"}>{isActive ? null : processIdx}</div>
+        <div
+          className={
+            isActive
+              ? isDone
+                ? "step-inner-done"
+                : "step-inner-active"
+              : "step-inner"
+          }
+        >
+          <div className={isActive ? (isDone ? "check" : "") : "number"}>
+            {isActive ? (
+              isDone ? (
+                <Icon as={MdCheck} color="white" />
+              ) : null
+            ) : (
+              processIdx
+            )}
+          </div>
         </div>
       </div>
-      <div className={isActive ? "step-text-crown-active" : "step-text-crown"}></div>
+      <div
+        className={isActive ? "step-text-crown-active" : "step-text-crown"}
+      ></div>
       <div className={isActive ? "step-text-box-active" : "step-text-box"}>
-        <div className={isActive ? "text-active" :"text"}>{text}</div>
+        <div className={isActive ? "text-active" : "text"}>{text}</div>
       </div>
       <style jsx>{`
         .step {
@@ -46,8 +67,8 @@ function Step({isActive, isDone, text, processIdx}: Props) {
           position: absolute;
           width: 1rem;
           height: 1rem;
-          background: #BFBFBF;
-          border: 5px solid #BFBFBF;
+          background: #bfbfbf;
+          border: 5px solid #bfbfbf;
           border-radius: 15.883px;
           display: flex;
           align-items: center;
@@ -57,8 +78,18 @@ function Step({isActive, isDone, text, processIdx}: Props) {
           position: absolute;
           width: 1rem;
           height: 1rem;
-          background: #FFFFFF;
-          border: 2px solid #3563E9;
+          background: #ffffff;
+          border: 2.5px solid #3563e9;
+          border-radius: 15.883px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .step-inner-done {
+          position: absolute;
+          width: 1rem;
+          height: 1rem;
+          background: #3563e9;
           border-radius: 15.883px;
           display: flex;
           align-items: center;
@@ -66,21 +97,25 @@ function Step({isActive, isDone, text, processIdx}: Props) {
         }
         .number {
           position: absolute;
-          width: .7rem;
+          width: 0.7rem;
           height: 1.1rem;
           font-family: "Roboto";
           font-style: normal;
           font-weight: 700;
-          font-size: .9rem;
+          font-size: 0.9rem;
           color: #ffffff;
           text-align: center;
+        }
+        .check {
+          position: absolute;
+          top: -0.3rem;
         }
         .step-text-crown {
           position: absolute;
           width: 0;
           height: 0;
           top: 2.5rem;
-          border-bottom: 0.3rem solid #BFBFBF;
+          border-bottom: 0.3rem solid #bfbfbf;
           border-top: 0.3rem solid transparent;
           border-left: 0.3rem solid transparent;
           border-right: 0.3rem solid transparent;
@@ -90,7 +125,7 @@ function Step({isActive, isDone, text, processIdx}: Props) {
           width: 0;
           height: 0;
           top: 2.5rem;
-          border-bottom: 0.3rem solid #3563E9;
+          border-bottom: 0.3rem solid #3563e9;
           border-top: 0.3rem solid transparent;
           border-left: 0.3rem solid transparent;
           border-right: 0.3rem solid transparent;
@@ -112,7 +147,7 @@ function Step({isActive, isDone, text, processIdx}: Props) {
           width: 6rem;
           height: 1.5rem;
           top: 3.2rem;
-          background: #3563E9;
+          background: #3563e9;
           box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
           border-radius: 26px;
           display: flex;
@@ -141,7 +176,7 @@ function Step({isActive, isDone, text, processIdx}: Props) {
           font-weight: 700;
           font-size: 1rem;
           letter-spacing: 0.02em;
-          color: #FFFFFF;
+          color: #ffffff;
           text-align: center;
           vertical-align: middle;
         }
@@ -150,14 +185,10 @@ function Step({isActive, isDone, text, processIdx}: Props) {
   );
 }
 
-export default function Steps() {
+export function Steps({ children }: any) {
   return (
     <>
-      <div className="steps-container">
-        <Step isActive={true} isDone={false} text="Write" processIdx={1} />
-        <Step isActive={false} isDone={false} text="Additional" processIdx={2} />
-        <Step isActive={false} isDone={false} text="Send" processIdx={3} />
-      </div>
+      <div className="steps-container">{children}</div>
       <style jsx>
         {`
           .steps-container {

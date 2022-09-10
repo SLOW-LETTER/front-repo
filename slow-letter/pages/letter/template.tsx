@@ -1,6 +1,6 @@
 import CustomButton from "../../components/custom-button";
 import CustomCarousel from "../../components/custom-carousel";
-import Steps from "../../components/steps";
+import {Steps, Step} from "../../components/steps";
 import { useDisclosure } from "@chakra-ui/react";
 import CustomModal from "../../components/custom-modal";
 
@@ -9,10 +9,14 @@ export default function Template() {
 
   return (
     <div className="whole-container">
-      <Steps />
+      <Steps>
+        <Step isActive text="Write" />
+        <Step text="Additional" processIdx={2}/>
+        <Step text="Send" processIdx={3} />
+      </Steps>
       <CustomCarousel />
-      <div className="button-container" onClick={modalOpen.onOpen}>
-        <CustomButton buttonSize="" text="Write a letter" />
+      <div className="button-container">
+        <CustomButton text="Write a letter" onClick={modalOpen.onOpen} />
       </div>
       <CustomModal
         isOpen={modalOpen.isOpen}
@@ -31,13 +35,13 @@ export default function Template() {
           }
           .button-container {
             position: absolute;
-            width: 11rem;
-            height: 3rem;
-            top: 36rem;
-            left: 66rem;
+            width: 100%;
+            bottom: 1rem;
+            right: 2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: right;
+            
           }
         `}
       </style>

@@ -12,7 +12,7 @@ export default function Layout({ children }: Props) {
         {`
           .page-background {
             width: 100%;
-            height: 100%;
+            height: 45rem;
             background: rgba(237, 242, 244, 1);
             opacity: 1;
             position: absolute;
