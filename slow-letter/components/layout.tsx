@@ -17,12 +17,13 @@ export default function Layout({ children }: Props) {
         {`
           .page-background {
             width: 100%;
-            height: 100%;
+            height: 45rem;
             background: rgba(237, 242, 244, 1);
             opacity: 1;
             position: absolute;
             top: 0px;
             left: 0px;
+<<<<<<< HEAD
           }
 
           .side-bar-cover {
@@ -32,6 +33,8 @@ export default function Layout({ children }: Props) {
             height: 100%;
             background: #ffffff;
             position: absolute;
+=======
+>>>>>>> 9a14943f8352532335bc76648f71ade6527b42ae
           }
         `}
       </style>

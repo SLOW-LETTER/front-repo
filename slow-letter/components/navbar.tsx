@@ -5,7 +5,7 @@ export default function NavBar() {
     <>
       <div className="navbar-container">
         <div className="navbar-logo-container">
-          <Image src="/project-logo.svg" layout="fill" alt="temp" />
+          <Image src="/project-logo.svg" layout="fill" alt="" />
         </div>
       </div>
       <style jsx>
