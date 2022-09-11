@@ -8,17 +8,15 @@ export default function Home() {
       <div className="earth-globe">
         <Earth />
       </div>
-      <ProjectTitle
-        containerTop="12rem"
-        containerLeft="10rem"
-        titleTop="0"
-        titleLeft="0"
-        subtitleTop="16rem"
-        subtitleLeft="0"
-      />
+      <ProjectTitle containerTop="12rem"
+  containerLeft="10rem"
+  titleTop="0"
+  titleLeft="0"
+  subtitleTop="16rem"
+  subtitleLeft="0" />
       <div className="button-container">
-        <Button text="Sign in" btnWidth={"44rem"} />
-        <Button text="Sign up" btnWidth={"44rem"} />
+        <Button text="Sign in" />
+        <Button text="Sign up" />
       </div>
       <style jsx>
         {`

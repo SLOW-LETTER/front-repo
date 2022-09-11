@@ -3,21 +3,12 @@ import ProjectTitle from "../components/project-title";
 export default function Login() {
   return (
     <>
-      <ProjectTitle
-        containerTop="17em"
-        containerLeft="20rem"
-        titleTop="0"
-        titleLeft="0"
-        subtitleTop="16rem"
-        subtitleLeft="0"
-      />
+      <ProjectTitle />
       <div className="login-container">
         <div className="flex flex-col w-full p-8 h-5/6 bg-white shadow-lg drop-shadow-2xl rounded-lg">
-          <a className="font-bold text-sm text-black text-2xl">Welcome!</a>
+          <a className="font-bold text-sm text-black text-2xl">Sign in</a>
 
-          <a className="text-sm text-black text-l">
-            Please sign in your account
-          </a>
+          <a className="text-sm text-black text-l">Please enter your info</a>
 
           <div className="py-3 mb-2">
             <label
@@ -41,8 +32,9 @@ export default function Login() {
             >
               Password
             </label>
+
             <input
-              className=" PasswordInput shadow items-center bg-white text-black w-72 appearance-none border rounded-lg py-2 px-3 text-grey-darker"
+              className="shadow items-center bg-white text-black w-72 appearance-none border rounded-lg py-2 px-3 text-grey-darker"
               id="password"
               type="password"
               placeholder="Password"
@@ -61,7 +53,7 @@ export default function Login() {
           </a>
           <a
             className="inline-block align-baseline font-bold text-m text-blue-600 hover:text-blue-darker"
-            href="/signuppage"
+            href="#"
           >
             Sign up here!
           </a>

@@ -10,16 +10,16 @@ export default function Sidebar() {
   return (
     <>
       <div className="side-bar-cover"></div>
-      <div className="flex gap-y-12">
+      <div className="flex">
         <aside
           className="flex flex-col w-72 h-screen py-20 items-center bg-white z-10"
           x-show="asideOpen"
         >
-          <ul className="flex flex-col gap-y-2">
+          <ul>
             <li onClick={onClick}>
               <a
                 href="#"
-                className="flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600 focus:bg-blue-600 rounded-lg text-start text-xl"
+                className="flex flex-row p-3 text-black hover:text-blue bg-white hover:bg-blue-600 focus:bg-blue-600 rounded-lg text-start text-xl"
               >
                 <Image
                   src={toggle === true ? "/Account.svg" : "/Accountactive.svg"}
@@ -59,7 +59,7 @@ export default function Sidebar() {
             <li>
               <a
                 href="#"
-                className="flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600  focus:bg-blue-600 rounded-lg text-start text-xl"
+                className="flex flex-row p-3 text-black hover:text-blue bg-white hover:bg-blue-600  focus:bg-blue-600 rounded-lg text-start text-xl"
               >
                 <Image src="/Tickets.svg" width="30" height="30" />
                 <span>Tickets</span>
@@ -69,7 +69,7 @@ export default function Sidebar() {
               <div>
                 <a
                   href="#"
-                  className="flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600 focus:bg-blue-600 rounded-lg text-start text-xl"
+                  className="flex flex-row p-3 text-black hover:text-blue bg-white hover:bg-blue-600 focus:bg-blue-600 rounded-lg text-start text-xl"
                 >
                   <Image src="/Notification.svg" width="30" height="30" />
                   <span>Notification</span>
