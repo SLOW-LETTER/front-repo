@@ -2,11 +2,10 @@ import CustomButton from "../../components/custom-button";
 import CustomCarousel from "../../components/custom-carousel";
 import {Steps, Step} from "../../components/steps";
 import { useDisclosure } from "@chakra-ui/react";
-import CustomModal from "../../components/custom-modal";
+import MailModal from "../../components/modal/mail-modal";
 
 export default function Template() {
   const modalOpen = useDisclosure();
-
   return (
     <div className="whole-container">
       <Steps>
@@ -18,9 +17,8 @@ export default function Template() {
       <div className="button-container">
         <CustomButton text="Write a letter" onClick={modalOpen.onOpen} />
       </div>
-      <CustomModal
+      <MailModal
         isOpen={modalOpen.isOpen}
-        onOpen={modalOpen.onOpen}
         onClose={modalOpen.onClose}
       />
       <style jsx>

@@ -11,11 +11,10 @@ import {
 
 interface Props {
   isOpen: boolean;
-  onOpen: () => void;
   onClose: () => void;
 }
 
-export default function CustomModal({ isOpen, onOpen, onClose }: Props) {
+export default function MailModal({ isOpen, onClose }: Props) {
   return (
     <>
       <Modal
