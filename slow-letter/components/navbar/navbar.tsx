@@ -1,4 +1,5 @@
 import Image from "next/image";
+import NavbarAdditional from "./navbar-additional";
 
 export default function NavBar() {
   return (
@@ -7,6 +8,7 @@ export default function NavBar() {
         <div className="navbar-logo-container">
           <Image src="/project-logo.svg" layout="fill" alt="" />
         </div>
+        <NavbarAdditional />
       </div>
       <style jsx>
         {`
@@ -19,6 +21,7 @@ export default function NavBar() {
             top: 0px;
             left: 0px;
             box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.25);
+            z-index: 99999;
           }
           .navbar-logo-container {
             width: 2.5rem;
