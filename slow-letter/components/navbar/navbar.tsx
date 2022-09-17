@@ -1,15 +1,27 @@
 import Image from "next/image";
-import NavbarAdditional from "./navbar-additional";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import NavItems from "./navbar-items";
 
 export default function NavBar() {
+  const router = useRouter();
   return (
     <>
-      <div className="navbar-container">
+      <header className="navbar-container">
         <div className="navbar-logo-container">
-          <Image src="/project-logo.svg" layout="fill" alt="" />
+          <Link href="/">
+            <a>
+              <Image
+                src="/project-logo.svg"
+                layout="fill"
+                alt=""
+              />
+            </a>
+          </Link>
         </div>
-        <NavbarAdditional />
-      </div>
+
+        {router.pathname === "/" ? null : <NavItems />}
+      </header>
       <style jsx>
         {`
           .navbar-container {
