@@ -32,7 +32,7 @@ export default function Sidebar() {
               <ul id="drop-menu">
                 <li>
                   <a
-                    href="#"
+                    href="/mypage"
                     className="flex flex-col items-start w-full p-2 pl-10 text-sm text-black hover:text-blue-600 hover:underline focus:underline focus:text-blue-600"
                   >
                     Account Info

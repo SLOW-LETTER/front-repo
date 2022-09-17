@@ -39,19 +39,34 @@ export default function Mypage() {
             </div>
             <hr className="line" />
             <SettingItems
-              ID="Editemail"
+              ID="Editpsw"
               Hint="*************"
               Label="Password"
+              Types="Password"
             />
             <hr className="line" />
 
-            <SettingItems ID="Editphone" Hint="000-0000-0000" Label="Phone" />
+            <SettingItems
+              ID="Editpsw"
+              Hint="*************"
+              Label="Confirm Password"
+              Types="Password"
+            />
+            <hr className="line" />
+
+            <SettingItems
+              ID="Editphone"
+              Hint="000-0000-0000"
+              Label="Phone"
+              Types="number"
+            />
             <hr className="line" />
 
             <SettingItems
               ID="Editbio"
               Hint="Pleace introduce yourself"
               Label="Your Bio"
+              Types="string"
             />
             <hr className="line" />
           </div>

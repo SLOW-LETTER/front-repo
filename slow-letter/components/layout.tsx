@@ -23,7 +23,6 @@ export default function Layout({ children }: Props) {
             position: absolute;
             top: 0px;
             left: 0px;
-<<<<<<< HEAD
           }
 
           .side-bar-cover {
@@ -33,8 +32,6 @@ export default function Layout({ children }: Props) {
             height: 100%;
             background: #ffffff;
             position: absolute;
-=======
->>>>>>> 9a14943f8352532335bc76648f71ade6527b42ae
           }
         `}
       </style>

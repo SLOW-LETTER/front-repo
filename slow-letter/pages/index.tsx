@@ -17,13 +17,8 @@ export default function Home() {
         subtitleLeft="0"
       />
       <div className="button-container">
-<<<<<<< HEAD
-        <Button text="Sign in" btnWidth={"44rem"} />
-        <Button text="Sign up" btnWidth={"44rem"} />
-=======
         <CustomButton buttonSize="" text="Sign in" />
         <CustomButton buttonSize="" text="Sign up" />
->>>>>>> 9a14943f8352532335bc76648f71ade6527b42ae
       </div>
       <style jsx>
         {`

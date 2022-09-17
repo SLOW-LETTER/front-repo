@@ -2,9 +2,10 @@ interface items {
   ID: string;
   Label: string;
   Hint: string;
+  Types: string;
 }
 
-export default function SettingItems({ Label, ID, Hint }: items) {
+export default function SettingItems({ Label, ID, Hint, Types }: items) {
   return (
     <>
       <div className="input-container">
@@ -22,7 +23,12 @@ export default function SettingItems({ Label, ID, Hint }: items) {
         ) : (
           <div className="input-container flex flex-row justify-between">
             <label className="label-input p-3">{Label}</label>
-            <input id={ID} className="input-value" placeholder={Hint} />
+            <input
+              id={ID}
+              className="input-value"
+              placeholder={Hint}
+              type={Types}
+            />
           </div>
         )}
       </div>
@@ -48,6 +54,7 @@ export default function SettingItems({ Label, ID, Hint }: items) {
             border-color: light-grey;
             border-width: 4px;
             border-image: initial;
+            padding-left: 15px;
             border-style: ridge;
             border-radius: 8px;
             alignitems: center;
@@ -55,23 +62,6 @@ export default function SettingItems({ Label, ID, Hint }: items) {
           .input-value::placeholder {
             color: grey;
             font-size: 16px;
-            padding: 15px;
-          }
-          .input-value {
-            width: 18rem;
-            height: 42px;
-            background: white;
-            border-color: light-grey;
-            border-width: 4px;
-            border-image: initial;
-            border-style: ridge;
-            border-radius: 8px;
-            alignitems: center;
-          }
-          .input-value::placeholder {
-            color: grey;
-            font-size: 16px;
-            padding: 15px;
           }
           .Bio {
             background: white;

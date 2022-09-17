@@ -1,4 +1,5 @@
 import ProjectTitle from "../components/project-title";
+import TypeIn from "../components/inputitem";
 
 export default function Login() {
   return (
@@ -31,6 +32,15 @@ export default function Login() {
               id="Username"
               type="text"
               placeholder="example@example.com"
+            />
+
+            <TypeIn
+              ID="Email"
+              Hint="Email"
+              Label="Email"
+              Iconimg=""
+              IconHeight="30"
+              IconWidth="30"
             />
           </div>
 

@@ -21,7 +21,7 @@ export default function Signup() {
           <div className="flex flex-col py-3">
             <TypeIn
               ID="Email"
-              Hint="Email"
+              Hint="Example@Example.com"
               Label="Email"
               Iconimg="/emailIcon.svg"
               IconHeight="30"
@@ -29,9 +29,17 @@ export default function Signup() {
             />
             <TypeIn
               ID="psw"
+              Hint="UserName"
+              Label="UserName"
+              Iconimg="/UsernameIcon.svg"
+              IconHeight="30"
+              IconWidth="30"
+            />
+            <TypeIn
+              ID="Username"
               Hint="Password"
               Label="Password"
-              Iconimg="/UsernameIcon.svg"
+              Iconimg="/PasswordIcon.svg"
               IconHeight="30"
               IconWidth="30"
             />
@@ -43,14 +51,7 @@ export default function Signup() {
               IconHeight="30"
               IconWidth="30"
             />
-            <TypeIn
-              ID="Username"
-              Hint="UserName"
-              Label="UserName"
-              Iconimg="/PasswordIcon.svg"
-              IconHeight="30"
-              IconWidth="30"
-            />
+
             <TypeIn
               ID="Phonenum"
               Hint="xxx-xxxx-xxxx"

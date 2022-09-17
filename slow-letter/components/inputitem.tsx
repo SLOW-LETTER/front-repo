@@ -36,49 +36,71 @@ export default function TypeIn({
             required
           />
         )} */}
-        <input id={ID} className="input-value" placeholder={Hint} />
+        {Label === "Password" ? (
+          <input
+            id={ID}
+            className="input-value"
+            placeholder={Hint}
+            type="Password"
+          />
+        ) : Label === "Confirm Password" ? (
+          <input
+            id={ID}
+            className="input-value"
+            placeholder={Hint}
+            type="Password"
+          />
+        ) : Label === "Phone Number" ? (
+          <input
+            id={ID}
+            className="input-value"
+            placeholder={Hint}
+            type="number"
+          />
+        ) : (
+          <input id={ID} className="input-value" placeholder={Hint} />
+        )}
       </div>
 
       <style jsx>
         {`
           .input-container {
             width: 18rem;
-            top:  ;
+            top: ;
             left: ;
             font-family: Plus Jakarta Sans;
             text-align: left;
             padding: 0.5em;
-            color:black;
+            color: black;
+            font-weight: 500;
           }
           .label-intput {
             width: 18rem;
             height: 42px;
-            color:black;
+            color: black;
           }
-            .input-value {
-              width: 18rem;
-              height: 42px;
-              background: white;
-              border-color: light-grey;
-              border-width: 4px;
-              border-image:initial;
-              
-              border-style: ridge;
-              border-radius: 8px;
-              alignitems: center;
-            }
-            .input-value::placeholder {
-              color: grey;
-              font-size: 16px;
-              padding: 15px;
-            }
-            .input-value::focus{
-              
-            }
-            .Icon{
-              width:${IconWidth}
-              height:${IconHeight}
-            }
+          .input-value {
+            width: 18rem;
+            height: 42px;
+            background: white;
+            border-color: light-grey;
+            border-width: 4px;
+            border-image: initial;
+            padding-left: 15px;
+            border-style: ridge;
+            border-radius: 8px;
+            alignitems: center;
+          }
+          .input-value::placeholder {
+            color: grey;
+            font-size: 16px;
+          }
+          .input-value::focus {
+          }
+          .Icon {
+            width: ${IconWidth};
+            height: ${IconHeight};
+          }
         `}
       </style>
     </>
