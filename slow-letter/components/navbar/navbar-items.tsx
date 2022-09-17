@@ -1,7 +1,7 @@
-export default function NavbarAdditional() {
+export default function NavItems() {
   return (
     <>
-      <div className="additional-container">
+      <nav className="nav-items-container">
         <div className="sending-container">
           <div className="send-icon"></div>
         </div>
@@ -15,10 +15,10 @@ export default function NavbarAdditional() {
         <div className="profile-container">
           <div className="profile-icon"></div>
         </div>
-      </div>
+      </nav>
       <style jsx>
         {`
-          .additional-container {
+          .nav-items-container {
             width: 15rem;
             height: 2.5rem;
             position: absolute;

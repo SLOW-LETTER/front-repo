@@ -8,12 +8,14 @@ export default function Home() {
       <div className="earth-globe">
         <Earth />
       </div>
-      <ProjectTitle containerTop="12rem"
-  containerLeft="10rem"
-  titleTop="0"
-  titleLeft="0"
-  subtitleTop="16rem"
-  subtitleLeft="0" />
+      <ProjectTitle
+        containerTop="12rem"
+        containerLeft="10rem"
+        titleTop="0"
+        titleLeft="0"
+        subtitleTop="16rem"
+        subtitleLeft="0"
+      />
       <div className="button-container">
         <CustomButton buttonSize="" text="Sign in" />
         <CustomButton buttonSize="" text="Sign up" />
