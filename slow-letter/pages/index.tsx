@@ -23,8 +23,8 @@ export default function Home() {
       <style jsx>
         {`
           .earth-globe {
-            width: 40rem;
-            height: 100%;
+            width: 50%;
+            height: 90%;
             opacity: 1;
             position: absolute;
             top: 3.5rem;

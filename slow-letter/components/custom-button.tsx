@@ -5,9 +5,10 @@ interface ButtonProps {
   buttonSize?: string;
   text?: string;
   onClick?: MouseEventHandler
+  form?: string
 }
 
-export default function CustomButton({className="none" , buttonSize, text, onClick }: ButtonProps) {
+export default function CustomButton({className="none" , buttonSize, text, onClick, form }: ButtonProps) {
   const smallBtn = {
     btn: `flex justify-center items-center bg-blue-600 w-32 h-10 rounded-md hover:bg-blue-500 ${className}`,
     text: "text-white text-md",
@@ -21,6 +22,7 @@ export default function CustomButton({className="none" , buttonSize, text, onCli
             : `flex justify-center items-center bg-blue-600 w-44 h-12 rounded-md hover:bg-blue-500 ${className}`
         }
         onClick={onClick}
+        form={form}
       >
         <span
           className={buttonSize === "sm" ? smallBtn.text : "text-white text-lg"}

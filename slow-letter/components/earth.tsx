@@ -31,15 +31,17 @@ export default function Earth() {
             <Model />
             <Environment preset="city" />
           </Suspense>
-          <OrbitControls autoRotate minDistance={2.5} maxDistance={6} />
+          {/* <OrbitControls autoRotate minDistance={2.5} maxDistance={6} /> */}
+          <OrbitControls autoRotate enableZoom={false} />
         </Canvas>
       </div>
       <style jsx>
         {`
           .globe {
-            display: grid;
-            place-items: center;
+            width: 100%;
             height: 100%;
+            position: absolute;
+            top: 0rem;
             cursor: grabbing;
           }
         `}

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Step, Steps } from "../../components/steps";
+import ProgressBar from "../../components/progressbar/progressbar";
+import ProgressBarItem from "../../components/progressbar/progressbar-item";
 import CustomButton from "../../components/custom-button";
 import { useDisclosure } from "@chakra-ui/react";
 import ConfirmModal from "../../components/modal/confirm-modal";
@@ -9,11 +10,11 @@ export default function Sending() {
 
   return (
     <>
-      <Steps>
-        <Step isActive isDone text="Write" />
-        <Step isActive isDone text="Additional" />
-        <Step isActive text="Send" />
-      </Steps>
+      <ProgressBar>
+        <ProgressBarItem isActive isDone text="Write" />
+        <ProgressBarItem isActive isDone text="Additional" />
+        <ProgressBarItem isActive text="Send" />
+      </ProgressBar>
       <div className="confirm-letter-container">
         <Image src="/letter-cover.svg" alt="" layout="fill" />
         <div className="confirm-letter-subcontainer">
@@ -80,12 +81,13 @@ export default function Sending() {
       </div>
       <div className="button-container">
         <CustomButton className="button" text="Previous" />
-        <CustomButton className="button" text="Send" onClick={modalOpen.onOpen}/>
+        <CustomButton
+          className="button"
+          text="Send"
+          onClick={modalOpen.onOpen}
+        />
       </div>
-      <ConfirmModal
-        isOpen={modalOpen.isOpen}
-        onClose={modalOpen.onClose}
-      />
+      <ConfirmModal isOpen={modalOpen.isOpen} onClose={modalOpen.onClose} />
       <style jsx>
         {`
           .confirm-letter-container {
