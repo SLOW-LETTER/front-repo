@@ -8,13 +8,48 @@ import {
   ModalCloseButton,
   Button,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { ChangeEvent, useEffect, useState } from "react";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type InputEvent = ChangeEvent<HTMLInputElement>;
+
 export default function MailModal({ isOpen, onClose }: Props) {
+  const [mailTitle, setMailTitle] = useState("");
+  const [mailBody, setMailBody] = useState("");
+  const router = useRouter();
+
+  const onMailTitleChange = (event: InputEvent) => {
+    setMailTitle(event.target.value);
+  };
+
+  const onMailBodyChange = (event: InputEvent) => {
+    setMailBody(event.target.innerText);
+  };
+
+  useEffect(() => {
+    setMailTitle("");
+    const eventHandler = (event: KeyboardEvent) => {
+      if (event.code === "Enter" || event.keyCode === 13) {
+        event.preventDefault();
+      }
+    };
+
+    setTimeout(() => {
+      document
+        .getElementById("mail-title")
+        ?.addEventListener("keydown", eventHandler);
+    }, 1);
+
+    return document
+      .getElementById("mail-title")
+      ?.removeEventListener("keydown", eventHandler);
+  }, [isOpen]);
+
   return (
     <>
       <Modal
@@ -23,8 +58,10 @@ export default function MailModal({ isOpen, onClose }: Props) {
         isOpen={isOpen}
         onClose={onClose}
       >
-        <ModalOverlay backdropFilter='auto' backdropBlur='2px' />
-        <ModalContent style={{ borderRadius: "10px" }}>
+        <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
+        <ModalContent
+          style={{ borderRadius: "10px", position: "absolute", top: "3rem" }}
+        >
           <ModalHeader
             style={{
               backgroundColor: "#CCDDFF",
@@ -36,20 +73,48 @@ export default function MailModal({ isOpen, onClose }: Props) {
           </ModalHeader>
           <ModalCloseButton style={{ top: ".8rem" }} />
           <ModalBody>
-            <input className="mail-title" placeholder="Title"></input>
-            <hr />
-            <div
-              className="mail-body"
-              role="textbox"
-              contentEditable="true"
-            ></div>
+            {/* action="/send-data-here" method="post" */}
+            <form id="mailForm">
+              <input
+                id="mail-title"
+                className="mail-title"
+                type="text"
+                placeholder="Title"
+                value={mailTitle}
+                onChange={onMailTitleChange}
+              ></input>
+              <hr />
+              <div
+                className="mail-body"
+                role="textbox"
+                contentEditable="true"
+                onInput={onMailBodyChange}
+                spellCheck="false"
+                style={{ overflow: "scroll" }}
+              ></div>
+            </form>
+            <ModalFooter>
+              <Button variant="ghost" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button
+                id="form-submit-button"
+                colorScheme="blue"
+                type="submit"
+                form="mailForm"
+                onClick={(event) => {
+                  event.preventDefault();
+                  if(mailTitle === "" || mailBody === "") {
+                    alert("Fill a subject and body ");
+                    return;
+                  }
+                  router.push("/letter/additional");
+                }}
+              >
+                Save changes
+              </Button>
+            </ModalFooter>
           </ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button colorScheme="blue">Save changes</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
       <style jsx>

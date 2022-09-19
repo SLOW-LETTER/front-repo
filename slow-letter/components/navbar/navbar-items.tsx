@@ -1,9 +1,15 @@
+import Link from "next/link";
+
 export default function NavItems() {
   return (
     <>
       <nav className="nav-items-container">
         <div className="sending-container">
-          <div className="send-icon"></div>
+          <Link href="/letter/template">
+            <a>
+              <div className="send-icon"></div>
+            </a>
+          </Link>
         </div>
         <div className="notification-container">
           <div className="notification-sub-icon"></div>
@@ -22,8 +28,7 @@ export default function NavItems() {
             width: 15rem;
             height: 2.5rem;
             position: absolute;
-            top: 0.52rem;
-            right: 0.5rem;
+            right: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -38,6 +43,9 @@ export default function NavItems() {
             display: flex;
             align-items: center;
             justify-content: center;
+          }
+          .sending-container:hover {
+            opacity: 0.6;
           }
           .send-icon {
             width: 1.5rem;
@@ -57,6 +65,9 @@ export default function NavItems() {
             align-items: center;
             justify-content: center;
           }
+          .notification-container:hover {
+            opacity: 0.6;
+          }
           .notification-icon {
             width: 1rem;
             height: 1.3rem;
@@ -71,7 +82,7 @@ export default function NavItems() {
             background: rgba(255, 68, 35, 1);
             position: absolute;
             top: 0.1rem;
-            left: 7.3rem;
+            left: 6.4rem;
             border-radius: 50%;
           }
           .ticket-container {
@@ -83,6 +94,9 @@ export default function NavItems() {
             display: flex;
             align-items: center;
             justify-content: center;
+          }
+          .ticket-container:hover {
+            opacity: 0.6;
           }
           .ticket-icon {
             width: 1.5rem;
@@ -101,6 +115,9 @@ export default function NavItems() {
             display: flex;
             align-items: center;
             justify-content: center;
+          }
+          .profile-container:hover {
+            opacity: 0.6;
           }
           .profile-icon {
             width: 1.5rem;

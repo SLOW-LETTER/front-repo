@@ -8,7 +8,7 @@ interface Props {
   processIdx?: number;
 }
 
-export function Step({ isActive, isDone, text, processIdx }: Props) {
+export default function ProgressBarItem({ isActive, isDone, text, processIdx }: Props) {
   return (
     <div className="step">
       <div className="step-outer">
@@ -182,28 +182,5 @@ export function Step({ isActive, isDone, text, processIdx }: Props) {
         }
       `}</style>
     </div>
-  );
-}
-
-export function Steps({ children }: any) {
-  return (
-    <>
-      <div className="steps-container">{children}</div>
-      <style jsx>
-        {`
-          .steps-container {
-            position: absolute;
-            width: 50rem;
-            height: 5rem;
-            top: 7rem;
-            left: 15rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6rem;
-          }
-        `}
-      </style>
-    </>
   );
 }
