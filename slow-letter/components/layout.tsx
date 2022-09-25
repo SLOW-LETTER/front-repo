@@ -10,7 +10,10 @@ export default function Layout({ children }: Props) {
     <>
       <div className="page-background">
         <NavBar />
-        {router.pathname === "/mypage" ? <Sidebar /> : null}
+        {router.pathname === "/account/accountinfo" ? <Sidebar /> : null}
+        {router.pathname === "/account/deleteaccount" ? <Sidebar /> : null}
+        {router.pathname === "/account/changePW" ? <Sidebar /> : null}
+        {router.pathname === "/notification" ? <Sidebar /> : null}
         {children}
       </div>
       <style jsx>

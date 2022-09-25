@@ -28,7 +28,7 @@ export default function Login() {
               Email
             </label>
             <input
-              className="shadow bg-white items-center text-black w-72 appearance-none border rounded-lg py-2 px-3 text-grey-darker"
+              className={` shadow bg-white items-center text-black w-72 appearance-none border rounded-lg py-2 px-3 text-grey-darker`}
               id="Username"
               type="text"
               placeholder="example@example.com"
@@ -41,6 +41,7 @@ export default function Login() {
               Iconimg=""
               IconHeight="30"
               IconWidth="30"
+              Values=""
             />
           </div>
 

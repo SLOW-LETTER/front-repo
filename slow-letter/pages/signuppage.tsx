@@ -1,9 +1,107 @@
 import TypeIn from "../components/inputitem";
 import ProjectTitle from "../components/project-title";
-import Button from "../components/button";
 import Image from "next/image";
 import PwCheck from "../components/pswCheck";
+import Buttondefault from "../components/button";
+
+import React, { useState, ChangeEvent } from "react";
+import {
+  LengthCheck,
+  CapCheck,
+  LowCheck,
+  SpecialLetterCheck,
+  EmailCheck,
+} from "../function/validation";
+type InputEvent = ChangeEvent<HTMLInputElement>;
+
 export default function Signup() {
+  const [cnfrmError, setcnfrmError] = useState(false);
+  const [pswInput, setpswInput] = useState("");
+  const [cnfrmInput, setcnfrmInput] = useState("");
+  const [pwValid, setpwValid] = useState(false);
+  const [emailInput, setemailInput] = useState("");
+  const [phoneNum, setphoneNum] = useState("");
+  const [userName, setuserName] = useState("");
+  const [emailCheck, setemailCheck] = useState(false);
+
+  const onPasswordChange = (evnt: InputEvent) => {
+    const pswValue = evnt?.target.value.trim(); //get inserted value in pswvalue
+    setpswInput(pswValue); //change pswInput by using usestate
+    {
+      LengthCheck(pswValue) &&
+      CapCheck(pswValue) &&
+      LowCheck(pswValue) &&
+      SpecialLetterCheck(pswValue)
+        ? setpwValid(true)
+        : setpwValid(false);
+    } //if at least one of the validation does not pass it is not valid
+    console.log(pswValue);
+  };
+
+  const onConfirmPasswordChange = (evnt: InputEvent) => {
+    const cnfrmValue = evnt?.target.value.trim();
+    setcnfrmInput(cnfrmValue);
+    console.log(cnfrmValue);
+    check(pswInput, cnfrmValue);
+  };
+
+  const onEmailChange = (evnt: InputEvent) => {
+    const emailInput = evnt?.target.value.trim();
+    setemailInput(emailInput);
+    EmailCheck(emailInput) ? setemailCheck(true) : setemailCheck(false);
+  };
+
+  const onPhoneChange = (evnt: InputEvent) => {
+    const phoneNum = evnt?.target.value.trim();
+    setphoneNum(phoneNum);
+    console.log(evnt);
+  };
+
+  const onUserNameChange = (evnt: InputEvent) => {
+    const userName = evnt?.target.value.trim();
+    setuserName(userName);
+  };
+
+  const check = (pswInput: string, cnfrmInput: string) => {
+    //따로 함수선언
+    if (cnfrmInput.length > 0) {
+      if (pswInput === cnfrmInput) {
+        setcnfrmError(true);
+      } else {
+        setcnfrmError(false);
+      }
+    }
+  };
+  const onFocus = (evnt: React.FocusEvent<HTMLElement>) => {
+    const Display = "visible";
+    pwValid ? (
+      <PwCheck color="#3B9904" icon="/checksign.svg" visibility={Display} />
+    ) : (
+      <PwCheck
+        color="rgb(238,96,91,0.8)"
+        icon="/pswWarn.svg"
+        visibility={Display}
+      />
+    );
+    console.log(evnt);
+    return true;
+  };
+
+  const onBlur = (evnt: InputEvent) => {
+    const Hide = "hidden";
+    console.log(evnt);
+    pwValid ? (
+      <PwCheck color="#3B9904" icon="/checksign.svg" visibility={Hide} />
+    ) : (
+      <PwCheck
+        color="rgb(238,96,91,0.8)"
+        icon="/pswWarn.svg"
+        visibility={Hide}
+      />
+    );
+    return Hide;
+  };
+
   return (
     <>
       <ProjectTitle
@@ -26,23 +124,49 @@ export default function Signup() {
               Iconimg="/emailIcon.svg"
               IconHeight="30"
               IconWidth="30"
+              Values={emailInput}
+              onChange={onEmailChange}
             />
+            {emailCheck ? (
+              ""
+            ) : (
+              <div className="flex px-4 text-xs text-red-600">
+                * Your email is not email format
+              </div>
+            )}
             <TypeIn
-              ID="psw"
+              ID="Username"
               Hint="UserName"
               Label="UserName"
               Iconimg="/UsernameIcon.svg"
               IconHeight="30"
               IconWidth="30"
+              Values={userName}
+              onChange={onUserNameChange}
             />
             <TypeIn
-              ID="Username"
+              ID="Password"
               Hint="Password"
               Label="Password"
               Iconimg="/PasswordIcon.svg"
               IconHeight="30"
               IconWidth="30"
+              Values={pswInput}
+              onChange={onPasswordChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
+            {/* {
+      pwValid ? (
+        <PwCheck color="#3B9904" icon="/checksign.svg" visibility={} />
+      ) : (
+        <PwCheck
+          color="rgb(238,96,91,0.8)"
+          icon="/pswWarn.svg"
+          visibility="visible"
+        />
+      );
+    } */}
             <TypeIn
               ID="pswCheck"
               Hint="Confirm Password"
@@ -50,7 +174,16 @@ export default function Signup() {
               Iconimg="/PasswordIcon.svg"
               IconHeight="30"
               IconWidth="30"
+              Values={cnfrmInput}
+              onChange={onConfirmPasswordChange}
             />
+            <div
+              className={
+                cnfrmError ? "hidden" : "flex px-4 text-xs text-red-600"
+              }
+            >
+              * Please match your password
+            </div>
 
             <TypeIn
               ID="Phonenum"
@@ -59,9 +192,15 @@ export default function Signup() {
               Iconimg="/PhoneIcon.svg"
               IconHeight="30"
               IconWidth="30"
+              Values={phoneNum}
+              onChange={onPhoneChange}
             />
           </div>
-          <Button text="Sign up" btnWidth={"20rem"} />
+          <Buttondefault
+            text="Sign up"
+            btnWidth={"20rem"}
+            btnColor={"#2563eb"}
+          />
         </div>
         <div className="flex flex-row items-start  px-7 py-5">
           <a className="inline-block align-baseline font-bold text-m text-gray-600 px-4">
@@ -74,7 +213,6 @@ export default function Signup() {
             Sign in here!
           </a>
         </div>
-        <PwCheck />
       </div>
       <style jsx>
         {`

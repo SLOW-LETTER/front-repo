@@ -9,17 +9,16 @@ export default function Sidebar() {
   };
   return (
     <>
-      <div className="side-bar-cover"></div>
-      <div className="flex gap-y-12">
+      <div className=" side-bar-cover flex gap-y-20">
         <aside
-          className="flex flex-col w-72 h-screen py-20 items-center bg-white z-10"
+          className="flex flex-col w-56 h-screen py-20 px-5 items-start bg-white z-10"
           x-show="asideOpen"
         >
-          <ul className="flex flex-col gap-y-2">
-            <li onClick={onClick}>
+          <ul className="flex flex-col gap-y-2 space-y-5 ">
+            <li onClick={onClick} className="w-48">
               <a
-                href="#"
-                className="flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600 focus:bg-blue-600 rounded-lg text-start text-xl"
+                href="/account/accountinfo"
+                className="flex flex-row p-2 py-4  text-black hover:text-blue bg-white hover:bg-blue-600 focus:bg-blue-600 rounded-lg text-start text-xl"
               >
                 <Image
                   src={toggle === true ? "/Account.svg" : "/Accountactive.svg"}
@@ -32,7 +31,7 @@ export default function Sidebar() {
               <ul id="drop-menu">
                 <li>
                   <a
-                    href="/mypage"
+                    href="/account/accountinfo"
                     className="flex flex-col items-start w-full p-2 pl-10 text-sm text-black hover:text-blue-600 hover:underline focus:underline focus:text-blue-600"
                   >
                     Account Info
@@ -40,7 +39,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/account/changePW"
                     className="flex flex-col items-start w-full p-2 pl-10  text-sm text-black hover:text-blue-600 hover:underline focus:underline focus:text-blue-600"
                   >
                     Change Password
@@ -48,7 +47,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/account/deleteaccount"
                     className="flex flex-col items-start w-full p-2 pl-10 text-sm text-black hover:text-blue-600 hover:underline focus:underline focus:text-blue-600"
                   >
                     Delete Account
@@ -66,19 +65,18 @@ export default function Sidebar() {
               </a>
             </li>
             <li>
-              <div>
-                <a
-                  href="#"
-                  className="flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600 focus:bg-blue-600 rounded-lg text-start text-xl"
-                >
-                  <Image src="/Notification.svg" width="30" height="30" />
-                  <span>Notification</span>
-                </a>
-              </div>
+              <a
+                href="/notification"
+                className="flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600 focus:bg-blue-600 rounded-lg text-start text-xl"
+              >
+                <Image src="/Notification.svg" width="30" height="30" />
+                <span>Notification</span>
+              </a>
             </li>
           </ul>
         </aside>
       </div>
+      <style jsx>{``}</style>
     </>
   );
 }

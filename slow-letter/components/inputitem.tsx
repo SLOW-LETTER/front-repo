@@ -1,4 +1,11 @@
 import Image from "next/image";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  useState,
+} from "react";
 import PwCheck from "./pswCheck";
 
 interface Props {
@@ -8,6 +15,11 @@ interface Props {
   Iconimg: string;
   IconWidth: string;
   IconHeight: string;
+  Values: string;
+  onChange?: ChangeEventHandler;
+  onFocus?: FocusEventHandler;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  //  onKeyup?: KeyboardEventHandler;
 }
 
 export default function TypeIn({
@@ -17,7 +29,12 @@ export default function TypeIn({
   Iconimg,
   IconWidth,
   IconHeight,
-}: Props) {
+  Values = "",
+  onChange,
+  onFocus,
+  onBlur,
+}: // onKeyup,
+Props) {
   return (
     <>
       <div className="input-container">
@@ -25,23 +42,16 @@ export default function TypeIn({
           <Image src={Iconimg} className="Icon" width={25} height={25} />
           <label className="label-input">{Label}</label>
         </div>
-        {/* {Label === "Password" ? (
-          <PasswordCheck ID={ID} Hint={Hint} />
-        ) : (
-          <input
-            id={ID}
-            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}"
-            className="input-value"
-            placeholder={Hint}
-            required
-          />
-        )} */}
         {Label === "Password" ? (
           <input
             id={ID}
             className="input-value"
             placeholder={Hint}
             type="Password"
+            value={Values}
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
         ) : Label === "Confirm Password" ? (
           <input
@@ -49,6 +59,9 @@ export default function TypeIn({
             className="input-value"
             placeholder={Hint}
             type="Password"
+            value={Values}
+            onChange={onChange}
+            //  onKeyUp={onKeyup}
           />
         ) : Label === "Phone Number" ? (
           <input
@@ -56,9 +69,17 @@ export default function TypeIn({
             className="input-value"
             placeholder={Hint}
             type="number"
+            value={Values}
+            onChange={onChange}
           />
         ) : (
-          <input id={ID} className="input-value" placeholder={Hint} />
+          <input
+            id={ID}
+            className="input-value"
+            placeholder={Hint}
+            value={Values}
+            onChange={onChange}
+          />
         )}
       </div>
 
@@ -84,10 +105,10 @@ export default function TypeIn({
             height: 42px;
             background: white;
             border-color: light-grey;
-            border-width: 4px;
+            border-width: 2px;
             border-image: initial;
             padding-left: 15px;
-            border-style: ridge;
+            border-style: solid;
             border-radius: 8px;
             alignitems: center;
           }
