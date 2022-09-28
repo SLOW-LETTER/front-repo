@@ -1,4 +1,5 @@
-import { Steps, Step } from "../../components/steps";
+import ProgressBar from "../../components/progressbar/progressbar";
+import ProgressBarItem from "../../components/progressbar/progressbar-item";
 import {
   InputGroup,
   Input,
@@ -9,17 +10,31 @@ import {
   FormLabel,
   Select,
 } from "@chakra-ui/react";
-import { UserDefaultIcon, UserReadOnlyIcon } from "../../components/icon/user-icon";
+import {
+  UserDefaultIcon,
+  UserReadOnlyIcon,
+} from "../../components/icon/user-icon";
 import CustomButton from "../../components/custom-button";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Additional() {
+  const router = useRouter();
+
+  const [receiver, setReceiver] = useState("");
+  const [departCountry, setDepartCountry] = useState("");
+  const [departCity, setDepartCity] = useState("");
+  const [arriveCountry, setArriveCountry] = useState("");
+  const [arriveCity, setArriveCity] = useState("");
+  const [transportation, setTransportation] = useState("");
+
   return (
     <>
-      <Steps>
-        <Step isActive isDone text="Write" />
-        <Step isActive text="Additional" />
-        <Step text="Send" processIdx={3} />
-      </Steps>
+      <ProgressBar>
+        <ProgressBarItem isActive isDone text="Write" />
+        <ProgressBarItem isActive text="Additional" />
+        <ProgressBarItem text="Send" processIdx={3} />
+      </ProgressBar>
       <div className="additional-container">
         <div className="additional-title-container">
           <span className="additional-title">Additional Info</span>
@@ -27,171 +42,190 @@ export default function Additional() {
             Please enter addtional info
           </span>
         </div>
-        <Grid
-          w="95%"
-          h="75%"
-          top="5rem"
-          left="1.5rem"
-          position="absolute"
-          templateRows="repeat(4, 1fr)"
-          templateColumns="repeat(2, 1fr)"
-          gap={4}
-        >
-          <GridItem rowSpan={1} colSpan={1}>
-            <FormControl isRequired>
-              <FormLabel
-                fontSize="0.8rem"
-                fontWeight="Bold"
-                marginLeft="0.5rem"
-                htmlFor="sender"
-              >
-                Sender
-              </FormLabel>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  color="gray.300"
-                  fontSize="1.2em"
-                  h={8}
+
+        <form id="additional-form">
+          <Grid
+            w="95%"
+            h="75%"
+            top="5rem"
+            left="1.5rem"
+            position="absolute"
+            templateRows="repeat(4, 1fr)"
+            templateColumns="repeat(2, 1fr)"
+            gap={4}
+          >
+            <GridItem rowSpan={1} colSpan={1}>
+              <FormControl isRequired>
+                <FormLabel
+                  fontSize="0.8rem"
+                  fontWeight="Bold"
+                  marginLeft="0.5rem"
+                  htmlFor="sender"
                 >
-                  <UserReadOnlyIcon />
-                </InputLeftElement>
-                <Input
+                  Sender
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    color="gray.300"
+                    fontSize="1.2em"
+                    h={8}
+                  >
+                    <UserReadOnlyIcon />
+                  </InputLeftElement>
+                  <Input
+                    id="sender"
+                    h={8}
+                    placeholder="Email"
+                    fontSize="0.8rem"
+                    isReadOnly
+                  />
+                </InputGroup>
+              </FormControl>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <FormControl isRequired>
+                <FormLabel
+                  fontSize="0.8rem"
+                  fontWeight="Bold"
+                  marginLeft="0.5rem"
+                  htmlFor="receiver"
+                >
+                  Receiver
+                </FormLabel>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    color="gray.300"
+                    fontSize="1.2em"
+                    h={8}
+                  >
+                    <UserDefaultIcon />
+                  </InputLeftElement>
+                  <Input
+                    id="receiver"
+                    h={8}
+                    placeholder="Email"
+                    fontSize="0.8rem"
+                    value={receiver}
+                    onChange={(event) => setReceiver(event.target.value)}
+                  />
+                </InputGroup>
+              </FormControl>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <FormControl isRequired>
+                <FormLabel
+                  fontSize="0.8rem"
+                  fontWeight="Bold"
+                  marginLeft="0.5rem"
+                >
+                  Departure / Country
+                </FormLabel>
+                <Select
                   id="sender"
+                  w="100%"
                   h={8}
-                  placeholder="Email"
+                  placeholder="Departure / Country"
                   fontSize="0.8rem"
-                  isReadOnly
-                />
-              </InputGroup>
-            </FormControl>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <FormControl isRequired>
-              <FormLabel
-                fontSize="0.8rem"
-                fontWeight="Bold"
-                marginLeft="0.5rem"
-                htmlFor="receiver"
-              >
-                Receiver
-              </FormLabel>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  color="gray.300"
-                  fontSize="1.2em"
-                  h={8}
+                  onChange={(event) => setDepartCountry(event.target.value)}
                 >
-                  <UserDefaultIcon />
-                </InputLeftElement>
-                <Input
-                  id="receiver"
-                  h={8}
-                  placeholder="Email"
+                  <option>US</option>
+                  <option>Korea</option>
+                </Select>
+              </FormControl>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <FormControl isRequired>
+                <FormLabel
                   fontSize="0.8rem"
-                />
-              </InputGroup>
-            </FormControl>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <FormControl isRequired>
-              <FormLabel
-                fontSize="0.8rem"
-                fontWeight="Bold"
-                marginLeft="0.5rem"
-              >
-                Departure / Country
-              </FormLabel>
-              <Select
-                id="sender"
-                w="100%"
-                h={8}
-                placeholder="Departure / Country"
-                fontSize="0.8rem"
-              >
-                <option>US</option>
-                <option>Korea</option>
-              </Select>
-            </FormControl>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <FormControl isRequired>
-              <FormLabel
-                fontSize="0.8rem"
-                fontWeight="Bold"
-                marginLeft="0.5rem"
-              >
-                City
-              </FormLabel>
-              <Select
-                id="sender"
-                w="100%"
-                h={8}
-                placeholder="City"
-                fontSize="0.8rem"
-              ></Select>
-            </FormControl>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <FormControl isRequired>
-              <FormLabel
-                fontSize="0.8rem"
-                fontWeight="Bold"
-                marginLeft="0.5rem"
-              >
-                Arrival / Country
-              </FormLabel>
-              <Select
-                id="sender"
-                w="100%"
-                h={8}
-                placeholder="Arrival / Country"
-                fontSize="0.8rem"
-              ></Select>
-            </FormControl>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <FormControl isRequired>
-              <FormLabel
-                fontSize="0.8rem"
-                fontWeight="Bold"
-                marginLeft="0.5rem"
-              >
-                City
-              </FormLabel>
-              <Select
-                id="sender"
-                w="100%"
-                h={8}
-                placeholder="City"
-                fontSize="0.8rem"
-              ></Select>
-            </FormControl>
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={2}>
-            <FormControl isRequired>
-              <FormLabel
-                fontSize="0.8rem"
-                fontWeight="Bold"
-                marginLeft="0.5rem"
-              >
-                Transportation
-              </FormLabel>
-              <Select
-                id="sender"
-                w="100%"
-                h={8}
-                placeholder="Car / Flight / etc"
-                fontSize="0.8rem"
-              ></Select>
-            </FormControl>
-          </GridItem>
-        </Grid>
+                  fontWeight="Bold"
+                  marginLeft="0.5rem"
+                >
+                  City
+                </FormLabel>
+                <Select
+                  id="sender"
+                  w="100%"
+                  h={8}
+                  placeholder="City"
+                  fontSize="0.8rem"
+                  onChange={(event) => setDepartCity(event.target.value)}
+                ></Select>
+              </FormControl>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <FormControl isRequired>
+                <FormLabel
+                  fontSize="0.8rem"
+                  fontWeight="Bold"
+                  marginLeft="0.5rem"
+                >
+                  Arrival / Country
+                </FormLabel>
+                <Select
+                  id="sender"
+                  w="100%"
+                  h={8}
+                  placeholder="Arrival / Country"
+                  fontSize="0.8rem"
+                  onChange={(event) => setArriveCountry(event.target.value)}
+                ></Select>
+              </FormControl>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <FormControl isRequired>
+                <FormLabel
+                  fontSize="0.8rem"
+                  fontWeight="Bold"
+                  marginLeft="0.5rem"
+                >
+                  City
+                </FormLabel>
+                <Select
+                  id="sender"
+                  w="100%"
+                  h={8}
+                  placeholder="City"
+                  fontSize="0.8rem"
+                  onChange={(event) => setArriveCity(event.target.value)}
+                ></Select>
+              </FormControl>
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={2}>
+              <FormControl isRequired>
+                <FormLabel
+                  fontSize="0.8rem"
+                  fontWeight="Bold"
+                  marginLeft="0.5rem"
+                >
+                  Transportation
+                </FormLabel>
+                <Select
+                  id="sender"
+                  w="100%"
+                  h={8}
+                  placeholder="Car / Flight / etc"
+                  fontSize="0.8rem"
+                  onChange={(event) => setTransportation(event.target.value)}
+                ></Select>
+              </FormControl>
+            </GridItem>
+          </Grid>
+        </form>
       </div>
       <div className="button-container">
-        <CustomButton className="button" text="Previous" />
-        <CustomButton className="button" text="Next" />
+        <CustomButton
+          className="button"
+          text="Previous"
+          onClick={() => router.push("/letter/template")}
+        />
+        <CustomButton
+          className="button"
+          text="Next"
+          onClick={() => router.push("/letter/sending")}
+          form="additional-form"
+        />
       </div>
       <style jsx>
         {`

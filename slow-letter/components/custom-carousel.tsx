@@ -348,7 +348,7 @@ export default function CarouselContainer() {
             position: absolute;
             width: 70%;
             height: 25rem;
-            top: 12rem;
+            top: 13rem;
             left: 12rem;
             border-radius: 40px;
             display: flex;
