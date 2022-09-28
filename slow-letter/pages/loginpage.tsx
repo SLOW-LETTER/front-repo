@@ -1,7 +1,18 @@
 import ProjectTitle from "../components/project-title";
 import TypeIn from "../components/inputitem";
-
+import { ChangeEvent, useState } from "react";
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
+    console.log(e);
+
+    e.target.id === "Email"
+      ? setEmail(e.target.value.trim())
+      : setPassword(e.target.value.trim());
+  }
+
   return (
     <>
       <ProjectTitle
@@ -13,55 +24,38 @@ export default function Login() {
         subtitleLeft="0"
       />
       <div className="login-container">
-        <div className="flex flex-col w-full p-8 h-5/6 bg-white shadow-lg drop-shadow-2xl rounded-lg">
+        <div className="flex flex-col w-full px-8 py-8 h-5/6 bg-white shadow-lg drop-shadow-2xl rounded-lg">
           <a className="font-bold text-sm text-black text-2xl">Welcome!</a>
-
           <a className="text-sm text-black text-l">
             Please sign in your account
           </a>
 
-          <div className="py-3 mb-2">
-            <label
-              className="block text-m font-bold text-black mb-4 ml-4"
-              htmlFor="Email"
-            >
-              Email
-            </label>
-            <input
-              className={` shadow bg-white items-center text-black w-72 appearance-none border rounded-lg py-2 px-3 text-grey-darker`}
-              id="Username"
-              type="text"
-              placeholder="example@example.com"
-            />
-
+          <div className="">
             <TypeIn
               ID="Email"
               Hint="Email"
               Label="Email"
-              Iconimg=""
+              Iconimg="/emailIcon.svg"
               IconHeight="30"
               IconWidth="30"
-              Values=""
+              Values={email}
+              onChange={onChange}
             />
-          </div>
-
-          <div className="py-3 mb-2">
-            <label
-              className="block text-m font-bold text-black mb-4 ml-4"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              className=" PasswordInput shadow items-center bg-white text-black w-72 appearance-none border rounded-lg py-2 px-3 text-grey-darker"
-              id="password"
-              type="password"
-              placeholder="Password"
+            <TypeIn
+              ID="Password"
+              Hint="Password"
+              Label="Password"
+              Iconimg="/PasswordIcon.svg"
+              IconHeight="30"
+              IconWidth="30"
+              Values={password}
+              onChange={onChange}
             />
           </div>
           <button
-            className="bg-blue-600 hover:bg-black text-white font-bold py-2 px-4 w-full rounded"
+            className="bg-blue-600 hover:bg-blue-900 text-white font-bold py-2 px-4 w-full rounded"
             type="button"
+            id="loginBtn"
           >
             Sign In
           </button>

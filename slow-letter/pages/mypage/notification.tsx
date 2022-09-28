@@ -1,21 +1,22 @@
-import SettingModal from "../components/setting-modal";
+import SettingModal from "../../components/setting-modal";
 import Image from "next/image";
-import Checkbox from "../components/checkbox";
+import Checkbox from "../../components/checkbox";
 import { useState } from "react";
+import Buttondefault from "../../components/button";
 export default function Notification() {
   const [checkBox1, setcheckBox1] = useState(false);
   const [checkBox2, setcheckBox2] = useState(false);
   const [checkBox3, setcheckBox3] = useState(false);
   const [checkBox4, setcheckBox4] = useState(false);
 
+  function onClick1() {}
   function onClick() {}
-
   return (
     <>
       <div className="Page flex">
         <SettingModal />
         <div className="Page-container flex flex-col items-center space-y-4">
-          <div className="Profile-container flex flex-row py-8">
+          <div className="Profile-container flex flex-row py-12">
             <Image
               className="Profile-pic round rounded-full "
               src="/defaultProfile.svg"
@@ -37,6 +38,8 @@ export default function Notification() {
           <Checkbox Label="when you send tickets " />
 
           <Checkbox Label="when your letter arrive to others" />
+
+          <Buttondefault text={"Save"} btnWidth={"10em"} btnColor={"blue"} />
         </div>
       </div>
       <style jsx>
@@ -56,7 +59,7 @@ export default function Notification() {
           }
           .mysetting {
             position: absolute;
-            top: 6em;
+            top: 8em;
             left: 10px;
           }
         `}

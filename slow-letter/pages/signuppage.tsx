@@ -23,6 +23,7 @@ export default function Signup() {
   const [phoneNum, setphoneNum] = useState("");
   const [userName, setuserName] = useState("");
   const [emailCheck, setemailCheck] = useState(false);
+  const [focus, setFocus] = useState("hidden");
 
   const onPasswordChange = (evnt: InputEvent) => {
     const pswValue = evnt?.target.value.trim(); //get inserted value in pswvalue
@@ -73,33 +74,12 @@ export default function Signup() {
     }
   };
   const onFocus = (evnt: React.FocusEvent<HTMLElement>) => {
-    const Display = "visible";
-    pwValid ? (
-      <PwCheck color="#3B9904" icon="/checksign.svg" visibility={Display} />
-    ) : (
-      <PwCheck
-        color="rgb(238,96,91,0.8)"
-        icon="/pswWarn.svg"
-        visibility={Display}
-      />
-    );
+    setFocus("visible");
     console.log(evnt);
-    return true;
   };
 
   const onBlur = (evnt: InputEvent) => {
-    const Hide = "hidden";
-    console.log(evnt);
-    pwValid ? (
-      <PwCheck color="#3B9904" icon="/checksign.svg" visibility={Hide} />
-    ) : (
-      <PwCheck
-        color="rgb(238,96,91,0.8)"
-        icon="/pswWarn.svg"
-        visibility={Hide}
-      />
-    );
-    return Hide;
+    setFocus("hidden");
   };
 
   return (
@@ -156,17 +136,20 @@ export default function Signup() {
               onFocus={onFocus}
               onBlur={onBlur}
             />
-            {/* {
-      pwValid ? (
-        <PwCheck color="#3B9904" icon="/checksign.svg" visibility={} />
-      ) : (
-        <PwCheck
-          color="rgb(238,96,91,0.8)"
-          icon="/pswWarn.svg"
-          visibility="visible"
-        />
-      );
-    } */}
+            {pwValid ? (
+              <PwCheck
+                color="#3B9904"
+                icon="/checksign.svg"
+                visibility={focus}
+              />
+            ) : (
+              <PwCheck
+                color="rgb(238,96,91,0.8)"
+                icon="/pswWarn.svg"
+                visibility={focus}
+              />
+            )}
+
             <TypeIn
               ID="pswCheck"
               Hint="Confirm Password"
@@ -184,7 +167,6 @@ export default function Signup() {
             >
               * Please match your password
             </div>
-
             <TypeIn
               ID="Phonenum"
               Hint="xxx-xxxx-xxxx"
@@ -217,7 +199,7 @@ export default function Signup() {
       <style jsx>
         {`
           .login-container {
-            height: 50rem;
+            height: 53rem;
             position: absolute;
             top: 8em;
             right: 22.5em;

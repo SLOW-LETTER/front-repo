@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Sidebar from "../../components/sidebar";
-import SettingItems from "../../components/setting-Items";
-import SettingModal from "../../components/setting-modal";
+import Sidebar from "../../../components/sidebar";
+import SettingItems from "../../../components/setting-Items";
+import SettingModal from "../../../components/setting-modal";
 import { Button, useToast } from "@chakra-ui/react";
 export default function ChangePw() {
   const toast = useToast();

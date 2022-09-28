@@ -1,8 +1,8 @@
-import Sidebar from "../../components/sidebar";
-import SettingItems from "../../components/setting-Items";
-import SettingModal from "../../components/setting-modal";
+import Sidebar from "../../../components/sidebar";
+import SettingItems from "../../../components/setting-Items";
+import SettingModal from "../../../components/setting-modal";
 import Image from "next/image";
-import { MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import {
   Button,
   Modal,
@@ -35,12 +35,23 @@ export default function Mypage() {
   } = useDisclosure();
   const toast = useToast();
 
-  const [profile, setProfile] = useState("/defaultProfile.svg");
-  function eventread(e: React.MouseEvent<HTMLElement>) {
-    const files = (e.target as HTMLInputElement).files;
-    console.log(files);
+  const [profile, setProfile] = useState({
+    Email: "",
+    Phone: "",
+    Bio: "",
+    Pic: "/defaultProfile.svg",
+  });
+  function eventread(e: any) {
+    let file = e.target.files[0];
+    console.log(e);
+    console.log(file);
+    console.log(file.Values);
+    console.log(file.name);
   }
-  //setProfile((profile = document.getElementById("Profile_pics")));
+  function onEmailChange() {}
+  function onPhoneChange() {}
+  function onBioChange() {}
+
   return (
     <>
       <link
@@ -61,15 +72,17 @@ export default function Mypage() {
               id="Profilce_pics"
               name="Profile_pics"
               accept=".jpg, .jpeg, .png , .svg"
-              onClick={(event) => eventread(event)}
+              onChange={eventread}
             />
           </div>
           <hr className="line mt-10" />
-          <div className="email flex flex-row py-8 ">
-            <text className="flex text-black fixed-email justify-between">
+          <div className="email-continer flex w-32 flex-row  py-8">
+            <text className="email flex text-black fixed-email font-semibold ">
               Email
             </text>
-            <text className="flex text-black fixed-email">example@example</text>
+            <text className="flex text-black fixed-email px-2">
+              example@example.com
+            </text>
           </div>
 
           <hr className="line" />
@@ -96,6 +109,7 @@ export default function Mypage() {
               colorScheme="blue"
               background="blue"
               variant={"solid"}
+              width={"100px"}
             >
               Save
             </Button>
@@ -130,10 +144,13 @@ export default function Mypage() {
                       }}
                       colorScheme="blue"
                       background="blue"
+                      width={"100px"}
                     >
                       Save
                     </Button>
-                    <Button onClick={onSaveClose}>Cancel</Button>
+                    <Button onClick={onSaveClose} width={"100px"}>
+                      Cancel
+                    </Button>
                   </Stack>
                 </ModalFooter>
               </ModalContent>
@@ -142,6 +159,7 @@ export default function Mypage() {
               onClick={onCancelOpen}
               colorScheme="red"
               background-color="red"
+              width={"100px"}
             >
               Cancel
             </Button>
@@ -154,9 +172,9 @@ export default function Mypage() {
               isCentered
             >
               <ModalOverlay />
-              <ModalContent>
+              <ModalContent width={"400px"}>
                 <ModalHeader>
-                  Do you really want to cancel all the changes?
+                  Do you really want to reset all the changes?
                 </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
@@ -166,12 +184,15 @@ export default function Mypage() {
                   <Stack direction="row" spacing={4}>
                     <Button
                       onClick={onCancelClose}
-                      colorScheme="blue"
-                      background="blue"
+                      colorScheme="red"
+                      background="red"
+                      width={"100px"}
                     >
-                      Save
+                      Continue
                     </Button>
-                    <Button onClick={onCancelClose}>Cancel</Button>
+                    <Button onClick={onCancelClose} width={"100px"}>
+                      Cancel
+                    </Button>
                   </Stack>
                 </ModalFooter>
               </ModalContent>
@@ -214,7 +235,7 @@ export default function Mypage() {
           width:px;
           height:px;
           position:relative;
-          background-image: url(${profile});
+          background-image: url(${profile.Pic});
           background-size:100% 100%; 
           border-radius:30%;
           overflow:hidden;
@@ -256,11 +277,12 @@ export default function Mypage() {
         .btn-container{
           position:absolute;
           right:10px;
-          bottom:-550px;
+          bottom:-430px;
         }
         .email{
           position:relative;
-          left:-8em;
+          left:-9.2em;
+          font-family: Plus Jakarta Sans;
         }
       `}
       </style>

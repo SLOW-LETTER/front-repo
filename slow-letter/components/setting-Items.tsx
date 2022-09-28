@@ -20,12 +20,12 @@ export default function SettingItems({ Label, ID, Hint, Types }: items) {
               placeholder={Hint}
               cols={40}
               rows={5}
-              maxLength={100}
+              maxLength={200}
             />
           </div>
         ) : Label === "Confirm Password" ? (
           <div className="input-container flex flex-row  justify-between">
-            <label className="label-input font-medium p-3">{Label}</label>
+            <label className="label-input font-semibold p-3">{Label}</label>
             <input
               id={ID}
               className="input-value"
@@ -39,13 +39,13 @@ export default function SettingItems({ Label, ID, Hint, Types }: items) {
           </div>
         ) : (
           <div className="input-container flex flex-row  justify-between">
-            <label className="label-input font-medium p-3">{Label}</label>
+            <label className="label-input font-semibold p-3">{Label}</label>
             <input
               id={ID}
               className="input-value"
               placeholder={Hint}
               type={Types}
-              maxLength={Label === "Password" ? 16 : 100}
+              maxLength={Label === "Password" ? 16 : 25}
             />
           </div>
         )}
@@ -65,13 +65,14 @@ export default function SettingItems({ Label, ID, Hint, Types }: items) {
             height: 42px;
             font-weight: bold;
             color: black;
+            font-family: Plus Jakarta Sans;
           }
           .input-value {
             width: 18rem;
             height: 42px;
             background: white;
-            border-color: light-grey;
-            border-width: 4px;
+            border-color: grey;
+            border-width: 1px;
             border-image: initial;
             padding-left: 15px;
             border-style: ridge;
@@ -84,11 +85,12 @@ export default function SettingItems({ Label, ID, Hint, Types }: items) {
           }
           .input-value:focus {
             border-color: #3563e9;
+            outline: none;
           }
           .Bio {
             background: white;
-            border-color: light-grey;
-            border-width: 4px;
+            border-color: grey;
+            border-width: 1px;
             border-image: initial;
             border-style: ridge;
             border-radius: 8px;
@@ -97,6 +99,10 @@ export default function SettingItems({ Label, ID, Hint, Types }: items) {
           .Bio::placeholder {
             color: grey;
             font-size: 16px;
+          }
+          .Bio::focus {
+            border-color: #3563e9;
+            outline: none;
           }
         `}
       </style>

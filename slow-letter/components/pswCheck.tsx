@@ -10,7 +10,7 @@ interface Props {
 export default function PwCheck({ color, icon, visibility }: Props) {
   return (
     <>
-      <div className="pswValid w-72 p-4 flex flex-col text-align justify-evenly gap-y-2 bg-white div-3 text-black rounded-lg drop-shadow-2xl border-2 border-neutral-400">
+      <div className="pswValid w-72 p-4 flex flex-col text-align justify-evenly gap-y-2 bg-white div-3 text-black rounded-lg drop-shadow-2xl border-1 border-slate-600">
         <div>Requirements!</div>
         <div className="list flex flex-row rounded-md shadow">
           <Image src={icon} width="30px" height="30px"></Image>
@@ -44,13 +44,16 @@ export default function PwCheck({ color, icon, visibility }: Props) {
           .pswValid {
             visibility: ${visibility};
             position: absolute;
-            top: 170px;
+            top: 270px;
             right: -250px;
           }
           .list {
             background-color: ${color};
           }
           .icon {
+          }
+          .pwSpecialC {
+            font-family: Plus Jakarta Sans;
           }
         `}
       </style>

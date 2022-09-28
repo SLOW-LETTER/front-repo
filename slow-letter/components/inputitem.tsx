@@ -2,7 +2,9 @@ import Image from "next/image";
 import {
   ChangeEvent,
   ChangeEventHandler,
+  DOMAttributes,
   FocusEventHandler,
+  FormEventHandler,
   KeyboardEventHandler,
   useState,
 } from "react";
@@ -13,8 +15,8 @@ interface Props {
   Hint: string;
   Label: string;
   Iconimg: string;
-  IconWidth: string;
-  IconHeight: string;
+  IconWidth?: string;
+  IconHeight?: string;
   Values: string;
   onChange?: ChangeEventHandler;
   onFocus?: FocusEventHandler;
@@ -52,6 +54,7 @@ Props) {
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
+            maxLength={16}
           />
         ) : Label === "Confirm Password" ? (
           <input
@@ -61,6 +64,7 @@ Props) {
             type="Password"
             value={Values}
             onChange={onChange}
+            maxLength={16}
             //  onKeyUp={onKeyup}
           />
         ) : Label === "Phone Number" ? (
@@ -71,6 +75,8 @@ Props) {
             type="number"
             value={Values}
             onChange={onChange}
+            min={0}
+            max={99999999999}
           />
         ) : (
           <input
@@ -79,6 +85,7 @@ Props) {
             placeholder={Hint}
             value={Values}
             onChange={onChange}
+            maxLength={25}
           />
         )}
       </div>
@@ -87,8 +94,6 @@ Props) {
         {`
           .input-container {
             width: 18rem;
-            top: ;
-            left: ;
             font-family: Plus Jakarta Sans;
             text-align: left;
             padding: 0.5em;
@@ -127,18 +132,3 @@ Props) {
     </>
   );
 }
-
-// <div className="py-3 mb-2">
-// <label
-//   className="block text-m font-bold text-black mb-4 ml-4"
-//   htmlFor="Email"
-// >
-//   Email
-// </label>
-// <input
-//   className="shadow bg-white items-center text-black w-72 appearance-none border rounded-lg py-2 px-3 text-grey-darker"
-//   id="Username"
-//   type="text"
-//   placeholder="example@example.com"
-// />
-// </div>

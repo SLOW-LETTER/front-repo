@@ -11,8 +11,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import SettingItems from "../../components/setting-Items";
-import SettingModal from "../../components/setting-modal";
+import SettingItems from "../../../components/setting-Items";
+import SettingModal from "../../../components/setting-modal";
 
 export default function DeleteAcc() {
   const {
@@ -29,7 +29,7 @@ export default function DeleteAcc() {
           <div className="Profile-container flex flex-row py-8">
             <Image
               className="Profile-pic round rounded-full "
-              src="/drangon.png"
+              src="/defaultProfile.svg"
               width="100"
               height="100"
               border-radius="30%"
