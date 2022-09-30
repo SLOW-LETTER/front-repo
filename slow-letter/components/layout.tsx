@@ -8,6 +8,8 @@ export default function Layout({ children }: Props) {
   const router = useRouter();
   return (
     <>
+      <NavBar />
+      <section className="w-full" style={{height: "41.5rem"}}>{children}</section>
       <div className="page-background">
         <NavBar />
         {router.pathname === "/mypage/account/changePW" ? <Sidebar /> : null}

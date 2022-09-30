@@ -6,6 +6,10 @@ import {
   ModalBody,
   Button,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useStore } from "../../components/zustand_hooks/store";
+import { apiURL } from "../../components/apiURL";
+import axios from "axios";
 
 interface Props {
   isOpen: boolean;
@@ -13,6 +17,11 @@ interface Props {
 }
 
 export default function ConfirmModal({ isOpen, onClose }: Props) {
+  const router = useRouter();
+
+  const letter = useStore((state: any) => state.letter);
+  const additional = useStore((state: any) => state.additional);
+
   return (
     <>
       <Modal
@@ -22,7 +31,9 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
         onClose={onClose}
       >
         <ModalOverlay backdropFilter="auto" backdropBlur="2px" />
-        <ModalContent style={{ borderRadius: "10px", position: "absolute", top: "10rem" }}>
+        <ModalContent
+          style={{ borderRadius: "10px", position: "absolute", top: "10rem" }}
+        >
           <ModalBody paddingTop={"2rem"}>
             <div className="confirm-body">
               <span className="confirm-body-title">
@@ -35,11 +46,36 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
               </span>
             </div>
           </ModalBody>
-          <ModalFooter style={{display: "flex", justifyContent: "center"}}>
+          <ModalFooter style={{ display: "flex", justifyContent: "center" }}>
             <Button variant="ghost" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button colorScheme="blue">Send</Button>
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                axios
+                  .post(`${apiURL}/letters`, {
+                    receiverEmail: additional.receiver,
+                    templeteId: "1",
+                    transportationId: "1",
+                    departureCountry: additional.departCountry,
+                    departureCity: additional.departureCity,
+                    arrivalCountry: additional.arrivalCountry,
+                    arrivalCity: additional.arrivalCity,
+                    file: letter.attachments,
+                  })
+                  .then((res) => {
+                    console.log(res);
+                    router.push("/ticket");
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    return;
+                  });
+              }}
+            >
+              Send
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -52,7 +88,7 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: .5rem;
+            gap: 0.5rem;
           }
           .confirm-body-title {
             font-weight: bold;

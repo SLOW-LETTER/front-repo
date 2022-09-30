@@ -1,11 +1,32 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { CarouselItemProps, TemplateProps } from "./type/type";
+import { useStore } from "./zustand_hooks/store";
 
-export default function CarouselContainer() {
+function CarouselItem({ imgUrl }: CarouselItemProps) {
+  return (
+    <motion.div
+      className="w-full h-full"
+      style={{
+        borderRadius: "40px",
+        backgroundImage: `url(${imgUrl})`,
+        backgroundSize: "cover",
+      }}
+    ></motion.div>
+  );
+}
+
+export default function CarouselContainer({ templatesArr }: TemplateProps) {
   const [dotIdx, setDotIdx] = useState([1, 2, 3, 4, 5]);
 
   const [slideIdx, setSlideIdx] = useState(1);
+
+  const saveTemplate = useStore((state: any) => state.saveTemplate);
+
+  useEffect(() => {
+    saveTemplate(`/carousel-item-${slideIdx}.svg`);
+  }, [slideIdx]);
 
   const onNextTemplate = () => {
     setSlideIdx((prev) => {
@@ -29,306 +50,109 @@ export default function CarouselContainer() {
   return (
     <>
       <div className="carousel-container">
-        {slideIdx === 1 ? (
-          <>
-            <div className="carousel-item-sm-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-3.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-sm-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-2.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-4.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-1.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-lg">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-0.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-          </>
-        ) : null}
-        {slideIdx === 2 ? (
-          <>
-            <div className="carousel-item-sm-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-4.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-sm-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-3.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-0.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-2.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-lg">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-1.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-          </>
-        ) : null}
-        {slideIdx === 3 ? (
-          <>
-            <div className="carousel-item-sm-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-0.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-sm-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-4.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-1.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-3.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-lg">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-2.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-          </>
-        ) : null}
-        {slideIdx === 4 ? (
-          <>
-            <div className="carousel-item-sm-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-1.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-sm-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-0.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-2.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-4.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-lg">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-3.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-          </>
-        ) : null}
-        {slideIdx === 5 ? (
-          <>
-            <div className="carousel-item-sm-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-2.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-sm-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-1.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-left">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-3.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-md-right">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-0.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-            <div className="carousel-item-lg">
-              <motion.div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: "url(/carousel-item-4.svg)",
-                  borderRadius: "40px",
-                  backgroundSize: "cover",
-                }}
-              ></motion.div>
-            </div>
-          </>
-        ) : null}
+        <div className="carousel-items-container">
+          {slideIdx === 1 ? (
+            <>
+              <div className="carousel-item-sm-left">
+                <CarouselItem imgUrl="/carousel-item-4.svg" />
+              </div>
+              <div className="carousel-item-md-left">
+                <CarouselItem imgUrl="/carousel-item-5.svg" />
+              </div>
+              <div className="carousel-item-lg">
+                <CarouselItem imgUrl="/carousel-item-1.svg" />
+              </div>
+              <div className="carousel-item-md-right">
+                <CarouselItem imgUrl="/carousel-item-2.svg" />
+              </div>
+              <div className="carousel-item-sm-right">
+                <CarouselItem imgUrl="/carousel-item-3.svg" />
+              </div>
+            </>
+          ) : null}
+          {slideIdx === 2 ? (
+            <>
+              <div className="carousel-item-sm-left">
+                <CarouselItem imgUrl="/carousel-item-5.svg" />
+              </div>
+              <div className="carousel-item-md-left">
+                <CarouselItem imgUrl="/carousel-item-1.svg" />
+              </div>
+              <div className="carousel-item-lg">
+                <CarouselItem imgUrl="/carousel-item-2.svg" />
+              </div>
+              <div className="carousel-item-md-right">
+                <CarouselItem imgUrl="/carousel-item-3.svg" />
+              </div>
+              <div className="carousel-item-sm-right">
+                <CarouselItem imgUrl="/carousel-item-4.svg" />
+              </div>
+            </>
+          ) : null}
+          {slideIdx === 3 ? (
+            <>
+              <div className="carousel-item-sm-left">
+                <CarouselItem imgUrl="/carousel-item-1.svg" />
+              </div>
+              <div className="carousel-item-md-left">
+                <CarouselItem imgUrl="/carousel-item-2.svg" />
+              </div>
+              <div className="carousel-item-lg">
+                <CarouselItem imgUrl="/carousel-item-3.svg" />
+              </div>
+              <div className="carousel-item-md-right">
+                <CarouselItem imgUrl="/carousel-item-4.svg" />
+              </div>
+              <div className="carousel-item-sm-right">
+                <CarouselItem imgUrl="/carousel-item-5.svg" />
+              </div>
+            </>
+          ) : null}
+          {slideIdx === 4 ? (
+            <>
+              <div className="carousel-item-sm-left">
+                <CarouselItem imgUrl="/carousel-item-2.svg" />
+              </div>
+              <div className="carousel-item-md-left">
+                <CarouselItem imgUrl="/carousel-item-3.svg" />
+              </div>
+              <div className="carousel-item-lg">
+                <CarouselItem imgUrl="/carousel-item-4.svg" />
+              </div>
+              <div className="carousel-item-md-right">
+                <CarouselItem imgUrl="/carousel-item-5.svg" />
+              </div>
+              <div className="carousel-item-sm-right">
+                <CarouselItem imgUrl="/carousel-item-1.svg" />
+              </div>
+            </>
+          ) : null}
+          {slideIdx === 5 ? (
+            <>
+              <div className="carousel-item-sm-left">
+                <CarouselItem imgUrl="/carousel-item-3.svg" />
+              </div>
+              <div className="carousel-item-md-left">
+                <CarouselItem imgUrl="/carousel-item-4.svg" />
+              </div>
+              <div className="carousel-item-lg">
+                <CarouselItem imgUrl="/carousel-item-5.svg" />
+              </div>
+              <div className="carousel-item-md-right">
+                <CarouselItem imgUrl="/carousel-item-1.svg" />
+              </div>
+              <div className="carousel-item-sm-right">
+                <CarouselItem imgUrl="/carousel-item-2.svg" />
+              </div>
+            </>
+          ) : null}
+        </div>
 
-        <div className="carousel-slide-container">
-          <div className="carousel-button-left" onClick={onPreviousTemplate}>
-            <Image src="/carousel-arrow-left.svg" layout="fill" alt="" />
-          </div>
+        <div className="carousel-indicator-container">
+          <div
+            className="carousel-button-left"
+            onClick={onPreviousTemplate}
+          ></div>
           {dotIdx.map((item, key) => (
             <div
               key={key}
@@ -337,70 +161,73 @@ export default function CarouselContainer() {
               }
             ></div>
           ))}
-          <div className="carousel-button-right" onClick={onNextTemplate}>
-            <Image src="/carousel-arrow-right.svg" layout="fill" alt="" />
-          </div>
+          <div className="carousel-button-right" onClick={onNextTemplate}></div>
         </div>
       </div>
       <style jsx>
         {`
           .carousel-container {
-            position: absolute;
-            width: 70%;
-            height: 25rem;
-            top: 13rem;
-            left: 12rem;
-            border-radius: 40px;
+            width: fit-content;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 2rem;
+          }
+          .carousel-items-container {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-bottom: 2rem;
           }
           .carousel-item-lg {
-            position: absolute;
-            left: 8rem;
             width: 40rem;
             height: 20rem;
             border-radius: 40px;
+            z-index: 100;
           }
           .carousel-item-md-left {
             position: absolute;
-            left: 4rem;
+            left: 16rem;
             width: 30rem;
             height: 15rem;
             border-radius: 40px;
             filter: blur(0.5px);
+            z-index: 80;
           }
           .carousel-item-md-right {
             position: absolute;
-            left: 22rem;
+            right: 16rem;
             width: 30rem;
             height: 15rem;
             border-radius: 40px;
             filter: blur(0.5px);
+            z-index: 80;
           }
           .carousel-item-sm-left {
             position: absolute;
-            left: 1.5rem;
+            left: 13rem;
             width: 20rem;
             height: 10rem;
             border-radius: 40px;
             filter: blur(1px);
+            z-index: 60;
           }
           .carousel-item-sm-right {
             position: absolute;
-            left: 35rem;
+            right: 13rem;
             width: 20rem;
             height: 10rem;
             border-radius: 40px;
             filter: blur(1px);
+            z-index: 60;
           }
-          .carousel-slide-container {
-            position: absolute;
+          .carousel-indicator-container {
             width: 8rem;
             height: 1.5rem;
-            position: absolute;
-            left: 24rem;
-            bottom: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -419,16 +246,18 @@ export default function CarouselContainer() {
             border-radius: 50%;
           }
           .carousel-button-left {
-            position: absolute;
             left: 0;
             width: 1rem;
             height: 1rem;
+            background-image: url("/carousel-arrow-left.svg");
+            background-size: cover;
           }
           .carousel-button-right {
-            position: absolute;
             right: 0;
             width: 1rem;
             height: 1rem;
+            background-image: url("/carousel-arrow-right.svg");
+            background-size: cover;
           }
         `}
       </style>
