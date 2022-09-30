@@ -1,260 +1,200 @@
-import Image from "next/image";
 import ProgressBar from "../../components/progressbar/progressbar";
 import ProgressBarItem from "../../components/progressbar/progressbar-item";
 import CustomButton from "../../components/custom-button";
 import { useDisclosure } from "@chakra-ui/react";
 import ConfirmModal from "../../components/modal/confirm-modal";
+import { useStore } from "../../components/zustand_hooks/store";
+import { useRouter } from "next/router";
+import { AdditionalItemProps } from "../../components/type/type";
+
+function AddiItem({ label, text, colS, colE, rowS, rowE }: AdditionalItemProps) {
+  return (
+    <>
+      <div className={`additional-item-container col-start-${colS} col-end-${colE} row-start-${rowS} row-end-${rowE}`}>
+        <span className="additional-item-label">{label}</span>
+        <span className="additional-item">{text}</span>
+      </div>
+      <style jsx>
+        {`
+          .additional-item-container {
+            display: flex;
+            flex-direction: column;
+          }
+          .additional-item-label {
+            width: fit-content;
+            height: fit-content;
+            font-family: Plus Jakarta Sans;
+            font-weight: Bold;
+            font-size: 1rem;
+            text-align: left;
+            color: #005ade;
+          }
+          .additional-item {
+            width: fit-content;
+            height: fit-content;
+            font-family: Plus Jakarta Sans;
+            font-size: 1rem;
+            text-align: left;
+          }
+        `}
+      </style>
+    </>
+  );
+}
 
 export default function Sending() {
   const modalOpen = useDisclosure();
 
+  const router = useRouter();
+
+  const template = useStore((state: any) => state.template);
+  const letter = useStore((state: any) => state.letter);
+  const additional = useStore((state: any) => state.additional);
+
   return (
     <>
-      <ProgressBar>
-        <ProgressBarItem isActive isDone text="Write" />
-        <ProgressBarItem isActive isDone text="Additional" />
-        <ProgressBarItem isActive text="Send" />
-      </ProgressBar>
-      <div className="confirm-letter-container">
-        <Image src="/letter-cover.svg" alt="" layout="fill" />
-        <div className="confirm-letter-subcontainer">
-          <div className="confirm-letter-bg-container">
-            <Image
-              src="/carousel-item-0.svg"
-              alt=""
-              layout="fill"
-              style={{ opacity: 0.3 }}
-            />
-          </div>
-          <div className="letter-container">
-            <div className="letter-additional-container">
-              <span className="letter-additional-title">안녕하세요</span>
-              <div className="letter-additional-subcontainer">
-                <div className="letter-addtional-sender-container">
-                  <span className="letter-addtional-sender-1">Sender</span>
-                  <span className="letter-addtional-sender-2">Yong</span>
-                </div>
-                <div className="letter-addtional-receiver-container">
-                  <span className="letter-addtional-receiver-1">Receiver</span>
-                  <span className="letter-addtional-receiver-2">onki</span>
-                </div>
-                <div className="letter-addtional-departure-container">
-                  <span className="letter-addtional-departure-1">
-                    Departure
-                  </span>
-                  <span className="letter-addtional-departure-2">Seoul</span>
-                </div>
-                <div className="letter-addtional-arrival-container">
-                  <span className="letter-addtional-arrival-1">Arrival</span>
-                  <span className="letter-addtional-arrival-2">New York</span>
-                </div>
-                <div className="letter-addtional-transportation-container">
-                  <span className="letter-addtional-transportation-1">
-                    Transportation
-                  </span>
-                  <span className="letter-addtional-transportation-2">
-                    Flight
-                  </span>
-                </div>
+      <div className="sending-page-container w-full h-full flex flex-col items-center justify-center">
+        <ProgressBar>
+          <ProgressBarItem isActive isDone text="Write" />
+          <ProgressBarItem isActive isDone text="Additional" />
+          <ProgressBarItem isActive text="Send" />
+        </ProgressBar>
+        <div className="confirm-letter-container">
+          <div className="confirm-letter-subcontainer">
+            <div className="letter-body-container">
+              <div className="letter-title">{letter.title}</div>
+              <hr className="letter-body-cross-line" />
+              <div className="letter-body">
+                {letter.body.map((item: any, key: any) => (
+                  <div key={key}>{item === "" ? <br /> : item}</div>
+                ))}
               </div>
             </div>
-            <div className="letter-body-container">
-              <span className="letter-body">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                nisl eros, pulvinar facilisis justo mollis, auctor consequat
-                urna. Morbi a bibendum metus. Donec scelerisque sollicitudin
-                enim eu venenatis. Duis tincidunt laoreet ex, in pretium orci
-                vestibulum eget. className aptent taciti sociosqu ad litora
-                torquent per conubia nostra, per inceptos himenaeos. Duis
-                pharetra luctus lacus ut vestibulum. Maecenas ipsum lacus,
-                lacinia quis posuere ut, pulvinar vitae dolor. Integer eu nibh
-                at nisi ullamcorper sagittis id vel leo. Integer feugiat
-                faucibus libero, at maximus nisl suscipit posuere. Morbi nec
-                enim nunc. Phasellus bibendum turpis ut ipsum egestas, sed
-                sollicitudin elit convallis. Cras pharetra mi tristique sapien
-                vestibulum lobortis. Nam eget bibendum metus, non dictum mauris.
-                Nulla at tellus sagittis, viverra est a, bibendum metus.
-              </span>
+            <div className="letter-additional-container">
+              <AddiItem label="Sender" text="Yong" colS="1" colE="2" rowS="1" rowE="2" />
+              <AddiItem label="Receiver" text={additional.receiver} colS="2" colE="3" rowS="1" rowE="2" />
+              <AddiItem label="Departure" text={additional.departCountry} colS="1" colE="2" rowS="2" rowE="3" />
+              <AddiItem label="Arrival" text={additional.arriveCountry} colS="2" colE="3" rowS="2" rowE="3" />
+              <AddiItem
+                label="Transportation"
+                text={additional.transportation}
+                colS="3" colE="4" rowS="2" rowE="3"
+              />
             </div>
           </div>
         </div>
-      </div>
-      <div className="button-container">
-        <CustomButton className="button" text="Previous" />
-        <CustomButton
-          className="button"
-          text="Send"
-          onClick={modalOpen.onOpen}
-        />
+        <div className="button-container">
+          <div className="button-left-container">
+            <CustomButton
+              className="button-left"
+              text="Previous"
+              onClick={() => router.push("/letter/additional")}
+            />
+          </div>
+          <div className="button-right-container">
+            <CustomButton
+              className="button-right"
+              text="Send"
+              onClick={modalOpen.onOpen}
+            />
+          </div>
+        </div>
       </div>
       <ConfirmModal isOpen={modalOpen.isOpen} onClose={modalOpen.onClose} />
       <style jsx>
         {`
           .confirm-letter-container {
-            position: absolute;
             width: 40rem;
             height: 25rem;
-            top: 14rem;
-            left: 20rem;
             filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.25));
-          }
-          .confirm-letter-subcontainer {
-            position: absolute;
-            width: 34rem;
-            height: 21rem;
-            top: 2rem;
-            left: 3rem;
-            overflow: hidden;
-          }
-          .confirm-letter-bg-container {
-            position: absolute;
-            width: 40rem;
-            height: 25rem;
-            top: -2rem;
-            left: -3rem;
-          }
-          .button-container {
-            position: absolute;
-            width: 100%;
-            bottom: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            background-image: url("/letter-cover.svg");
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 54rem;
           }
-          .letter-container {
-            width: 32rem;
-            height: 19rem;
+          .confirm-letter-subcontainer {
+            width: 34rem;
+            height: 21rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+          }
+          .confirm-letter-subcontainer::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-image: url(${template});
+            opacity: 0.3;
+            background-size: cover;
             position: absolute;
-            top: 1rem;
-            left: 1rem;
+            top: 0;
+            left: 0;
           }
           .letter-body-container {
             width: 100%;
-            height: 40%;
-            position: absolute;
-            top: 3rem;
-            overflow: auto;
-            padding-left: 0.5rem;
+            height: 60%;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
           }
-          .letter-body {
-            font-family: Plus Jakarta Sans;
-            font-weight: Regular;
-            font-size: 1rem;
-            text-align: left;
-            padding-left: 0.5rem;
-          }
-          .letter-additional-container {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-          }
-          .letter-additional-title {
-            position: absolute;
-            top: 0px;
-            left: 0px;
+          .letter-title {
+            width: fit-content;
+            height: fit-content;
             font-family: Plus Jakarta Sans;
             font-weight: 500;
             font-size: 1.5rem;
             text-align: left;
+            margin-left: 1.5rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
           }
-          .letter-additional-subcontainer {
-            position: absolute;
+          .letter-body-cross-line {
+            width: 95%;
+            align-self: center;
+            border-color: gray;
+          }
+          .letter-body {
+            width: 95%;
+            height: fit-content;
+            font-family: Plus Jakarta Sans;
+            font-weight: Regular;
+            font-size: 1rem;
+            text-align: left;
+            padding-left: 0.7rem;
+            padding-right: 0.7rem;
+            z-index: 100;
+            overflow: scroll;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            background-color: rgb(255, 255, 255, 0.3);
+            align-self: center;
+            border-radius: 10px;
+          }
+          .letter-additional-container {
             width: 100%;
             height: 40%;
-            top: 11.7rem;
+            margin-left: 1rem;
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+            z-index: 100;
           }
-          .letter-addtional-sender-container {
-            position: absolute;
+          .button-container {
+            width: 100%;
+            height: 4rem;
             display: flex;
-            flex-direction: column;
+            align-items: center;
           }
-          .letter-addtional-sender-1 {
-            font-family: Plus Jakarta Sans;
-            font-weight: Bold;
-            font-size: 1rem;
-            text-align: left;
-            color: #005ade;
-          }
-          .letter-addtional-sender-2 {
-            font-family: Plus Jakarta Sans;
-            font-size: 1rem;
-            text-align: left;
-          }
-          .letter-addtional-receiver-container {
+          .button-container .button-left-container {
             position: absolute;
-            left: 10rem;
-            display: flex;
-            flex-direction: column;
+            left: 2rem;
           }
-          .letter-addtional-receiver-1 {
-            font-family: Plus Jakarta Sans;
-            font-weight: Bold;
-            font-size: 1rem;
-            text-align: left;
-            color: #005ade;
-          }
-          .letter-addtional-receiver-2 {
-            font-family: Plus Jakarta Sans;
-            font-size: 1rem;
-            text-align: left;
-          }
-          .letter-addtional-departure-container {
+          .button-container .button-right-container {
             position: absolute;
-            top: 4rem;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-          }
-          .letter-addtional-departure-1 {
-            font-family: Plus Jakarta Sans;
-            font-weight: Bold;
-            font-size: 1rem;
-            text-align: left;
-            color: #005ade;
-          }
-          .letter-addtional-departure-2 {
-            font-family: Plus Jakarta Sans;
-            font-size: 1rem;
-            text-align: left;
-          }
-          .letter-addtional-arrival-container {
-            position: absolute;
-            top: 4rem;
-            left: 10rem;
-            display: flex;
-            flex-direction: column;
-          }
-          .letter-addtional-arrival-1 {
-            font-family: Plus Jakarta Sans;
-            font-weight: Bold;
-            font-size: 1rem;
-            text-align: left;
-            color: #005ade;
-          }
-          .letter-addtional-arrival-2 {
-            font-family: Plus Jakarta Sans;
-            font-size: 1rem;
-            text-align: left;
-          }
-          .letter-addtional-transportation-container {
-            position: absolute;
-            top: 4rem;
-            left: 20rem;
-            display: flex;
-            flex-direction: column;
-          }
-          .letter-addtional-transportation-1 {
-            font-family: Plus Jakarta Sans;
-            font-weight: Bold;
-            font-size: 1rem;
-            text-align: left;
-            color: #005ade;
-          }
-          .letter-addtional-transportation-2 {
-            font-family: Plus Jakarta Sans;
-            font-size: 1rem;
-            text-align: left;
+            right: 2rem;
           }
         `}
       </style>

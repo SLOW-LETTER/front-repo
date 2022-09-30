@@ -46,15 +46,14 @@ export default function ProgressBarItem({ isActive, isDone, text, processIdx }: 
           flex-direction: column;
           align-items: center;
           justify-content: center;
+          gap: 0.3rem;
         }
         .step-outer {
           width: 1.5rem;
           height: 1.5rem;
-          top: 0.5rem;
           background: #f0f0f0;
           box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
           opacity: 1;
-          position: absolute;
           border-top-left-radius: 15px;
           border-top-right-radius: 15px;
           border-bottom-left-radius: 15px;
@@ -64,7 +63,6 @@ export default function ProgressBarItem({ isActive, isDone, text, processIdx }: 
           justify-content: center;
         }
         .step-inner {
-          position: absolute;
           width: 1rem;
           height: 1rem;
           background: #bfbfbf;
@@ -75,7 +73,6 @@ export default function ProgressBarItem({ isActive, isDone, text, processIdx }: 
           justify-content: center;
         }
         .step-inner-active {
-          position: absolute;
           width: 1rem;
           height: 1rem;
           background: #ffffff;
@@ -86,7 +83,6 @@ export default function ProgressBarItem({ isActive, isDone, text, processIdx }: 
           justify-content: center;
         }
         .step-inner-done {
-          position: absolute;
           width: 1rem;
           height: 1rem;
           background: #3563e9;
@@ -106,35 +102,25 @@ export default function ProgressBarItem({ isActive, isDone, text, processIdx }: 
           color: #ffffff;
           text-align: center;
         }
-        .check {
-          position: absolute;
-          top: -0.3rem;
-        }
         .step-text-crown {
-          position: absolute;
           width: 0;
           height: 0;
-          top: 2.5rem;
           border-bottom: 0.3rem solid #bfbfbf;
           border-top: 0.3rem solid transparent;
           border-left: 0.3rem solid transparent;
           border-right: 0.3rem solid transparent;
         }
         .step-text-crown-active {
-          position: absolute;
           width: 0;
           height: 0;
-          top: 2.5rem;
           border-bottom: 0.3rem solid #3563e9;
           border-top: 0.3rem solid transparent;
           border-left: 0.3rem solid transparent;
           border-right: 0.3rem solid transparent;
         }
         .step-text-box {
-          position: absolute;
           width: 6rem;
           height: 1.5rem;
-          top: 3.2rem;
           background: #f0f0f0;
           box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
           border-radius: 26px;
@@ -143,10 +129,8 @@ export default function ProgressBarItem({ isActive, isDone, text, processIdx }: 
           justify-content: center;
         }
         .step-text-box-active {
-          position: absolute;
           width: 6rem;
           height: 1.5rem;
-          top: 3.2rem;
           background: #3563e9;
           box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
           border-radius: 26px;

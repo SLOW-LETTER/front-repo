@@ -5,7 +5,7 @@ export default function Layout({ children }: Props) {
   return (
     <>
       <NavBar />
-      {children}
+      <section className="w-full" style={{height: "41.5rem"}}>{children}</section>
     </>
   );
 }

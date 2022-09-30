@@ -5,15 +5,13 @@ export default function ProgressBar({ children }: any) {
       <style jsx>
         {`
           .steps-container {
-            position: absolute;
-            width: 50rem;
-            height: 5rem;
-            top: 7rem;
-            left: 15rem;
+            width: fit-content;
+            height: fit-content;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6rem;
+            padding-top: 2rem;
           }
         `}
       </style>
