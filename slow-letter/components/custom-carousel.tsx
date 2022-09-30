@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { CarouselItemProps, TemplateProps } from "./type/type";
@@ -6,14 +5,16 @@ import { useStore } from "./zustand_hooks/store";
 
 function CarouselItem({ imgUrl }: CarouselItemProps) {
   return (
-    <motion.div
-      className="w-full h-full"
-      style={{
-        borderRadius: "40px",
-        backgroundImage: `url(${imgUrl})`,
-        backgroundSize: "cover",
-      }}
-    ></motion.div>
+    <>
+      <motion.div
+        className="w-full h-full"
+        style={{
+          borderRadius: "40px",
+          backgroundImage: `url(${imgUrl.replace("https://slowletter.s3.ap-northeast-2.amazonaws.com", "")})`,
+          backgroundSize: "cover",
+        }}
+      ></motion.div>
+    </>
   );
 }
 
@@ -25,8 +26,9 @@ export default function CarouselContainer({ templatesArr }: TemplateProps) {
   const saveTemplate = useStore((state: any) => state.saveTemplate);
 
   useEffect(() => {
-    saveTemplate(`/carousel-item-${slideIdx}.svg`);
+    saveTemplate(`/templates/carousel-item-${slideIdx}.svg`, slideIdx);
   }, [slideIdx]);
+
 
   const onNextTemplate = () => {
     setSlideIdx((prev) => {
@@ -54,95 +56,95 @@ export default function CarouselContainer({ templatesArr }: TemplateProps) {
           {slideIdx === 1 ? (
             <>
               <div className="carousel-item-sm-left">
-                <CarouselItem imgUrl="/carousel-item-4.svg" />
+                <CarouselItem imgUrl={templatesArr[1].templateUrl} />
               </div>
               <div className="carousel-item-md-left">
-                <CarouselItem imgUrl="/carousel-item-5.svg" />
+                <CarouselItem imgUrl={templatesArr[0].templateUrl} />
               </div>
               <div className="carousel-item-lg">
-                <CarouselItem imgUrl="/carousel-item-1.svg" />
+                <CarouselItem imgUrl={templatesArr[4].templateUrl} />
               </div>
               <div className="carousel-item-md-right">
-                <CarouselItem imgUrl="/carousel-item-2.svg" />
+                <CarouselItem imgUrl={templatesArr[3].templateUrl} />
               </div>
               <div className="carousel-item-sm-right">
-                <CarouselItem imgUrl="/carousel-item-3.svg" />
+                <CarouselItem imgUrl={templatesArr[2].templateUrl} />
               </div>
             </>
           ) : null}
           {slideIdx === 2 ? (
             <>
               <div className="carousel-item-sm-left">
-                <CarouselItem imgUrl="/carousel-item-5.svg" />
+                <CarouselItem imgUrl={templatesArr[0].templateUrl} />
               </div>
               <div className="carousel-item-md-left">
-                <CarouselItem imgUrl="/carousel-item-1.svg" />
+                <CarouselItem imgUrl={templatesArr[4].templateUrl} />
               </div>
               <div className="carousel-item-lg">
-                <CarouselItem imgUrl="/carousel-item-2.svg" />
+                <CarouselItem imgUrl={templatesArr[3].templateUrl} />
               </div>
               <div className="carousel-item-md-right">
-                <CarouselItem imgUrl="/carousel-item-3.svg" />
+                <CarouselItem imgUrl={templatesArr[2].templateUrl} />
               </div>
               <div className="carousel-item-sm-right">
-                <CarouselItem imgUrl="/carousel-item-4.svg" />
+                <CarouselItem imgUrl={templatesArr[1].templateUrl} />
               </div>
             </>
           ) : null}
           {slideIdx === 3 ? (
             <>
               <div className="carousel-item-sm-left">
-                <CarouselItem imgUrl="/carousel-item-1.svg" />
+                <CarouselItem imgUrl={templatesArr[4].templateUrl} />
               </div>
               <div className="carousel-item-md-left">
-                <CarouselItem imgUrl="/carousel-item-2.svg" />
+                <CarouselItem imgUrl={templatesArr[3].templateUrl} />
               </div>
               <div className="carousel-item-lg">
-                <CarouselItem imgUrl="/carousel-item-3.svg" />
+                <CarouselItem imgUrl={templatesArr[2].templateUrl} />
               </div>
               <div className="carousel-item-md-right">
-                <CarouselItem imgUrl="/carousel-item-4.svg" />
+                <CarouselItem imgUrl={templatesArr[1].templateUrl} />
               </div>
               <div className="carousel-item-sm-right">
-                <CarouselItem imgUrl="/carousel-item-5.svg" />
+                <CarouselItem imgUrl={templatesArr[0].templateUrl} />
               </div>
             </>
           ) : null}
           {slideIdx === 4 ? (
             <>
               <div className="carousel-item-sm-left">
-                <CarouselItem imgUrl="/carousel-item-2.svg" />
+                <CarouselItem imgUrl={templatesArr[3].templateUrl} />
               </div>
               <div className="carousel-item-md-left">
-                <CarouselItem imgUrl="/carousel-item-3.svg" />
+                <CarouselItem imgUrl={templatesArr[2].templateUrl} />
               </div>
               <div className="carousel-item-lg">
-                <CarouselItem imgUrl="/carousel-item-4.svg" />
+                <CarouselItem imgUrl={templatesArr[1].templateUrl} />
               </div>
               <div className="carousel-item-md-right">
-                <CarouselItem imgUrl="/carousel-item-5.svg" />
+                <CarouselItem imgUrl={templatesArr[0].templateUrl} />
               </div>
               <div className="carousel-item-sm-right">
-                <CarouselItem imgUrl="/carousel-item-1.svg" />
+                <CarouselItem imgUrl={templatesArr[4].templateUrl} />
               </div>
             </>
           ) : null}
           {slideIdx === 5 ? (
             <>
               <div className="carousel-item-sm-left">
-                <CarouselItem imgUrl="/carousel-item-3.svg" />
+                <CarouselItem imgUrl={templatesArr[2].templateUrl} />
               </div>
               <div className="carousel-item-md-left">
-                <CarouselItem imgUrl="/carousel-item-4.svg" />
+                <CarouselItem imgUrl={templatesArr[1].templateUrl} />
               </div>
               <div className="carousel-item-lg">
-                <CarouselItem imgUrl="/carousel-item-5.svg" />
+                <CarouselItem imgUrl={templatesArr[0].templateUrl} />
               </div>
               <div className="carousel-item-md-right">
-                <CarouselItem imgUrl="/carousel-item-1.svg" />
+                <CarouselItem imgUrl={templatesArr[4].templateUrl} />
               </div>
               <div className="carousel-item-sm-right">
-                <CarouselItem imgUrl="/carousel-item-2.svg" />
+                <CarouselItem imgUrl={templatesArr[3].templateUrl} />
               </div>
             </>
           ) : null}

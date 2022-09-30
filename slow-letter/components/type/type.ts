@@ -9,7 +9,7 @@ export interface LetterTemplate {
 }
 
 export interface TemplateProps {
-  templatesArr: string[];
+  templatesArr: {templateUrl: string, templateId: number}[];
 }
 
 export interface CarouselItemProps {

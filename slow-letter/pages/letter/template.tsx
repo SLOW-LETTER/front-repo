@@ -44,7 +44,7 @@ export async function getServerSideProps() {
   const data = await (await fetch(`${apiURL}/templates`))
     .json()
     .catch((error) => console.log("error:", error));
-  const templatesArr: string[] = [];
-  data.payload.map((item: LetterTemplate) => templatesArr.push(item.fileUrl));
+  const templatesArr: {templateUrl: string, templateId: number}[] = [];
+  data.payload.map((item: LetterTemplate) => templatesArr.push({templateUrl: item.fileUrl, templateId: item.id}));
   return { props: { templatesArr } };
 }
