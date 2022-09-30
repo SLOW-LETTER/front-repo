@@ -25,7 +25,7 @@ export default function MailModal({ isOpen, onClose }: Props) {
 
   const [mailTitle, setMailTitle] = useState<string>(letter.title);
   const [mailBody, setMailBody] = useState<string[] | undefined>(letter.body);
-  const [mailAttachments, setMailAttachments] = useState<File>();
+  const [mailAttachments, setMailAttachments] = useState<File>(letter.file);
 
   const router = useRouter();
 
@@ -42,20 +42,6 @@ export default function MailModal({ isOpen, onClose }: Props) {
       setMailAttachments(event.target?.files[0]);
     }
   };
-
-  
-  useEffect(() => {
-    const reader = new FileReader();
-    if (typeof mailAttachments === "undefined") {
-      return;
-    } else {
-      reader.onload = () => {
-        console.log(reader.result);
-      };
-      reader.readAsDataURL(mailAttachments);
-    }
-  }, [mailAttachments])
-
 
   useEffect(() => {
     const eventHandler = (event: KeyboardEvent) => {

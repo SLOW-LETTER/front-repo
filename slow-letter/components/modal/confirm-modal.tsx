@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useStore } from "../../components/zustand_hooks/store";
 import { apiURL } from "../../components/apiURL";
 import axios from "axios";
+import { useTokenStore } from "../zustand_hooks/tokenStore";
 
 interface Props {
   isOpen: boolean;
@@ -19,10 +20,11 @@ interface Props {
 export default function ConfirmModal({ isOpen, onClose }: Props) {
   const router = useRouter();
 
+  const userToken = useTokenStore((state: any) => state.userToken);
+
+  const template = useStore((state: any) => state.template);
   const letter = useStore((state: any) => state.letter);
   const additional = useStore((state: any) => state.additional);
-
-  const form = new FormData();
 
   return (
     <>
@@ -55,29 +57,32 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
             <Button
               colorScheme="blue"
               onClick={() => {
+                const form = new FormData();
                 form.append("receiverEmail", additional.receiver);
-                form.append("templeteId", "1");
-                form.append("transportationId", "1");
+                form.append("boardingTime", "123");
+                form.append("arrivalTime", "123");
                 form.append("departureCountry", additional.departCountry);
                 form.append("departureCity", additional.departCity);
                 form.append("arrivalCountry", additional.arriveCountry);
                 form.append("arrivalCity", additional.arriveCity);
-                form.append("file", letter.attachments);
+                form.append("title", letter.title);
+                form.append("content", JSON.stringify(letter.body));
+                form.append("templateId", template.templateId);
+                form.append("transportationId", "1");
+                form.append("file", letter.file);
                 axios
                   .post(`${apiURL}/letters`, form, {
                     headers: {
-                      token:
-                        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY2NDUxMzAzNiwiZXhwIjoxNjY0NTE0ODM2fQ.YJqQSmMJl3oyaEUXJiE595ls2zbRv7anAZoJN2__4ho",
-                      "Content-Type": "multipart/form-data",
+                      "X-AUTH-TOKEN": `${userToken}`,
+                      "content-type": "multipart/form-data",
                     },
                   })
                   .then((res) => {
                     console.log(res);
-                    router.push("/ticket");
+                    // router.push("/ticket");
                   })
                   .catch((err) => {
                     console.log(err);
-                    return;
                   });
               }}
             >
