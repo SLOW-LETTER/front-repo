@@ -34,6 +34,7 @@ export default function NavBar() {
             height: 2.5rem;
             position: absolute;
             left: 1.5rem;
+            z-index: 20;
           }
           .navbar-logo-link {
             width: 2.5rem;
