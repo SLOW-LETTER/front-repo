@@ -1,5 +1,5 @@
 import { Props } from "../types/children-type";
-import NavBar from "./navbar";
+import NavBar from "./navbar/navbar";
 import { useRouter } from "next/router";
 import Sidebar from "./sidebar";
 import Link from "next/link";

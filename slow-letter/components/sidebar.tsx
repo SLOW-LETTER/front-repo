@@ -22,16 +22,22 @@ export default function Sidebar() {
               <a
                 href="/mypage/account/accountinfo"
                 className={
-                  router.pathname === "/mypage/account/.."
-                    ? "Account flex flex-row p-2 py-4  text-black hover:text-blue bg-white hover:bg-blue-600 rounded-lg text-start text-xl"
-                    : "Account flex flex-row p-2 py-4  text-white hover:text-blue bg-blue-600 rounded-lg text-start text-xl"
+                  router.pathname ===
+                  ("/mypage/account/accountinfo" ||
+                    "/mypage/account/changePW" ||
+                    "/mypage/account/deleteaccount")
+                    ? "Account flex flex-row p-2 py-4  text-white hover:text-blue bg-blue-600 rounded-lg text-start text-xl"
+                    : "Account flex flex-row p-2 py-4  text-black hover:text-blue bg-white hover:bg-blue-600 rounded-lg text-start text-xl"
                 }
               >
                 <Image
                   src={
-                    router.pathname === "/mypage/account/../"
-                      ? "/Account.svg"
-                      : "/Accountactive.svg"
+                    router.pathname ===
+                    ("/mypage/account/accountinfo" ||
+                      "/mypage/account/changePW" ||
+                      "/mypage/account/deleteaccount")
+                      ? "/Accountactive.svg"
+                      : "/Account.svg"
                   }
                   width="30"
                   height="30"
@@ -80,8 +86,12 @@ export default function Sidebar() {
             </li>
             <li>
               <a
-                href="#"
-                className="Tickets flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600  hover:text-white rounded-lg text-start text-xl"
+                href="/mypage/tickets"
+                className={
+                  router.pathname === "/mypage/tickets"
+                    ? "Tickets flex flex-row p-2 py-4 text-white  bg-blue-600  rounded-lg text-start text-xl"
+                    : "Tickets flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600  hover:text-white rounded-lg text-start text-xl"
+                }
               >
                 <Image src="/Tickets.svg" width="30" height="30" />
                 <span>Tickets</span>

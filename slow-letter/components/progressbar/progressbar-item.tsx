@@ -1,4 +1,16 @@
-import { Icon } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import {
+  Icon,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+} from "@chakra-ui/react";
 import { MdCheck } from "react-icons/md";
 
 interface Props {
@@ -8,7 +20,12 @@ interface Props {
   processIdx?: number;
 }
 
-export default function ProgressBarItem({ isActive, isDone, text, processIdx }: Props) {
+export default function ProgressBarItem({
+  isActive,
+  isDone,
+  text,
+  processIdx,
+}: Props) {
   return (
     <div className="step">
       <div className="step-outer">
@@ -35,9 +52,9 @@ export default function ProgressBarItem({ isActive, isDone, text, processIdx }: 
       <div
         className={isActive ? "step-text-crown-active" : "step-text-crown"}
       ></div>
-      <div className={isActive ? "step-text-box-active" : "step-text-box"}>
-        <div className={isActive ? "text-active" : "text"}>{text}</div>
-      </div>
+      <div
+        className={isActive ? "step-text-box-active" : "step-text-box"}
+      ></div>
       <style jsx>{`
         .step {
           width: 10rem;

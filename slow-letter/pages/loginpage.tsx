@@ -6,13 +6,12 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
-    console.log(e);
-
     e.target.id === "Email"
       ? setEmail(e.target.value.trim())
       : setPassword(e.target.value.trim());
   }
-
+  console.log(email);
+  console.log(password);
   return (
     <>
       <ProjectTitle

@@ -44,6 +44,7 @@ Props) {
           <Image src={Iconimg} className="Icon" width={25} height={25} />
           <label className="label-input">{Label}</label>
         </div>
+
         {Label === "Password" ? (
           <input
             id={ID}

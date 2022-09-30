@@ -1,8 +1,19 @@
 import { useState } from "react";
 import SettingModal from "../../components/setting-modal";
+import Ticket from "../ticket";
 export default function Tickets() {
   const [viewSent, setviewSent] = useState(false);
-  const [viewRecieve, setviewRecieve] = useState(false);
+  const [viewRecieve, setviewRecieve] = useState(true);
+  const [ticketInfo, setticketInfo] = useState({
+    Departure: "",
+    Arrival: "",
+    Sender: "",
+    Reciever: "",
+    SentDate: "",
+    ArrivingDate: "",
+    LetterID: "",
+    Transportation: "",
+  });
 
   function onClick1(e: any) {
     setviewRecieve(true);
@@ -45,8 +56,8 @@ export default function Tickets() {
       <style jsx>{`
         .switch {
           position: absolute;
-          top: 10em;
-          left: 10em;
+          top: 6em;
+          left: 49em;
         }
       `}</style>
     </>
