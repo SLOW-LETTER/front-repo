@@ -1,9 +1,18 @@
 import ProjectTitle from "../components/project-title";
 import TypeIn from "../components/inputitem";
 import { ChangeEvent, useState } from "react";
+import axios from "axios";
+import { apiURL } from "../components/apiURL";
+import { useStore } from "../components/zustand_hooks/store";
+import { useRouter } from "next/router";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const saveUserToken = useStore((state: any) => state.saveUserToken);
+
+  const router = useRouter();
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     console.log(e);
@@ -56,6 +65,22 @@ export default function Login() {
             className="bg-blue-600 hover:bg-blue-900 text-white font-bold py-2 px-4 w-full rounded"
             type="button"
             id="loginBtn"
+            onClick={() => {
+              const form = new FormData();
+              form.append("email", email);
+              form.append("password", password);
+              axios
+                .post(`${apiURL}/users/login`, form, {
+                  headers: {
+                    "content-type": "multipart/form-data",
+                  },
+                })
+                .then((res) => {
+                  saveUserToken(res.data.payload?.token);
+                  router.push("/");
+                })
+                .catch((err) => console.log(err));
+            }}
           >
             Sign In
           </button>

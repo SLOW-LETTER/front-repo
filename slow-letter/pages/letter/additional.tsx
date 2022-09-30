@@ -41,7 +41,6 @@ function AdditionalFormSelect({
   onSetState,
   options,
 }: AdditionalFormSelectProps) {
-  options?.unshift("Select Your Option");
   return (
     <Select
       className="select"
@@ -50,18 +49,13 @@ function AdditionalFormSelect({
       fontSize={FONT_SIZE}
       onChange={(event) => onSetState(event.target.value)}
       cursor="pointer"
+      placeholder="Select Your Option"
     >
-      {options?.map((item, key) =>
-        item === "Select Your Option" ? (
-          <option key={key} value="" disabled selected>
-            {item}
-          </option>
-        ) : (
-          <option key={key} value={item}>
-            {item}
-          </option>
-        )
-      )}
+      {options?.map((item, key) => (
+        <option key={key} value={item}>
+          {item}
+        </option>
+      ))}
     </Select>
   );
 }
