@@ -22,6 +22,8 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
   const letter = useStore((state: any) => state.letter);
   const additional = useStore((state: any) => state.additional);
 
+  const form = new FormData();
+
   return (
     <>
       <Modal
@@ -53,16 +55,21 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
             <Button
               colorScheme="blue"
               onClick={() => {
+                form.append("receiverEmail", additional.receiver);
+                form.append("templeteId", "1");
+                form.append("transportationId", "1");
+                form.append("departureCountry", additional.departCountry);
+                form.append("departureCity", additional.departCity);
+                form.append("arrivalCountry", additional.arriveCountry);
+                form.append("arrivalCity", additional.arriveCity);
+                form.append("file", letter.attachments);
                 axios
-                  .post(`${apiURL}/letters`, {
-                    receiverEmail: additional.receiver,
-                    templeteId: "1",
-                    transportationId: "1",
-                    departureCountry: additional.departCountry,
-                    departureCity: additional.departureCity,
-                    arrivalCountry: additional.arrivalCountry,
-                    arrivalCity: additional.arrivalCity,
-                    file: letter.attachments,
+                  .post(`${apiURL}/letters`, form, {
+                    headers: {
+                      token:
+                        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTY2NDUxMzAzNiwiZXhwIjoxNjY0NTE0ODM2fQ.YJqQSmMJl3oyaEUXJiE595ls2zbRv7anAZoJN2__4ho",
+                      "Content-Type": "multipart/form-data",
+                    },
                   })
                   .then((res) => {
                     console.log(res);

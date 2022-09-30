@@ -25,9 +25,7 @@ export default function MailModal({ isOpen, onClose }: Props) {
 
   const [mailTitle, setMailTitle] = useState<string>(letter.title);
   const [mailBody, setMailBody] = useState<string[] | undefined>(letter.body);
-  const [mailAttachments, setMailAttachments] = useState<File>(
-    letter.attachments
-  );
+  const [mailAttachments, setMailAttachments] = useState<File>();
 
   const router = useRouter();
 
@@ -44,6 +42,20 @@ export default function MailModal({ isOpen, onClose }: Props) {
       setMailAttachments(event.target?.files[0]);
     }
   };
+
+  
+  useEffect(() => {
+    const reader = new FileReader();
+    if (typeof mailAttachments === "undefined") {
+      return;
+    } else {
+      reader.onload = () => {
+        console.log(reader.result);
+      };
+      reader.readAsDataURL(mailAttachments);
+    }
+  }, [mailAttachments])
+
 
   useEffect(() => {
     const eventHandler = (event: KeyboardEvent) => {
@@ -116,7 +128,7 @@ export default function MailModal({ isOpen, onClose }: Props) {
               </div>
             </form>
             <div className="mail-attachments-view">
-              <span>{mailAttachments === null ? "" : mailAttachments.name}</span>
+              <span>{mailAttachments?.name}</span>
             </div>
 
             <hr />
@@ -146,7 +158,7 @@ export default function MailModal({ isOpen, onClose }: Props) {
                     document.getElementById("mail-body")?.innerText.split("\n"),
                     mailAttachments
                   );
-                 router.push("/letter/additional");
+                  router.push("/letter/additional");
                 }}
               >
                 Save changes
@@ -195,7 +207,7 @@ export default function MailModal({ isOpen, onClose }: Props) {
             left: 2rem;
           }
           .mail-attachments-container:hover {
-            opacity: .5;
+            opacity: 0.5;
           }
           .mail-attachments-container label {
             display: block;

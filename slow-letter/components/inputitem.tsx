@@ -72,11 +72,9 @@ Props) {
             id={ID}
             className="input-value"
             placeholder={Hint}
-            type="number"
+            type="text"
             value={Values}
             onChange={onChange}
-            min={0}
-            max={99999999999}
           />
         ) : (
           <input

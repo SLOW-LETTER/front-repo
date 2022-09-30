@@ -2,9 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import NavItems from "./navbar-items";
+import { useStore } from "../zustand_hooks/store";
 
 export default function NavBar() {
   const router = useRouter();
+
+  const userToken = useStore((state: any) => state.userToken);
   return (
     <>
       <header className="navbar-container">
@@ -15,7 +18,7 @@ export default function NavBar() {
             </a>
           </Link>
         </div>
-        {router.pathname === "/" ? null : <NavItems />}
+        {userToken === "temp" ? <></> : <NavItems />}
       </header>
       <style jsx>
         {`

@@ -1,8 +1,12 @@
 import ProjectTitle from "../components/project-title";
 import CustomButton from "../components/custom-button";
 import Earth from "../components/earth";
+import Link from "next/link";
+import { useStore } from "../components/zustand_hooks/store";
 
 export default function Home() {
+  const userToken = useStore((state: any) => state.userToken);
+
   return (
     <>
       <div className="earth-globe">
@@ -17,8 +21,28 @@ export default function Home() {
         subtitleLeft="0"
       />
       <div className="button-container">
-        <CustomButton buttonSize="" text="Sign in" />
-        <CustomButton buttonSize="" text="Sign up" />
+        {userToken === "temp" ? (
+          <>
+            <Link href="/loginpage">
+              <a>
+                <CustomButton text="Sign in" />
+              </a>
+            </Link>
+            <Link href="/signuppage">
+              <a>
+                <CustomButton text="Sign up" />
+              </a>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href="/letter/template">
+              <a>
+                <CustomButton text="Write a letter" />
+              </a>
+            </Link>
+          </>
+        )}
       </div>
       <style jsx>
         {`
