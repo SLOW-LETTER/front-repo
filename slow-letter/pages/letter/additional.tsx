@@ -16,12 +16,13 @@ import {
 } from "../../components/icon/user-icon";
 import CustomButton from "../../components/custom-button";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useStore } from "../../components/zustand_hooks/store";
+import { useEffect, useState } from "react";
 import {
   AdditionalFormLabelProps,
   AdditionalFormSelectProps,
 } from "../../components/type/type";
+import { apiURL } from "../../components/apiURL";
+import axios from "axios";
 
 const FONT_SIZE = "0.8rem";
 const INPUT_WIDTH = "15rem";
@@ -70,7 +71,15 @@ export default function Additional() {
   const [arriveCity, setArriveCity] = useState("");
   const [transportation, setTransportation] = useState("");
 
-  const saveAdditional = useStore((state: any) => state.saveAdditional);
+  // useEffect(() => {
+  //   console.log(savedUserToken);
+  //   axios
+  //     .get(`${apiURL}/users-info`, {
+  //       headers: { "X-AUTH-TOKEN": `${savedUserToken}` },
+  //     })
+  //     .then((res) => console.log(res.data.payload))
+  //     .catch((err) => console.log(err));
+  // }, [savedUserToken]);
 
   return (
     <>

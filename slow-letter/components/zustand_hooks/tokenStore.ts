@@ -10,7 +10,7 @@ export const useTokenStore = create(
       resetUserToken: () => set(() => ({ userToken: "temp" })),
     }), {
       name: "user-token",
-      getStorage: () => localStorage
+      getStorage: () => sessionStorage
     })
   )
 );
