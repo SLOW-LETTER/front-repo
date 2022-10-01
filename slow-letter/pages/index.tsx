@@ -2,10 +2,17 @@ import ProjectTitle from "../components/project-title";
 import CustomButton from "../components/custom-button";
 import Earth from "../components/earth";
 import Link from "next/link";
-import { useStore } from "../components/zustand_hooks/store";
+import { useTokenStore } from "../components/zustand_hooks/tokenStore";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const userToken = useStore((state: any) => state.userToken);
+  const userToken = useTokenStore((state: any) => state.userToken);
+
+  const [savedUserToken, setSavedUserToken] = useState("temp");
+
+  useEffect(() => {
+    setSavedUserToken(userToken);
+  }, [savedUserToken]);
 
   return (
     <>
@@ -21,7 +28,7 @@ export default function Home() {
         subtitleLeft="0"
       />
       <div className="button-container">
-        {userToken === "temp" ? (
+        {savedUserToken === "temp" ? (
           <>
             <Link href="/loginpage">
               <a>

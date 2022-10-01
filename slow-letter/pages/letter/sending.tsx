@@ -126,7 +126,7 @@ export default function Sending() {
             content: "";
             width: 100%;
             height: 100%;
-            background-image: url(${template});
+            background-image: url(${template.templateUrl});
             opacity: 0.3;
             background-size: cover;
             position: absolute;

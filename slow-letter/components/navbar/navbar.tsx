@@ -1,24 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import NavItems from "./navbar-items";
-import { useStore } from "../zustand_hooks/store";
+import { useTokenStore } from "../zustand_hooks/tokenStore";
+import { useEffect, useState } from "react";
 
 export default function NavBar() {
-  const router = useRouter();
+  const userToken = useTokenStore((state: any) => state.userToken);
+  const [savedUserToken, setSavedUserToken] = useState("temp");
 
-  const userToken = useStore((state: any) => state.userToken);
+  useEffect(() => {
+    setSavedUserToken(userToken);
+  }, [savedUserToken])
+
   return (
     <>
       <header className="navbar-container">
         <div className="navbar-logo-container">
           <Link href="/">
             <a className="navbar-logo-link">
-              <Image src="/project-logo.svg" layout="fill" alt="" />
+              <Image src="/project-logo.svg" layout="fill" alt="" priority />
             </a>
           </Link>
         </div>
-        {userToken === "temp" ? <></> : <NavItems />}
+        {savedUserToken === "temp" ? <></> : <NavItems />}
       </header>
       <style jsx>
         {`

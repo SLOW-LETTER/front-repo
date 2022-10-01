@@ -3,12 +3,14 @@ import TypeIn from "../components/inputitem";
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
 import { apiURL } from "../components/apiURL";
-import { useStore } from "../components/zustand_hooks/store";
 import { useRouter } from "next/router";
-//export const saveUserToken = useStore((state: any) => state.saveUserToken);
+import { useTokenStore } from "../components/zustand_hooks/tokenStore";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const saveUserToken = useTokenStore((state: any) => state.saveUserToken);
 
   const router = useRouter();
 
