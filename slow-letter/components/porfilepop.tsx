@@ -1,10 +1,8 @@
 import Buttondefault from "./button";
 import Image from "next/image";
 
-interface Props {
-  visible: String;
-}
-export default function Popover({ visible }: Props) {
+
+export default function Popover() {
   return (
     <>
       <div className="page  hidden flex flex-col items-center">
@@ -40,9 +38,6 @@ export default function Popover({ visible }: Props) {
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
             border-bottom: 20px solid blue;
-          }
-          .page {
-            visibility: ${visible};
           }
         `}
       </style>

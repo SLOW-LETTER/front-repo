@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useCheckUserToken } from "../hooks/use-check-user-token";
 import NavItems from "./navbar-items";
-import { useToken } from "../hooks/useToken";
 
 export default function NavBar() {
-const {savedUserToken} = useToken();
-
+  const {checkUserToken} = useCheckUserToken();
   return (
     <>
       <header className="navbar-container">
@@ -16,13 +15,13 @@ const {savedUserToken} = useToken();
             </a>
           </Link>
         </div>
-        {savedUserToken === "temp" ? <></> : <NavItems />}
+        {checkUserToken === "" ? <></> : <NavItems />}
       </header>
       <style jsx>
         {`
           .navbar-container {
             width: 100%;
-            height: 3.5rem;
+            height: 10%;
             background: rgba(255, 255, 255, 1);
             opacity: 1;
             box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.25);

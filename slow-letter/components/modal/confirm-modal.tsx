@@ -7,8 +7,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useStore } from "../../components/zustand_hooks/store";
-import { apiURL } from "../../components/apiURL";
+import { useStore } from "../zustand_hooks/store";
+import { apiURL } from "../apiURL";
 import axios from "axios";
 import { useTokenStore } from "../zustand_hooks/tokenStore";
 

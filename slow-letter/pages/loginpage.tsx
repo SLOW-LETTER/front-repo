@@ -1,4 +1,4 @@
-import ProjectTitle from "../components/project-title";
+import ProjectTitle from "../components/title/project-title";
 import TypeIn from "../components/inputitem";
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
@@ -6,31 +6,24 @@ import { apiURL } from "../components/apiURL";
 import { useRouter } from "next/router";
 import { useTokenStore } from "../components/zustand_hooks/tokenStore";
 
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const saveUserToken = useTokenStore((state: any) => state.saveUserToken);
-
   const router = useRouter();
+
+  const saveUserToken = useTokenStore((state: any) => state.saveUserToken);
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     e.target.id === "Email"
       ? setEmail(e.target.value.trim())
       : setPassword(e.target.value.trim());
   }
-  const saveUserToken = useStore((state: any) => state.saveUserToken);
-  console.log(saveUserToken);
+
   return (
     <>
-      <ProjectTitle
-        containerTop="17em"
-        containerLeft="20rem"
-        titleTop="0"
-        titleLeft="0"
-        subtitleTop="16rem"
-        subtitleLeft="0"
-      />
+      <ProjectTitle/>
       <div className="login-container">
         <div className="flex flex-col w-full px-8 py-8 h-5/6 bg-white shadow-lg drop-shadow-2xl rounded-lg">
           <span className="font-bold text-sm text-black text-2xl">
@@ -78,8 +71,7 @@ export default function Login() {
                 })
                 .then((res) => {
                   saveUserToken(res.data.payload?.token);
-                  console.log(res.data.payload?.token);
-                  router.push("/mypage/account/accountinfo");
+                  router.push("/");
                 })
                 .catch((err) => console.log(err));
             }}

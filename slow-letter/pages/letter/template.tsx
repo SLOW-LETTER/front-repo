@@ -1,4 +1,4 @@
-import CustomButton from "../../components/custom-button";
+import CustomButton from "../../components/button/custom-button";
 import CustomCarousel from "../../components/custom-carousel";
 import ProgressBar from "../../components/progressbar/progressbar";
 import ProgressBarItem from "../../components/progressbar/progressbar-item";

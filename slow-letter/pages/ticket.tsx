@@ -1,4 +1,4 @@
-import CustomButton from "../components/custom-button";
+import CustomButton from "../components/button/custom-button";
 import { TicketBodyItemProps } from "../components/type/type";
 import { useStore } from "../components/zustand_hooks/store";
 

@@ -14,7 +14,7 @@ import {
   UserDefaultIcon,
   UserReadOnlyIcon,
 } from "../../components/icon/user-icon";
-import CustomButton from "../../components/custom-button";
+import CustomButton from "../../components/button/custom-button";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
@@ -23,6 +23,7 @@ import {
 } from "../../components/type/type";
 import { apiURL } from "../../components/apiURL";
 import axios from "axios";
+import { useStore } from "../../components/zustand_hooks/store";
 
 const FONT_SIZE = "0.8rem";
 const INPUT_WIDTH = "15rem";
@@ -70,6 +71,8 @@ export default function Additional() {
   const [arriveCountry, setArriveCountry] = useState("");
   const [arriveCity, setArriveCity] = useState("");
   const [transportation, setTransportation] = useState("");
+
+  const saveAdditional = useStore((state: any) => state.saveAdditional);
 
   // useEffect(() => {
   //   console.log(savedUserToken);
