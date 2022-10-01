@@ -1,74 +1,65 @@
-import ProjectTitle from "../components/project-title";
-import CustomButton from "../components/custom-button";
-import Earth from "../components/earth";
+import ProjectTitle from "../components/title/project-title";
+import CustomButton from "../components/button/custom-button";
+import Earth from "../components/earth/earth";
 import Link from "next/link";
-import { useToken } from "../components/hooks/useToken";
-
+import { useCheckUserToken } from "../components/hooks/use-check-user-token";
 
 export default function Home() {
-  const {savedUserToken} = useToken();
+  const { checkUserToken } = useCheckUserToken();
   return (
-    <>
-      <div className="earth-globe">
-        <Earth />
+    <div className="main-page-container w-full h-full flex items-center">
+      <div className="main-page-left-subcontainer">
+        <ProjectTitle />
+        <div className="button-container">
+          {checkUserToken === "" ? (
+            <>
+              <Link href="/loginpage">
+                <a>
+                  <CustomButton text="Sign in" />
+                </a>
+              </Link>
+              <Link href="/signuppage">
+                <a>
+                  <CustomButton text="Sign up" />
+                </a>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link href="/letter/template">
+                <a>
+                  <CustomButton text="Write a letter" />
+                </a>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
-      <ProjectTitle
-        containerTop="12rem"
-        containerLeft="10rem"
-        titleTop="0"
-        titleLeft="0"
-        subtitleTop="16rem"
-        subtitleLeft="0"
-      />
-      <div className="button-container">
-        {savedUserToken === "temp" ? (
-          <>
-            <Link href="/loginpage">
-              <a>
-                <CustomButton text="Sign in" />
-              </a>
-            </Link>
-            <Link href="/signuppage">
-              <a>
-                <CustomButton text="Sign up" />
-              </a>
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link href="/letter/template">
-              <a>
-                <CustomButton text="Write a letter" />
-              </a>
-            </Link>
-          </>
-        )}
+      <div className="main-page-right-subcontainer">
+        <Earth />
       </div>
       <style jsx>
         {`
-          .earth-globe {
+          .main-page-left-subcontainer {
             width: 50%;
-            height: 90%;
-            opacity: 1;
-            position: absolute;
-            top: 3.5rem;
-            right: 0;
-          }
-          .button-container {
-            width: 25rem;
-            height: 5rem;
-            opacity: 1;
-            position: absolute;
-            top: 33rem;
-            left: 10rem;
+            height: fit-content;
             display: flex;
-            flex-direction: row;
-            justify-content: left;
+            flex-direction: column;
             align-items: center;
             gap: 20px;
           }
+          .button-container {
+            width: fit-content;
+            height: fit-content;
+            display: flex;
+            gap: 20px;
+          }
+          .main-page-right-subcontainer {
+            width: 50%;
+            height: 100%;
+          }
         `}
       </style>
-    </>
+    </div>
   );
 }

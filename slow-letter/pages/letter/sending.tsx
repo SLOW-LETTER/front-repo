@@ -1,6 +1,6 @@
 import ProgressBar from "../../components/progressbar/progressbar";
 import ProgressBarItem from "../../components/progressbar/progressbar-item";
-import CustomButton from "../../components/custom-button";
+import CustomButton from "../../components/button/custom-button";
 import { useDisclosure } from "@chakra-ui/react";
 import ConfirmModal from "../../components/modal/confirm-modal";
 import { useStore } from "../../components/zustand_hooks/store";

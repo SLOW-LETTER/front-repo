@@ -3,8 +3,6 @@ import { devtools } from "zustand/middleware";
 
 export const useStore = create(
   devtools((set) => ({
-    userToken: "temp",
-
     template: {
       templateUrl: "",
       templateId: 0,
@@ -31,10 +29,6 @@ export const useStore = create(
       })),
     resetTemplate: () =>
       set(() => ({ template: { templateUrl: "", templateId: 0 } })),
-
-    saveUserToken: (userToken: string) => set(() => ({ userToken: userToken })),
-
-    resetUserToken: () => set(() => ({ userToken: "temp" })),
 
     saveLetter: (title: string, body: string[], file: File) =>
       set(() => ({

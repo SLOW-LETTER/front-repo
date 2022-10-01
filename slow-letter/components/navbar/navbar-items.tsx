@@ -1,11 +1,13 @@
 import Link from "next/link";
-import Popover from "../../components/porfilepop";
+import { useRef } from "react";
+import Popover from "../porfilepop";
 
 export default function NavItems() {
-  function pop() {
-    console.log("hi");
-    return <Popover visible="visible" />;
-  }
+  let display="visible";  
+    const handleFocus = ()=>{
+          display="visible"
+    }
+  
   return (
     <>
       <nav className="nav-items-container">
@@ -23,8 +25,9 @@ export default function NavItems() {
         <div className="ticket-container">
           <div className="ticket-icon"></div>
         </div>
-        <div className="profile-container">
-          <div className="profile-icon" onClick={pop}></div>
+        <div className="profile-container flex flex-col">
+          <div className="profile-icon"></div>
+          <div className="profilePopover" ><Popover/></div>
         </div>
       </nav>
       <style jsx>
@@ -132,6 +135,10 @@ export default function NavItems() {
             background-position: center center;
             background-size: cover;
           }
+          .profilePopover{
+            
+          }
+          
         `}
       </style>
     </>

@@ -11,13 +11,11 @@ import {
 import PwCheck from "./pswCheck";
 
 interface Props {
-  ID: string;
-  Hint: string;
-  Label: string;
-  Iconimg: string;
-  IconWidth?: string;
-  IconHeight?: string;
-  Values: string;
+  id: string;
+  hint: string;
+  label: string;
+  iconImg: string;
+  values: string;
   onChange?: ChangeEventHandler;
   onFocus?: FocusEventHandler;
   onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -25,64 +23,61 @@ interface Props {
 }
 
 export default function TypeIn({
-  ID,
-  Hint,
-  Label,
-  Iconimg,
-  IconWidth,
-  IconHeight,
-  Values = "",
+  id,
+  hint,
+  label,
+  iconImg,
+  values = "",
   onChange,
   onFocus,
   onBlur,
-}: // onKeyup,
+}: 
 Props) {
   return (
     <>
-      <div className="input-container">
-        <div className="input-container flex flex-row">
-          <Image src={Iconimg} className="Icon" width={25} height={25} />
-          <label className="label-input">{Label}</label>
+      <div className="input-container flex flex-col space-y-1">
+        <div className="label-container flex flex-row space-x-1 pl-2">
+          <Image src={iconImg} className="Icon" width={20} height={20} />
+          <label>{label}</label>
         </div>
-
-        {Label === "Password" ? (
+        {label === "Password" ? (
           <input
-            id={ID}
+            id={id}
             className="input-value"
-            placeholder={Hint}
+            placeholder={hint}
             type="Password"
-            value={Values}
+            value={values}
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
             maxLength={16}
           />
-        ) : Label === "Confirm Password" ? (
+        ) : label === "Confirm Password" ? (
           <input
-            id={ID}
+            id={id}
             className="input-value"
-            placeholder={Hint}
+            placeholder={hint}
             type="Password"
-            value={Values}
+            value={values}
             onChange={onChange}
             maxLength={16}
-            //  onKeyUp={onKeyup}
           />
-        ) : Label === "Phone Number" ? (
+        ) : label === "Phone Number" ? (
           <input
-            id={ID}
+            id={id}
             className="input-value"
-            placeholder={Hint}
+            placeholder={hint}
             type="text"
-            value={Values}
+            value={values}
             onChange={onChange}
+            maxLength={13}
           />
         ) : (
           <input
-            id={ID}
+            id={id}
             className="input-value"
-            placeholder={Hint}
-            value={Values}
+            placeholder={hint}
+            value={values}
             onChange={onChange}
             maxLength={25}
           />
@@ -92,21 +87,27 @@ Props) {
       <style jsx>
         {`
           .input-container {
-            width: 18rem;
+            width: fit-content;
+            height: fit-content;
+
+          }
+          .label-container {
+            width: fit-content;
+            height: fit-content;
             font-family: Plus Jakarta Sans;
             text-align: left;
-            padding: 0.5em;
-            color: black;
-            font-weight: 500;
           }
-          .label-intput {
-            width: 18rem;
-            height: 42px;
+          .label-container label {
+            width: fit-content;
+            height: fit-content;
             color: black;
+            font-size: .9rem;
+            font-weight: semibold;
+            padding-top: 1px;
           }
           .input-value {
-            width: 18rem;
-            height: 42px;
+            width: 16rem;
+            height: 2rem;
             background: white;
             border-color: light-grey;
             border-width: 2px;
@@ -114,18 +115,14 @@ Props) {
             padding-left: 15px;
             border-style: solid;
             border-radius: 8px;
-            alignitems: center;
+            align-items: center;
+            font-size: 14px;
           }
           .input-value::placeholder {
             color: grey;
-            font-size: 16px;
+            font-size: 14px;
           }
-          .input-value::focus {
-          }
-          .Icon {
-            width: ${IconWidth};
-            height: ${IconHeight};
-          }
+          
         `}
       </style>
     </>
