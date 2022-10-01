@@ -2,18 +2,11 @@ import ProjectTitle from "../components/project-title";
 import CustomButton from "../components/custom-button";
 import Earth from "../components/earth";
 import Link from "next/link";
-import { useTokenStore } from "../components/zustand_hooks/tokenStore";
-import { useEffect, useState } from "react";
+import { useToken } from "../components/hooks/useToken";
+
 
 export default function Home() {
-  const userToken = useTokenStore((state: any) => state.userToken);
-
-  const [savedUserToken, setSavedUserToken] = useState("temp");
-
-  useEffect(() => {
-    setSavedUserToken(userToken);
-  }, [savedUserToken]);
-
+  const {savedUserToken} = useToken();
   return (
     <>
       <div className="earth-globe">

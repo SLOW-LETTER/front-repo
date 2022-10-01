@@ -1,16 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import NavItems from "./navbar-items";
-import { useTokenStore } from "../zustand_hooks/tokenStore";
-import { useEffect, useState } from "react";
+import { useToken } from "../hooks/useToken";
 
 export default function NavBar() {
-  const userToken = useTokenStore((state: any) => state.userToken);
-  const [savedUserToken, setSavedUserToken] = useState("temp");
-
-  useEffect(() => {
-    setSavedUserToken(userToken);
-  }, [savedUserToken])
+const {savedUserToken} = useToken();
 
   return (
     <>
