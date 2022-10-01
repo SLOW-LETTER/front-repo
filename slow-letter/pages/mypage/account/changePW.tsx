@@ -29,6 +29,7 @@ export default function ChangePw() {
             Hint="*************"
             Label="Password"
             Types="Password"
+            values=""
           />
           <hr className="line py-2" />
           <SettingItems
@@ -36,6 +37,7 @@ export default function ChangePw() {
             Hint="*************"
             Label="Confrim Password"
             Types="Password"
+            values=""
           />
         </div>
         <Button

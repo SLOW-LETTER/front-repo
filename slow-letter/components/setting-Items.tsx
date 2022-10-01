@@ -1,13 +1,25 @@
 import { kMaxLength } from "buffer";
+import { ChangeEvent, ChangeEventHandler } from "react";
 
 interface items {
   ID: string;
   Label: string;
   Hint: string;
   Types: string;
+  values: string;
+  onChangetext?: ChangeEventHandler<HTMLTextAreaElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-export default function SettingItems({ Label, ID, Hint, Types }: items) {
+export default function SettingItems({
+  Label,
+  ID,
+  Hint,
+  Types,
+  values,
+  onChange,
+  onChangetext,
+}: items) {
   return (
     <>
       <div className="input-container">
@@ -20,7 +32,9 @@ export default function SettingItems({ Label, ID, Hint, Types }: items) {
               placeholder={Hint}
               cols={40}
               rows={5}
+              value={values}
               maxLength={200}
+              onChange={onChangetext}
             />
           </div>
         ) : Label === "Confirm Password" ? (
@@ -31,7 +45,9 @@ export default function SettingItems({ Label, ID, Hint, Types }: items) {
               className="input-value"
               placeholder={Hint}
               type={Types}
+              value={values}
               maxLength={16}
+              onChange={onChange}
             />
             <p className=" invisible  input-value-required">
               Please enter Password
@@ -45,7 +61,9 @@ export default function SettingItems({ Label, ID, Hint, Types }: items) {
               className="input-value"
               placeholder={Hint}
               type={Types}
+              value={values}
               maxLength={Label === "Password" ? 16 : 25}
+              onChange={onChange}
             />
           </div>
         )}

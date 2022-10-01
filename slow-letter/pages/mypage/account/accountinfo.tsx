@@ -1,8 +1,7 @@
 import Sidebar from "../../../components/sidebar";
 import SettingItems from "../../../components/setting-Items";
 import SettingModal from "../../../components/setting-modal";
-import Image from "next/image";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import {
   Button,
   Modal,
@@ -13,16 +12,23 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  ChakraProvider,
   useDisclosure,
   Stack,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { apiURL } from "../../../components/apiURL";
+import { useRouter } from "next/router";
+import { useStore } from "../../../components/zustand_hooks/store";
 
+type InputEvent = ChangeEvent<HTMLInputElement>;
 interface MySettings {
-  Profile: string;
+  pics: File;
 }
+let Email = "";
+let phone = "";
+let biotest = "";
 
-export default function Mypage() {
+export default function Mypage({}: MySettings) {
   const {
     isOpen: isSaveOpen,
     onOpen: onSaveOpen,
@@ -34,23 +40,67 @@ export default function Mypage() {
     onClose: onCancelClose,
   } = useDisclosure();
   const toast = useToast();
+  const router = useRouter();
 
-  const [profile, setProfile] = useState({
-    Email: "",
+  const userToken: string = useStore((state: any) => state.userToken);
+
+  useEffect(() => {
+    axios
+      .get(`${apiURL}/users-info`, {
+        headers: { "X-AUTH-TOKEN": `${userToken}` },
+      })
+      .then((res) => {
+        console.log(res);
+        router.push("/mypage/account/accountinfo");
+        profile.Phone = res.data.payload.phone;
+        profile.Bio = res.data.payload.bio;
+        profile.Pic = res.data.payload.profileImageUrl;
+        console.log(profile.Bio);
+        console.log(profile.Pic);
+        Email = res.data.payload.email;
+        console.log(Email);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  const [profile, setProfile] = useState<{
+    Phone: string;
+    Bio: string;
+    Pic: File | string;
+  }>({
     Phone: "",
     Bio: "",
     Pic: "/defaultProfile.svg",
   });
-  function eventread(e: any) {
-    let file = e.target.files[0];
-    console.log(e);
-    console.log(file);
-    console.log(file.Values);
-    console.log(file.name);
+
+  function eventread(e: InputEvent) {
+    if (e.target.files === null) {
+      return;
+    } else {
+      const file = e.target.files[0];
+      setProfile({
+        ...profile,
+        Pic: file,
+      });
+    }
+    console.log(profile.Pic);
   }
   function onEmailChange() {}
-  function onPhoneChange() {}
-  function onBioChange() {}
+  function onPhoneChange(e: InputEvent) {
+    const value = e?.target.value;
+    setProfile({
+      ...profile,
+      Phone: value,
+    });
+  }
+  function onBioChange(e: ChangeEvent<HTMLTextAreaElement>) {
+    const biovalue = e?.target.value;
+    setProfile({
+      ...profile,
+      Bio: biovalue,
+    });
+  }
 
   return (
     <>
@@ -77,12 +127,10 @@ export default function Mypage() {
           </div>
           <hr className="line mt-10" />
           <div className="email-continer flex w-32 flex-row  py-8">
-            <text className="email flex text-black fixed-email font-semibold ">
+            <span className="email flex text-black fixed-email font-semibold ">
               Email
-            </text>
-            <text className="flex text-black fixed-email px-2">
-              example@example.com
-            </text>
+            </span>
+            <span className="flex text-black fixed-email px-2">{Email}</span>
           </div>
 
           <hr className="line" />
@@ -91,7 +139,9 @@ export default function Mypage() {
             ID="Editphone"
             Hint="000-0000-0000"
             Label="Phone"
-            Types="number"
+            Types="text"
+            onChange={onPhoneChange}
+            values={profile.Phone}
           />
           <hr className="line" />
 
@@ -100,6 +150,8 @@ export default function Mypage() {
             Hint="Place introduce yourself"
             Label="Your Bio"
             Types="string"
+            onChangetext={onBioChange}
+            values={profile.Bio}
           />
         </div>
         <div className="btn-container flex flex-row justify-end p-4 space-x-8">
@@ -141,6 +193,22 @@ export default function Mypage() {
                           duration: 2000,
                         });
                         onSaveClose();
+                        const form = new FormData();
+                        form.append("file", profile.Pic);
+                        form.append("phone", profile.Phone);
+                        form.append("bio", profile.Bio);
+                        axios
+                          .patch(`${apiURL}/users-info`, form, {
+                            headers: {
+                              "X-AUTH-TOKEN": `${userToken}`,
+                              "content-type": "multipart/form-data",
+                            },
+                          })
+                          .then((res) => {
+                            console.log(res.data.payload?.token);
+                            router.push("/mypage/account/accountinfo");
+                          })
+                          .catch((err) => console.log(err));
                       }}
                       colorScheme="blue"
                       background="blue"

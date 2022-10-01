@@ -3,12 +3,14 @@ import { devtools } from "zustand/middleware";
 
 export const useStore = create(
   devtools((set) => ({
+
+    userToken: "temp",
+
     template: "",
 
     letter: {
       title: "",
       body: [],
-      attachments: null,
     },
 
     additional: {
@@ -22,12 +24,15 @@ export const useStore = create(
 
     saveTemplate: (template: string) => set(() => ({ template: template })),
 
-    saveLetter: (title: string, body: string[], attachments: File) =>
+    saveUserToken: (userToken: string) => set(() => ({ userToken: userToken })),
+
+    resetUserToken: () => set(() => ({ userToken: "temp" })),
+
+    saveLetter: (title: string, body: string[]) =>
       set(() => ({
         letter: {
           title: title,
           body: body,
-          attachments: attachments,
         },
       })),
     resetLetter: () =>
@@ -35,7 +40,6 @@ export const useStore = create(
         letter: {
           title: "",
           body: [],
-          attatchments: null,
         },
       })),
 

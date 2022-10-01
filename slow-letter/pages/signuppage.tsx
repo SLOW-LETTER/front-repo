@@ -1,6 +1,5 @@
 import TypeIn from "../components/inputitem";
 import ProjectTitle from "../components/project-title";
-import Image from "next/image";
 import PwCheck from "../components/pswCheck";
 import Buttondefault from "../components/button";
 
@@ -12,6 +11,9 @@ import {
   SpecialLetterCheck,
   EmailCheck,
 } from "../function/validation";
+import axios from "axios";
+import { apiURL } from "../components/apiURL";
+import { useRouter } from "next/router";
 type InputEvent = ChangeEvent<HTMLInputElement>;
 
 export default function Signup() {
@@ -24,6 +26,8 @@ export default function Signup() {
   const [userName, setuserName] = useState("");
   const [emailCheck, setemailCheck] = useState(false);
   const [focus, setFocus] = useState("hidden");
+
+  const router = useRouter();
 
   const onPasswordChange = (evnt: InputEvent) => {
     const pswValue = evnt?.target.value.trim(); //get inserted value in pswvalue
@@ -182,6 +186,25 @@ export default function Signup() {
             text="Sign up"
             btnWidth={"20rem"}
             btnColor={"#2563eb"}
+            onClick={() => {
+              if (pwValid === false) {
+                alert("You have to pass the password validation");
+              } else {
+                const form = new FormData();
+                form.append("email", emailInput);
+                form.append("password", cnfrmInput);
+                form.append("name", userName);
+                form.append("phone", phoneNum);
+                axios
+                  .post(`${apiURL}/users/join`, form, {
+                    headers: {
+                      "content-type": "multipart/form-data",
+                    },
+                  })
+                  .then((res) => router.push("/"))
+                  .catch((err) => console.log(err));
+              }
+            }}
           />
         </div>
         <div className="flex flex-row items-start  px-7 py-5">

@@ -1,6 +1,11 @@
 import Link from "next/link";
+import Popover from "../../components/porfilepop";
 
 export default function NavItems() {
+  function pop() {
+    console.log("hi");
+    return <Popover visible="visible" />;
+  }
   return (
     <>
       <nav className="nav-items-container">
@@ -19,7 +24,7 @@ export default function NavItems() {
           <div className="ticket-icon"></div>
         </div>
         <div className="profile-container">
-          <div className="profile-icon"></div>
+          <div className="profile-icon" onClick={pop}></div>
         </div>
       </nav>
       <style jsx>
