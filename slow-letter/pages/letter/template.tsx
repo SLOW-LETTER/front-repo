@@ -1,5 +1,5 @@
 import CustomButton from "../../components/button/custom-button";
-import CustomCarousel from "../../components/custom-carousel";
+import CustomCarousel from "../../components/carousel/custom-carousel";
 import ProgressBar from "../../components/progressbar/progressbar";
 import ProgressBarItem from "../../components/progressbar/progressbar-item";
 import { useDisclosure } from "@chakra-ui/react";

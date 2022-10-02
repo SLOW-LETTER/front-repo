@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { CarouselItemProps, TemplateProps } from "./type/type";
-import { useStore } from "./zustand_hooks/store";
+import { CarouselItemProps, TemplateProps } from "../type/type";
+import { useStore } from "../zustand_hooks/store";
 
 function CarouselItem({ imgUrl }: CarouselItemProps) {
   return (

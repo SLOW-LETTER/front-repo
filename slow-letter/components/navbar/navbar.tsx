@@ -21,7 +21,7 @@ export default function NavBar() {
         {`
           .navbar-container {
             width: 100%;
-            height: 10%;
+            height: 8%;
             background: rgba(255, 255, 255, 1);
             opacity: 1;
             box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.25);
