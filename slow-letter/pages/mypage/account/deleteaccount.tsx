@@ -11,6 +11,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Image from "next/image";
+import { ChangeEvent, useState } from "react";
 import SettingItems from "../../../components/setting-Items";
 import SettingModal from "../../../components/setting-modal";
 
@@ -21,99 +22,104 @@ export default function DeleteAcc() {
     onClose: onCheckClose,
   } = useDisclosure();
   const toast = useToast();
+
   return (
     <>
-      <div className="Page flex">
-        <SettingModal />
-        <div className="Page-container flex flex-col items-center space-y-4">
-          <div className="Profile-container flex flex-row py-8">
-            <Image
-              className="Profile-pic round rounded-full "
-              src="/defaultProfile.svg"
-              width="100"
-              height="100"
-              border-radius="30%"
-            ></Image>
-            <div className="ProfileID flex flex-col py-5 px-7">
-              <span>Email</span>
-              <span>Example@example.com</span>
+      <div className="deletaAccount-page flex h-5/6">
+        <div className="modal-container bg-white w-full h-full shadow drop-shadow-lg rounded-lg">
+          <div className="Page-container flex flex-col items-center space-y-4">
+            <div className="Profile-container flex flex-row py-8">
+              <Image
+                className="Profile-pic round rounded-full "
+                src="/defaultProfile.svg"
+                width="100"
+                height="100"
+                border-radius="30%"
+              ></Image>
+              <div className="ProfileID flex flex-col py-5 px-7">
+                <span>Email</span>
+                <span>Example@example.com</span>
+              </div>
             </div>
-          </div>
-          <span>Are you sure you want to delete your account?</span>
-          <span>
-            Evething realted to your account will be removed permanently
-          </span>
-          <span>If you want to continue with deleting your account</span>
-          <span>please enter your password below</span>
-          <hr className="line py-2" />
+            <span>Are you sure you want to delete your account?</span>
+            <span>
+              Evething realted to your account will be removed permanently
+            </span>
+            <span>If you want to continue with deleting your account</span>
+            <span>please enter your password below</span>
+            <hr className="line py-2" />
 
-          <SettingItems
-            ID="Checkpsw"
-            Hint="*************"
-            Label="Password"
-            Types="Password"
-          />
-          <hr className="line py-2" />
-          <Button
-            onClick={onCheckOpen}
-            colorScheme="red"
-            background="red"
-            variant={"solid"}
-          >
-            Delete Account
-          </Button>
+            <SettingItems
+              ID="Checkpsw"
+              Hint="*************"
+              Label="Password"
+              Types="Password"
+              values={""}
+            />
+            <hr className="line py-2" />
+            <Button
+              onClick={onCheckOpen}
+              colorScheme="red"
+              background="red"
+              variant={"solid"}
+            >
+              Delete Account
+            </Button>
+
+            {/* Check the password different modal pops out */}
+            <Modal
+              closeOnOverlayClick={false}
+              blockScrollOnMount={false}
+              isOpen={isCheckOpen}
+              onClose={onCheckClose}
+              isCentered
+            >
+              <ModalOverlay />
+              <ModalContent maxH={800} maxW={600}>
+                <ModalHeader fontSize={18} textAlign={"center"}>
+                  Your account has been successfully deleted. Before you go,
+                  please tell us why you are deleting your account so we can
+                  continue improving our service
+                </ModalHeader>
+                <ModalBody>
+                  <textarea
+                    className="feedback p-3  h-52 bg-gray-200 border-4 border-blue-300 rounded-lg"
+                    maxLength={100}
+                    placeholder="Please provide us with the feedback (Your can write upto 200 letters)  "
+                  ></textarea>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    onClick={() => {
+                      toast({
+                        title: "Successfully deleted!",
+                        description: "Thank you for giving up feedback",
+                        status: "success",
+                        position: "bottom",
+                        isClosable: true,
+                        duration: 2000,
+                      });
+                      onCheckClose();
+                      location.href = "/";
+                    }}
+                    color={"white"}
+                    backgroundColor={"blue"}
+                  >
+                    Submit
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </div>
         </div>
-        {/* Check the password different modal pops out */}
-        <Modal
-          closeOnOverlayClick={false}
-          blockScrollOnMount={false}
-          isOpen={isCheckOpen}
-          onClose={onCheckClose}
-          isCentered
-        >
-          <ModalOverlay />
-          <ModalContent maxH={800} maxW={600}>
-            <ModalHeader fontSize={18} textAlign={"center"}>
-              Your account has been successfully deleted. Before you go, please
-              tell us why you are deleting your account so we can continue
-              improving our service
-            </ModalHeader>
-            <ModalBody>
-              <textarea
-                className="feedback p-3  h-52 bg-gray-200 border-4 border-blue-300 rounded-lg"
-                maxLength={100}
-                placeholder="Please provide us with the feedback (Your can write upto 200 letters)  "
-              ></textarea>
-            </ModalBody>
-            <ModalFooter>
-              <Button
-                onClick={() => {
-                  toast({
-                    title: "Successfully deleted!",
-                    description: "Thank you for giving up feedback",
-                    status: "success",
-                    position: "bottom",
-                    isClosable: true,
-                    duration: 2000,
-                  });
-                  onCheckClose();
-                  location.href = "/";
-                }}
-                color={"white"}
-                backgroundColor={"blue"}
-              >
-                Submit
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
       </div>
       <style jsx>
         {`
-          .Page-container {
-            position: absolute;
-            top: 6em;
-            right: 23em;
+          .modal-container {
+            position: relative;
+            margin-left: 45vh;
+            width: 120vh;
+            margin-top: 3vh;
           }
           .Profile-pic {
             border-radius: 50%;

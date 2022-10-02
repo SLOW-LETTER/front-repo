@@ -4,6 +4,7 @@ interface ButtonText {
   btnColor: String;
   radius?: String;
   btnHeight?: String;
+  fontSize?: String;
   onClick?: () => void;
 }
 
@@ -13,6 +14,7 @@ export default function Buttondefault({
   btnColor,
   btnHeight,
   onClick,
+  fontSize,
   radius,
 }: ButtonText) {
   return (
@@ -32,6 +34,7 @@ export default function Buttondefault({
             height: ${btnHeight};
             background-color: ${btnColor};
             border-radius: ${radius};
+            font-size: ${fontSize};
           }
         `}
       </style>

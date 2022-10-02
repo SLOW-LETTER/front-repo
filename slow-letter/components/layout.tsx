@@ -19,18 +19,7 @@ export default function Layout({ children }: Props) {
         {router.pathname === "/mypage/tickets" ? <Sidebar /> : null}
       </section>
 
-      <style jsx>
-        {`
-          .side-bar-cover {
-            left: 0;
-            top: 0;
-            width: 300px;
-            height: 100%;
-            background: #ffffff;
-            position: absolute;
-          }
-        `}
-      </style>
+      <style jsx>{``}</style>
     </>
   );
 }
