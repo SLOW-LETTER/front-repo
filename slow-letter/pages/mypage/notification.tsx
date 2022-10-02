@@ -1,8 +1,8 @@
 import SettingModal from "../../components/setting-modal";
 import Image from "next/image";
-import Checkbox from "../../components/checkbox";
+import Checkbox from "../../components/input/checkbox";
 import { useState } from "react";
-import Buttondefault from "../../components/button";
+import Buttondefault from "../../components/button/button";
 export default function Notification() {
   const [checkBox1, setcheckBox1] = useState(false);
   const [checkBox2, setcheckBox2] = useState(false);

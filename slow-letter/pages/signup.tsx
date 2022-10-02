@@ -1,15 +1,15 @@
-import TypeIn from "../components/inputitem";
-import ProjectTitle from "../components/title/project-title";
-import PwCheck from "../components/pswCheck";
-import Buttondefault from "../components/button";
+import TypeIn from "../components/input/inputitem";
+import ProjectTitle from "../components/main-title/project-title";
+import PwCheck from "../components/signup/pswCheck";
+import Buttondefault from "../components/button/button";
 
 import React, { useState, ChangeEvent } from "react";
 import {
-  LengthCheck,
-  CapCheck,
-  LowCheck,
-  SpecialLetterCheck,
-  EmailCheck,
+  lengthCheck,
+  capCheck,
+  lowCheck,
+  specialLetterCheck,
+  emailValid,
 } from "../function/validation";
 import axios from "axios";
 import { apiURL } from "../components/apiURL";
@@ -26,7 +26,7 @@ export default function Signup() {
   const [phoneNum, setphoneNum] = useState("");
   const [userName, setuserName] = useState("");
   const [emailCheck, setemailCheck] = useState(true);
-  const [focus, setFocus] = useState("none");
+  const [focus, setFocus] = useState("hidden");
 
   const router = useRouter();
 
@@ -34,33 +34,30 @@ export default function Signup() {
     const pswValue = evnt?.target.value.trim(); //get inserted value in pswvalue
     setpswInput(pswValue); //change pswInput by using usestate
     {
-      LengthCheck(pswValue) &&
-      CapCheck(pswValue) &&
-      LowCheck(pswValue) &&
-      SpecialLetterCheck(pswValue)
+      lengthCheck(pswValue) &&
+      capCheck(pswValue) &&
+      lowCheck(pswValue) &&
+      specialLetterCheck(pswValue)
         ? setpwValid(true)
         : setpwValid(false);
     }
-    console.log(pswValue);
   };
 
   const onConfirmPasswordChange = (evnt: InputEvent) => {
     const cnfrmValue = evnt?.target.value.trim();
     setcnfrmInput(cnfrmValue);
-    console.log(cnfrmValue);
     check(pswInput, cnfrmValue);
   };
 
   const onEmailChange = (evnt: InputEvent) => {
     const emailInput = evnt?.target.value.trim();
     setemailInput(emailInput);
-    EmailCheck(emailInput) ? setemailCheck(true) : setemailCheck(false);
+    emailValid(emailInput) ? setemailCheck(true) : setemailCheck(false);
   };
 
   const onPhoneChange = (evnt: InputEvent) => {
     const phoneNum = evnt?.target.value.trim();
     setphoneNum(phoneNum);
-    console.log(evnt);
   };
 
   const onUserNameChange = (evnt: InputEvent) => {
@@ -77,12 +74,12 @@ export default function Signup() {
       }
     }
   };
-  const onFocus = (evnt: React.FocusEvent<HTMLElement>) => {
-    setFocus("visible");
+  const onFocus = () => {
+    setFocus("inline");
   };
 
-  const onBlur = (evnt: InputEvent) => {
-    setFocus("none");
+  const onBlur = () => {
+    setFocus("hidden");
   };
 
   return (
@@ -92,7 +89,9 @@ export default function Signup() {
           <ProjectTitle />
         </div>
         <div className="page-subright flex flex-col w-full h-full items-center justify-center">
-          <div className="signup-container flex flex-col p-4 bg-white shadow-lg drop-shadow-2xl space-y-2 rounded-lg">
+          <div className="signup-container flex flex-col p-4 px-10 bg-white shadow-lg drop-shadow-2xl space-y-2 rounded-lg">
+            
+            
             <div className="signup-header flex flex-col space-y-1">
               <span className="font-bold text-sm text-black text-2xl">
                 Sign Up!
@@ -101,55 +100,116 @@ export default function Signup() {
                 Please enter your info
               </span>
             </div>
-            <div className="signup-list flex flex-col  space-y-4 py-1">
+            
+            
+            <div className="signup-list flex flex-col  space-y-5 py-1">
+              
+              
               <TypeIn
+                width="16rem"
+                height="2rem"
                 id="Email"
                 hint="Example@Example.com"
                 label="Email"
+                placeholderFontSize="14px"
+                labelFontSize=".9rem"
                 iconImg="/emailIcon.svg"
                 values={emailInput}
                 onChange={onEmailChange}
               />
+
+
               {emailCheck ? (
-                ""
+                <></>
               ) : (
                 <div className="flex px-4 text-xs text-red-600">
                   * Your email is not email format
                 </div>
               )}
+
+
               <TypeIn
+                width="16rem"
+                height="2rem"
                 id="Username"
                 hint="UserName"
                 label="UserName"
+                placeholderFontSize="14px"
+                labelFontSize=".9rem"
                 iconImg="/UsernameIcon.svg"
                 values={userName}
                 onChange={onUserNameChange}
               />
+
+              <div className="signinPsw-container">
               <TypeIn
+                width="16rem"
+                height="2rem"
                 id="Password"
                 hint="Password"
                 label="Password"
+                placeholderFontSize="14px"
+                labelFontSize=".9rem"
                 iconImg="/PasswordIcon.svg"
                 values={pswInput}
                 onChange={onPasswordChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
               />
-              {pwValid ? (
+             
+             <div className={`pswValid-container w-72 p-4 flex flex-col text-align ${focus} justify-evenly gap-y-2 bg-slate-300  div-3 text-black rounded-lg drop-shadow-2xl border-2  border-slate-500`}>
+              <span className="text-white"> Requirements!</span>
+              {capCheck(pswInput) ? (
                 <PwCheck
-                  color="#3B9904"
-                  icon="/checksign.svg"
-                  visibility={focus}
-                />
+                  validationMsg="Contains an uppercase letter"
+                  valid = {true} 
+                  />
               ) : (
                 <PwCheck
-                  color="rgb(238,96,91,0.8)"
-                  icon="/pswWarn.svg"
-                  visibility={focus}
-                />
+                  validationMsg="Contains an uppercase letter"
+                  valid = {false}
+                  />
               )}
+                {lowCheck(pswInput) ? (
+                <PwCheck
+                  validationMsg="Contains an lowcase letter"
+                  valid = {true}
+                  />
+              ) : (
+                <PwCheck
+                  validationMsg="Contains an lowcase letter"
+                  valid = {false}
+                            />
+              )}  {lengthCheck(pswInput) ? (
+                <PwCheck
+                  validationMsg="Minimum of 6 characters"
+                  valid = {true}
+                   />
+              ) : (
+                <PwCheck
+                  validationMsg="Minimum of 6 characters"
+                  valid = {false}
+                 />
+              )}
+                {specialLetterCheck(pswInput) ? (
+                <PwCheck
+                  validationMsg="Contains a special character"
+                  valid = {true}
+/>
+              ) : (
+                <PwCheck
+                  validationMsg="Contains a special character"
+                  valid = {false}
+                              />
+              )}
+            </div>
+            </div>
 
               <TypeIn
+                width="16rem"
+                height="2rem"
+                placeholderFontSize="14px"
+                labelFontSize=".9rem"
                 id="pswCheck"
                 hint="Confirm Password"
                 label="Confirm Password"
@@ -157,6 +217,7 @@ export default function Signup() {
                 values={cnfrmInput}
                 onChange={onConfirmPasswordChange}
               />
+             
               <div
                 className={
                   cnfrmError ? "hidden" : "flex px-4 text-xs text-red-600"
@@ -164,46 +225,56 @@ export default function Signup() {
               >
                 * Please match your password
               </div>
+
+
               <TypeIn
+                width="16rem"
+                height="2rem"
                 id="Phonenum"
                 hint="xxx-xxxx-xxxx"
                 label="Phone Number"
+                placeholderFontSize="14px"
+                labelFontSize=".9rem"
                 iconImg="/PhoneIcon.svg"
                 values={phoneNum}
                 onChange={onPhoneChange}
               />
+
+              <Buttondefault
+                text="Sign up"
+                btnWidth={"16rem"}
+                btnColor={"#2563eb"}
+                onClick={() => {
+                  if (pwValid === false) {
+                    alert("You have to pass the password validation");
+                  } else {
+                    const form = new FormData();
+                    form.append("email", emailInput);
+                    form.append("password", cnfrmInput);
+                    form.append("name", userName);
+                    form.append("phone", phoneNum);
+                    axios
+                      .post(`${apiURL}/users/join`, form, {
+                        headers: {
+                          "content-type": "multipart/form-data",
+                        },
+                      })
+                      .then((res) => {
+                        alert("Sign in sucessful");
+                        router.push("/");
+                      })
+                      .catch((err) => console.log(err));
+                  }
+                }}
+              />
             </div>
-            <Buttondefault
-              text="Sign up"
-              btnWidth={"16rem"}
-              btnColor={"#2563eb"}
-              onClick={() => {
-                if (pwValid === false) {
-                  alert("You have to pass the password validation");
-                } else {
-                  const form = new FormData();
-                  form.append("email", emailInput);
-                  form.append("password", cnfrmInput);
-                  form.append("name", userName);
-                  form.append("phone", phoneNum);
-                  axios
-                    .post(`${apiURL}/users/join`, form, {
-                      headers: {
-                        "content-type": "multipart/form-data",
-                      },
-                    })
-                    .then((res) => router.push("/"))
-                    .catch((err) => console.log(err));
-                }
-              }}
-            />
           </div>
 
           <div className="flex flex-row items-start space-x-4 mt-4">
             <span className="inline-block align-baseline font-bold text-m text-gray-600">
               Have an account already?
             </span>
-            <Link href="/loginpage">
+            <Link href="/signin">
               <a className="inline-block align-baseline font-bold text-m text-blue-600 hover:text-blue-darker">
                 Sign in here!
               </a>
@@ -212,10 +283,13 @@ export default function Signup() {
         </div>
       </div>
       <style jsx>{`
-      .page-subleft{
-    
-      }
-        `}</style>
+       .pswValid-container{
+        position:absolute; 
+     
+        right:20px;
+        z-index: 10;
+       }
+      `}</style>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import ProjectTitle from "../components/title/project-title";
+import ProjectTitle from "../components/main-title/project-title";
 import CustomButton from "../components/button/custom-button";
 import Earth from "../components/earth/earth";
 import Link from "next/link";

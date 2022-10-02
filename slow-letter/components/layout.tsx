@@ -8,7 +8,7 @@ export default function Layout({ children }: Props) {
   return (
     <>
       <NavBar />
-      <section className="w-full h-full" style={{ height: "90%" }}>
+      <section className="w-full h-full" style={{ height: "92%" }}>
         {children}
         {router.pathname === "/mypage/account/changePW" ? <Sidebar /> : null}
         {router.pathname === "/mypage/account/accountinfo" ? <Sidebar /> : null}

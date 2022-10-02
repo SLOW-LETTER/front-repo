@@ -8,18 +8,21 @@ import {
   KeyboardEventHandler,
   useState,
 } from "react";
-import PwCheck from "./pswCheck";
+import PwCheck from "../signup/pswCheck";
 
 interface Props {
   id: string;
   hint: string;
   label: string;
+  width: string;
   iconImg: string;
+  height: string;
   values: string;
+  placeholderFontSize: string;
+  labelFontSize: string;
   onChange?: ChangeEventHandler;
   onFocus?: FocusEventHandler;
   onBlur?: FocusEventHandler<HTMLInputElement>;
-  //  onKeyup?: KeyboardEventHandler;
 }
 
 export default function TypeIn({
@@ -27,12 +30,15 @@ export default function TypeIn({
   hint,
   label,
   iconImg,
+  width,
+  height,
   values = "",
   onChange,
   onFocus,
+  placeholderFontSize,
+  labelFontSize,
   onBlur,
-}: 
-Props) {
+}: Props) {
   return (
     <>
       <div className="input-container flex flex-col space-y-1">
@@ -102,12 +108,13 @@ Props) {
             height: fit-content;
             color: black;
             font-size: .9rem;
+            font-size: ${labelFontSize};
             font-weight: semibold;
             padding-top: 1px;
           }
           .input-value {
-            width: 16rem;
-            height: 2rem;
+            width: ${width};
+            height:${height};
             background: white;
             border-color: light-grey;
             border-width: 2px;
@@ -120,7 +127,7 @@ Props) {
           }
           .input-value::placeholder {
             color: grey;
-            font-size: 14px;
+            font-size: ${placeholderFontSize};
           }
           
         `}
