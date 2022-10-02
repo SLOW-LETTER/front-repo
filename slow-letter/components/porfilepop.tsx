@@ -9,7 +9,7 @@ export default function Popover() {
         <div className="arrow-up items-center"></div>
         <div className="pop-over flex flex-col bg-white rounded-3xl p-8 border-4 border-blue-600 space-y-5">
           <div>
-            <Image src="" width="" height="50px" />
+            {/* <Image src="" width="50px" height="50px" /> */}
           </div>
           <span className="text-center font-semibold ">email</span>
           <Buttondefault

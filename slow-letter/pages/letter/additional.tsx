@@ -21,9 +21,9 @@ import {
   AdditionalFormLabelProps,
   AdditionalFormSelectProps,
 } from "../../components/type/type";
-import { apiURL } from "../../components/apiURL";
+import { useStore } from "../../components/zustand_stores/store";
 import axios from "axios";
-import { useStore } from "../../components/zustand_hooks/store";
+import { apiURL } from "../../components/apiURL";
 
 const FONT_SIZE = "0.8rem";
 const INPUT_WIDTH = "15rem";
@@ -65,6 +65,7 @@ function AdditionalFormSelect({
 export default function Additional() {
   const router = useRouter();
 
+  const [sender, setSender] = useState("");
   const [receiver, setReceiver] = useState("");
   const [departCountry, setDepartCountry] = useState("");
   const [departCity, setDepartCity] = useState("");
@@ -74,15 +75,14 @@ export default function Additional() {
 
   const saveAdditional = useStore((state: any) => state.saveAdditional);
 
-  // useEffect(() => {
-  //   console.log(savedUserToken);
-  //   axios
-  //     .get(`${apiURL}/users-info`, {
-  //       headers: { "X-AUTH-TOKEN": `${savedUserToken}` },
-  //     })
-  //     .then((res) => console.log(res.data.payload))
-  //     .catch((err) => console.log(err));
-  // }, [savedUserToken]);
+  const userToken = useStore((state: any) => state.userToken);
+
+  useEffect(() => {
+    axios
+      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+      .then((res) => setSender(res.data.payload.username))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -127,6 +127,7 @@ export default function Additional() {
                       w={INPUT_WIDTH}
                       h={INPUT_HEIGHT}
                       placeholder="Email"
+                      value={sender}
                       fontSize={FONT_SIZE}
                       isReadOnly
                     />
@@ -135,7 +136,32 @@ export default function Additional() {
               </GridItem>
               <GridItem rowSpan={1} colSpan={1}>
                 <FormControl isRequired>
-                  <AdditionalFormLabel name="Receiver" />
+                  <AdditionalFormLabel name="Receiver"/>
+                  <div className="email-check-button-container">
+                    <button
+                      type="button"
+                      onClick={() =>{
+                        const form = new FormData();
+                        form.append("email", receiver)
+                        axios
+                          .post(`${apiURL}/users/email/validation`, form)
+                          .then((res) => {
+                            if (res.data.payload.validation) {
+                              setReceiver("");
+                              alert("No user existed")
+                            } else {
+                              alert("Find User")
+                            }
+                          })
+                          .catch((err) => {
+                            setReceiver("");
+                            console.log(err);
+                          })}
+                      }
+                    >
+                      Check
+                    </button>
+                  </div>
                   <InputGroup>
                     <InputLeftElement
                       pointerEvents="none"
@@ -220,6 +246,7 @@ export default function Additional() {
               onClick={(event) => {
                 event.preventDefault();
                 saveAdditional(
+                  sender,
                   receiver,
                   departCountry,
                   departCity,
@@ -272,6 +299,18 @@ export default function Additional() {
             font-weight: Medium;
             font-size: 0.7rem;
             text-align: left;
+          }
+          .email-check-button-container {
+            width: fit-content;
+            height: fit-content;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 12.8px;
+            background: #2563eb;
+            color: white;
+            padding: 0.2rem;
+            border-radius: 10px;
           }
           .button-container {
             width: 100%;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { CarouselItemProps, TemplateProps } from "../type/type";
-import { useStore } from "../zustand_hooks/store";
+import { useStore } from "../zustand_stores/store";
 
 function CarouselItem({ imgUrl }: CarouselItemProps) {
   return (
@@ -10,7 +10,10 @@ function CarouselItem({ imgUrl }: CarouselItemProps) {
         className="w-full h-full"
         style={{
           borderRadius: "40px",
-          backgroundImage: `url(${imgUrl.replace("https://slowletter.s3.ap-northeast-2.amazonaws.com", "")})`,
+          backgroundImage: `url(${imgUrl.replace(
+            "https://slowletter.s3.ap-northeast-2.amazonaws.com",
+            ""
+          )})`,
           backgroundSize: "cover",
         }}
       ></motion.div>
@@ -28,7 +31,6 @@ export default function CarouselContainer({ templatesArr }: TemplateProps) {
   useEffect(() => {
     saveTemplate(`/templates/carousel-item-${slideIdx}.svg`, slideIdx);
   }, [slideIdx]);
-
 
   const onNextTemplate = () => {
     setSlideIdx((prev) => {
@@ -253,6 +255,7 @@ export default function CarouselContainer({ templatesArr }: TemplateProps) {
             height: 1rem;
             background-image: url("/carousel-arrow-left.svg");
             background-size: cover;
+            cursor: pointer;
           }
           .carousel-button-right {
             right: 0;
@@ -260,6 +263,7 @@ export default function CarouselContainer({ templatesArr }: TemplateProps) {
             height: 1rem;
             background-image: url("/carousel-arrow-right.svg");
             background-size: cover;
+            cursor: pointer;
           }
         `}
       </style>

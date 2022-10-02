@@ -7,10 +7,10 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useStore } from "../zustand_hooks/store";
+import { useStore } from "../zustand_stores/store";
 import { apiURL } from "../apiURL";
 import axios from "axios";
-import { useTokenStore } from "../zustand_hooks/tokenStore";
+import { useTokenStore } from "../zustand_stores/tokenStore";
 
 interface Props {
   isOpen: boolean;

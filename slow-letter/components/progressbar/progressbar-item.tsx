@@ -52,9 +52,9 @@ export default function ProgressBarItem({
       <div
         className={isActive ? "step-text-crown-active" : "step-text-crown"}
       ></div>
-      <div
-        className={isActive ? "step-text-box-active" : "step-text-box"}
-      ></div>
+      <div className={isActive ? "step-text-box-active" : "step-text-box"}>
+        <div className={isActive ? "text-active" : "text"}>{text}</div>
+      </div>
       <style jsx>{`
         .step {
           width: 10rem;

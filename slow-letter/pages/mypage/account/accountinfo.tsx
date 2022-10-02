@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { apiURL } from "../../../components/apiURL";
 import { useRouter } from "next/router";
-import { useStore } from "../../../components/zustand_hooks/store";
+import { useStore } from "../../../components/zustand_stores/store";
 
 type InputEvent = ChangeEvent<HTMLInputElement>;
 interface MySettings {

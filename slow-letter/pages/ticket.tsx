@@ -1,6 +1,6 @@
 import CustomButton from "../components/button/custom-button";
 import { TicketBodyItemProps } from "../components/type/type";
-import { useStore } from "../components/zustand_hooks/store";
+import { useStore } from "../components/zustand_stores/store";
 
 function TicketBodyItem({
   label,

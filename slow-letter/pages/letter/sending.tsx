@@ -3,7 +3,7 @@ import ProgressBarItem from "../../components/progressbar/progressbar-item";
 import CustomButton from "../../components/button/custom-button";
 import { useDisclosure } from "@chakra-ui/react";
 import ConfirmModal from "../../components/modal/confirm-modal";
-import { useStore } from "../../components/zustand_hooks/store";
+import { useStore } from "../../components/zustand_stores/store";
 import { useRouter } from "next/router";
 import { AdditionalItemProps } from "../../components/type/type";
 
