@@ -8,16 +8,17 @@ import cookies from "next-cookies";
 import { setToken } from "../function/token/tokenHandler";
 import { useStore } from "../components/zustand_stores/store";
 import { useEffect } from "react";
+import useTokenCheckRedirect from "../function/redirect/tokenCheckRedirect";
 
 export default function Myapp({ Component, pageProps }: AppProps) {
   const saveUserToken = useStore((state: any) => state.saveUserToken);
   useEffect(() => {
-    if (pageProps.accessToken !== undefined) {
-      saveUserToken(pageProps.accessToken);
-    } else {
-      saveUserToken("");
-    }
+    pageProps.accessToken !== undefined
+      ? saveUserToken(pageProps.accessToken)
+      : saveUserToken("");
   }, [pageProps]);
+
+  useTokenCheckRedirect();
 
   const theme = extendTheme({
     styles: {

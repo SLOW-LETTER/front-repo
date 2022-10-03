@@ -1,8 +1,8 @@
 module.exports = {
   images: {
-    domains: ['slowletter.s3.ap-northeast-2.amazonaws.com'],
+    domains: ["slowletter.s3.ap-northeast-2.amazonaws.com"],
   },
-}
+};
 
 const nextConfig = {
   reactStrictMode: true,
@@ -21,12 +21,12 @@ module.exports = {
         // These rewrites are checked after pages/public files
         // are checked but before dynamic routes
         {
-          source: '/templates/:path*',
-          destination: 'https://slowletter.s3.ap-northeast-2.amazonaws.com/templates/:path*',
+          source: "/templates/:path*",
+          destination:
+            "https://slowletter.s3.ap-northeast-2.amazonaws.com/templates/:path*",
         },
-      ]
-    }
-  }
-}
-
+      ],
+    };
+  },
+};
 
