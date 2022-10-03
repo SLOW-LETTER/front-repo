@@ -3,32 +3,26 @@ import { devtools } from "zustand/middleware";
 
 export const useStore = create(
   devtools((set) => ({
+    userToken: "",
+    saveUserToken: (userToken: string) => set(() => ({ userToken: userToken })),
+    resetUserToken: () => set(() => ({ userToken: "" })),
+
     template: {
       templateUrl: "",
       templateId: 0,
     },
-
-    letter: {
-      title: "",
-      body: [],
-      file: {},
-    },
-
-    additional: {
-      receiver: "",
-      departCountry: "",
-      departCity: "",
-      arriveCountry: "",
-      arriveCity: "",
-      transportation: "",
-    },
-
     saveTemplate: (templateUrl: string, templateId: number) =>
       set(() => ({
         template: { templateUrl: templateUrl, templateId: templateId },
       })),
     resetTemplate: () =>
       set(() => ({ template: { templateUrl: "", templateId: 0 } })),
+
+    letter: {
+      title: "",
+      body: [],
+      file: {},
+    },
 
     saveLetter: (title: string, body: string[], file: File) =>
       set(() => ({
@@ -47,7 +41,18 @@ export const useStore = create(
         },
       })),
 
+    additional: {
+      sender: "",
+      receiver: "",
+      departCountry: "",
+      departCity: "",
+      arriveCountry: "",
+      arriveCity: "",
+      transportation: "",
+    },
+
     saveAdditional: (
+      sender: string,
       receiver: string,
       departCountry: string,
       departCity: string,
@@ -57,6 +62,7 @@ export const useStore = create(
     ) =>
       set(() => ({
         additional: {
+          sender: sender,
           receiver: receiver,
           departCountry: departCountry,
           departCity: departCity,

@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useStore } from "../zustand_hooks/store";
+import { useStore } from "../zustand_stores/store";
 
 interface Props {
   isOpen: boolean;
@@ -139,6 +139,10 @@ export default function MailModal({ isOpen, onClose }: Props) {
                 form="mailForm"
                 onClick={(event) => {
                   event.preventDefault();
+                  if(mailTitle === "") {
+                    alert("Type a mail subject");
+                    return;
+                  }
                   saveLetter(
                     mailTitle,
                     document.getElementById("mail-body")?.innerText.split("\n"),

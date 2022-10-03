@@ -1,11 +1,24 @@
-import { AppProps } from "next/app";
+import { AppContext, AppProps } from "next/app";
 import Head from "next/head";
 import Layout from "../components/layout";
 import "../styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
+import cookies from "next-cookies";
+import { setToken } from "../function/token/tokenHandler";
+import { useStore } from "../components/zustand_stores/store";
+import { useEffect } from "react";
 
 export default function Myapp({ Component, pageProps }: AppProps) {
+  const saveUserToken = useStore((state: any) => state.saveUserToken);
+  useEffect(() => {
+    if (pageProps.accessToken !== undefined) {
+      saveUserToken(pageProps.accessToken);
+    } else {
+      saveUserToken("");
+    }
+  }, [pageProps]);
+
   const theme = extendTheme({
     styles: {
       global: {
@@ -40,3 +53,24 @@ export default function Myapp({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+Myapp.getInitialProps = async (appContext: AppContext) => {
+  let pageProps = {};
+
+  const { ctx } = appContext;
+  const allCookies = cookies(ctx);
+  if (
+    allCookies["accessToken"] !== undefined &&
+    allCookies["refreshToken"] !== undefined
+  ) {
+    setToken(allCookies["accessToken"], allCookies["refreshToken"]);
+  }
+
+  pageProps = {
+    ...pageProps,
+    accessToken: allCookies["accessToken"],
+    refreshToken: allCookies["refreshToken"],
+  };
+
+  return { pageProps };
+};

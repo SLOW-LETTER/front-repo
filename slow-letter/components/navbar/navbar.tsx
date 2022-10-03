@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useCheckUserToken } from "../hooks/use-check-user-token";
+import { useStore } from "../zustand_stores/store";
 import NavItems from "./navbar-items";
 
 export default function NavBar() {
-  const {checkUserToken} = useCheckUserToken();
+  const userToken = useStore((state: any) => state.userToken);
   return (
     <>
       <header className="navbar-container">
@@ -15,7 +15,7 @@ export default function NavBar() {
             </a>
           </Link>
         </div>
-        {checkUserToken === "" ? <></> : <NavItems />}
+        { userToken === "" ? <></> : <NavItems />}
       </header>
       <style jsx>
         {`

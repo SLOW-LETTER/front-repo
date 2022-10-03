@@ -4,16 +4,14 @@ import { ChangeEvent, useState } from "react";
 import axios from "axios";
 import { apiURL } from "../components/apiURL";
 import { useRouter } from "next/router";
-import { useTokenStore } from "../components/zustand_hooks/tokenStore";
 import Link from "next/link";
+import { setToken } from "../function/token/tokenHandler";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const router = useRouter();
-
-  const saveUserToken = useTokenStore((state: any) => state.saveUserToken);
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     e.target.id === "Email"
@@ -80,7 +78,10 @@ export default function Login() {
                       },
                     })
                     .then((res) => {
-                      saveUserToken(res.data.payload?.token);
+                      setToken(
+                        res.data.payload.token,
+                        res.data.payload.refreshToken
+                      );
                       router.push("/");
                     })
                     .catch((err) => console.log(err));

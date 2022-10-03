@@ -253,7 +253,7 @@ export default function Signup() {
                         },
                       })
                       .then((res) => {
-                        alert("Sign in sucessful");
+                        alert("Sign up sucessful");
                         router.push("/");
                       })
                       .catch((err) => console.log(err));
