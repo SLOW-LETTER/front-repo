@@ -4,22 +4,15 @@ interface label {
 export default function Checkbox({ Label }: label) {
   return (
     <>
-      <div className="checkbox-container w-34 flex flex-row justify-items-start space-x-24">
-        <label className="label font-semibold p-3">{Label}</label>
+      <div className="checkbox-container flex flex-row w-96 justify-between">
+        <div className="label font-semibold p-3 w-56 text-start">{Label}</div>
         <input
           type={"checkbox"}
-          className="checkbox flex border-blue-300 w-32 h-8 mr-12 mt-2  rounded-lg cursor-pointer hover:bg-blue-100  border-3 border-blue-600 "
+          className="checkbox flex border-blue-300 w-32 h-8 mr-2 mt-2  rounded-lg cursor-pointer hover:bg-blue-100  border-3 border-blue-600 "
         />
       </div>
       <style jsx>{`
         .checkbox {
-          position: absolute;
-          right: 5px;
-        }
-        .label {
-          position: relative;
-          left: -100px;
-          top: 3px;
         }
       `}</style>
     </>

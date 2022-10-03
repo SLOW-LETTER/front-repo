@@ -90,8 +90,6 @@ export default function Signup() {
         </div>
         <div className="page-subright flex flex-col w-full h-full items-center justify-center">
           <div className="signup-container flex flex-col p-4 px-10 bg-white shadow-lg drop-shadow-2xl space-y-2 rounded-lg">
-            
-            
             <div className="signup-header flex flex-col space-y-1">
               <span className="font-bold text-sm text-black text-2xl">
                 Sign Up!
@@ -100,11 +98,8 @@ export default function Signup() {
                 Please enter your info
               </span>
             </div>
-            
-            
-            <div className="signup-list flex flex-col  space-y-5 py-1">
-              
-              
+
+            <div className="signup-list flex flex-col  space-y-3 py-1">
               <TypeIn
                 width="16rem"
                 height="2rem"
@@ -117,8 +112,6 @@ export default function Signup() {
                 values={emailInput}
                 onChange={onEmailChange}
               />
-
-
               {emailCheck ? (
                 <></>
               ) : (
@@ -126,8 +119,6 @@ export default function Signup() {
                   * Your email is not email format
                 </div>
               )}
-
-
               <TypeIn
                 width="16rem"
                 height="2rem"
@@ -140,70 +131,72 @@ export default function Signup() {
                 values={userName}
                 onChange={onUserNameChange}
               />
-
               <div className="signinPsw-container">
-              <TypeIn
-                width="16rem"
-                height="2rem"
-                id="Password"
-                hint="Password"
-                label="Password"
-                placeholderFontSize="14px"
-                labelFontSize=".9rem"
-                iconImg="/PasswordIcon.svg"
-                values={pswInput}
-                onChange={onPasswordChange}
-                onFocus={onFocus}
-                onBlur={onBlur}
-              />
-             
-             <div className={`pswValid-container w-72 p-4 flex flex-col text-align ${focus} justify-evenly gap-y-2 bg-slate-300  div-3 text-black rounded-lg drop-shadow-2xl border-2  border-slate-500`}>
-              <span className="text-white"> Requirements!</span>
-              {capCheck(pswInput) ? (
-                <PwCheck
-                  validationMsg="Contains an uppercase letter"
-                  valid = {true} 
-                  />
-              ) : (
-                <PwCheck
-                  validationMsg="Contains an uppercase letter"
-                  valid = {false}
-                  />
-              )}
-                {lowCheck(pswInput) ? (
-                <PwCheck
-                  validationMsg="Contains an lowcase letter"
-                  valid = {true}
-                  />
-              ) : (
-                <PwCheck
-                  validationMsg="Contains an lowcase letter"
-                  valid = {false}
-                            />
-              )}  {lengthCheck(pswInput) ? (
-                <PwCheck
-                  validationMsg="Minimum of 6 characters"
-                  valid = {true}
-                   />
-              ) : (
-                <PwCheck
-                  validationMsg="Minimum of 6 characters"
-                  valid = {false}
-                 />
-              )}
-                {specialLetterCheck(pswInput) ? (
-                <PwCheck
-                  validationMsg="Contains a special character"
-                  valid = {true}
-/>
-              ) : (
-                <PwCheck
-                  validationMsg="Contains a special character"
-                  valid = {false}
-                              />
-              )}
-            </div>
-            </div>
+                <TypeIn
+                  width="16rem"
+                  height="2rem"
+                  id="Password"
+                  hint="Password"
+                  label="Password"
+                  placeholderFontSize="14px"
+                  labelFontSize=".9rem"
+                  iconImg="/PasswordIcon.svg"
+                  values={pswInput}
+                  onChange={onPasswordChange}
+                  onFocus={onFocus}
+                  onBlur={onBlur}
+                />
+
+                <div
+                  className={`pswValid-container w-72 p-4 flex flex-col text-align ${focus} justify-evenly gap-y-2 bg-slate-300  div-3 text-black rounded-lg drop-shadow-2xl border-2  border-slate-500`}
+                >
+                  <span className="text-white"> Requirements!</span>
+                  {capCheck(pswInput) ? (
+                    <PwCheck
+                      validationMsg="Contains an uppercase letter"
+                      valid={true}
+                    />
+                  ) : (
+                    <PwCheck
+                      validationMsg="Contains an uppercase letter"
+                      valid={false}
+                    />
+                  )}
+                  {lowCheck(pswInput) ? (
+                    <PwCheck
+                      validationMsg="Contains an lowcase letter"
+                      valid={true}
+                    />
+                  ) : (
+                    <PwCheck
+                      validationMsg="Contains an lowcase letter"
+                      valid={false}
+                    />
+                  )}{" "}
+                  {lengthCheck(pswInput) ? (
+                    <PwCheck
+                      validationMsg="Minimum of 6 characters"
+                      valid={true}
+                    />
+                  ) : (
+                    <PwCheck
+                      validationMsg="Minimum of 6 characters"
+                      valid={false}
+                    />
+                  )}
+                  {specialLetterCheck(pswInput) ? (
+                    <PwCheck
+                      validationMsg="Contains a special character"
+                      valid={true}
+                    />
+                  ) : (
+                    <PwCheck
+                      validationMsg="Contains a special character"
+                      valid={false}
+                    />
+                  )}
+                </div>
+              </div>
 
               <TypeIn
                 width="16rem"
@@ -217,15 +210,13 @@ export default function Signup() {
                 values={cnfrmInput}
                 onChange={onConfirmPasswordChange}
               />
-             
-              <div
+              <span
                 className={
                   cnfrmError ? "hidden" : "flex px-4 text-xs text-red-600"
                 }
               >
                 * Please match your password
-              </div>
-
+              </span>
 
               <TypeIn
                 width="16rem"
@@ -239,14 +230,16 @@ export default function Signup() {
                 values={phoneNum}
                 onChange={onPhoneChange}
               />
-
               <Buttondefault
                 text="Sign up"
                 btnWidth={"16rem"}
                 btnColor={"#2563eb"}
+                fontSize=""
                 onClick={() => {
                   if (pwValid === false) {
-                    alert("You have to pass the password validation");
+                    alert(
+                      "You have to fill in all the space with valid information"
+                    );
                   } else {
                     const form = new FormData();
                     form.append("email", emailInput);
@@ -283,12 +276,11 @@ export default function Signup() {
         </div>
       </div>
       <style jsx>{`
-       .pswValid-container{
-        position:absolute; 
-     
-        right:20px;
-        z-index: 10;
-       }
+        .pswValid-container {
+          position: absolute;
+          right: 20px;
+          z-index: 10;
+        }
       `}</style>
     </>
   );

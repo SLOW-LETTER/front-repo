@@ -1,16 +1,12 @@
 import Buttondefault from "./button/button";
 import Image from "next/image";
 
-
 export default function Popover() {
   return (
     <>
       <div className="page  hidden flex flex-col items-center">
         <div className="arrow-up items-center"></div>
         <div className="pop-over flex flex-col bg-white rounded-3xl p-8 border-4 border-blue-600 space-y-5">
-          <div>
-            {/* <Image src="" width="50px" height="50px" /> */}
-          </div>
           <span className="text-center font-semibold ">email</span>
           <Buttondefault
             text="My Setting"

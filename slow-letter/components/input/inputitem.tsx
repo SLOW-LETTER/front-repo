@@ -1,4 +1,6 @@
+import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import {
   ChangeEvent,
   ChangeEventHandler,
@@ -8,7 +10,10 @@ import {
   KeyboardEventHandler,
   useState,
 } from "react";
+import { apiURL } from "../apiURL";
+import Buttondefault from "../button/button";
 import PwCheck from "../signup/pswCheck";
+import { useTokenStore } from "../zustand_hooks/tokenStore";
 
 interface Props {
   id: string;
@@ -32,19 +37,54 @@ export default function TypeIn({
   iconImg,
   width,
   height,
-  values = "",
+  values,
   onChange,
   onFocus,
   placeholderFontSize,
   labelFontSize,
   onBlur,
 }: Props) {
+  const router = useRouter();
+  const saveUserToken = useTokenStore((state: any) => state.saveUserToken);
+  const [emailValidCheck, setemailValidCheck] = useState(false);
+
   return (
     <>
       <div className="input-container flex flex-col space-y-1">
         <div className="label-container flex flex-row space-x-1 pl-2">
           <Image src={iconImg} className="Icon" width={20} height={20} />
           <label>{label}</label>
+          {label === "Email" ? (
+            <Buttondefault
+              text={"Check!"}
+              btnWidth={"60px"}
+              btnColor={""}
+              fontSize={"15px"}
+              btnHeight={"27px"}
+              onClick={() => {
+                const form = new FormData();
+                form.append("email", values);
+                axios
+                  .post(`${apiURL}/users/email/validation`, form, {
+                    headers: {
+                      "content-type": "multipart/form-data",
+                    },
+                  })
+                  .then((res) => {
+                    saveUserToken(res.data.payload?.token);
+                    setemailValidCheck(res.data.payload?.validation);
+                    router.push("");
+                    setemailValidCheck(res.data.payload?.validation);
+                  })
+                  .catch((err) => console.log(err));
+                {
+                  emailValidCheck
+                    ? alert("This is valid Email Address")
+                    : alert("This is invalid Email Address");
+                }
+              }}
+            />
+          ) : null}
         </div>
         {label === "Password" ? (
           <input
@@ -95,7 +135,6 @@ export default function TypeIn({
           .input-container {
             width: fit-content;
             height: fit-content;
-
           }
           .label-container {
             width: fit-content;
@@ -107,14 +146,14 @@ export default function TypeIn({
             width: fit-content;
             height: fit-content;
             color: black;
-            font-size: .9rem;
+            font-size: 0.9rem;
             font-size: ${labelFontSize};
             font-weight: semibold;
             padding-top: 1px;
           }
           .input-value {
             width: ${width};
-            height:${height};
+            height: ${height};
             background: white;
             border-color: light-grey;
             border-width: 2px;
@@ -129,7 +168,6 @@ export default function TypeIn({
             color: grey;
             font-size: ${placeholderFontSize};
           }
-          
         `}
       </style>
     </>
