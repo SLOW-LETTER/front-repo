@@ -13,7 +13,6 @@ import {
 import { apiURL } from "../apiURL";
 import Buttondefault from "../button/button";
 import PwCheck from "../signup/pswCheck";
-import { useTokenStore } from "../zustand_hooks/tokenStore";
 
 //test
 interface Props {
@@ -46,7 +45,6 @@ export default function TypeIn({
   onBlur,
 }: Props) {
   const router = useRouter();
-  const saveUserToken = useTokenStore((state: any) => state.saveUserToken);
   const [emailValidCheck, setemailValidCheck] = useState(false);
 
   return (
@@ -72,7 +70,6 @@ export default function TypeIn({
                     },
                   })
                   .then((res) => {
-                    saveUserToken(res.data.payload?.token);
                     setemailValidCheck(res.data.payload?.validation);
                     router.push("");
                     setemailValidCheck(res.data.payload?.validation);

@@ -75,11 +75,9 @@ export default function Additional() {
 
   const saveAdditional = useStore((state: any) => state.saveAdditional);
 
-  const userToken = useStore((state: any) => state.userToken);
-
   useEffect(() => {
     axios
-      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+      .get(`${apiURL}/users-info`)
       .then((res) => setSender(res.data.payload.username))
       .catch((err) => console.log(err));
   }, []);
@@ -197,7 +195,7 @@ export default function Additional() {
                   <AdditionalFormLabel name="City" />
                   <AdditionalFormSelect
                     onSetState={setDepartCity}
-                    options={["New York", "Seoul"]}
+                    options={departCountry === "US" ? ["New York"] : ["Seoul"]}
                   />
                 </FormControl>
               </GridItem>
@@ -215,7 +213,7 @@ export default function Additional() {
                   <AdditionalFormLabel name="City" />
                   <AdditionalFormSelect
                     onSetState={setArriveCity}
-                    options={["New York", "Seoul"]}
+                    options={arriveCountry === "US" ? ["New York"] : ["Seoul"]}
                   />
                 </FormControl>
               </GridItem>
@@ -224,7 +222,7 @@ export default function Additional() {
                   <AdditionalFormLabel name="Transportation" />
                   <AdditionalFormSelect
                     onSetState={setTransportation}
-                    options={["Flight", "Car", "Walk"]}
+                    options={["flight", "car", "walk"]}
                   />
                 </FormControl>
               </GridItem>

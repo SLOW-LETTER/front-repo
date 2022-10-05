@@ -5,6 +5,7 @@ import NavBar from "./navbar/navbar";
 
 export default function Layout({ children }: Props) {
   const router = useRouter();
+
   return (
     <>
       <NavBar />

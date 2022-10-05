@@ -153,11 +153,11 @@ function Ticket() {
             margin-left: 1rem;
           }
           .ticket-body-container {
-            width: fit-content;
+            width: 65%;
             height: 100%;
             display: grid;
-            grid-auto-rows: auto;
-            grid-auto-columns: auto;
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             padding-top: 2rem;
             padding-left: 2rem;
           }

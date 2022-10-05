@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { useStore } from "../zustand_stores/store";
 import { apiURL } from "../apiURL";
 import axios from "axios";
-import { useTokenStore } from "../zustand_stores/tokenStore";
+import { useEffect, useState } from "react";
 
 interface Props {
   isOpen: boolean;
@@ -20,11 +20,22 @@ interface Props {
 export default function ConfirmModal({ isOpen, onClose }: Props) {
   const router = useRouter();
 
-  const userToken = useTokenStore((state: any) => state.userToken);
-
   const template = useStore((state: any) => state.template);
   const letter = useStore((state: any) => state.letter);
   const additional = useStore((state: any) => state.additional);
+  const [transportationId, setTransportationId] = useState(0);
+  const [transportationVelocity, setTransportationVelocity] = useState(0);
+
+  useEffect(() => {
+    axios.get(`${apiURL}/transportations`).then((res) => {
+      res.data.payload.map((item: any) => {
+        if (item.name === additional.transportation) {
+          setTransportationId(item.id);
+          setTransportationVelocity(item.velocity);
+        }
+      });
+    });
+  }, []);
 
   return (
     <>
@@ -57,10 +68,13 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
             <Button
               colorScheme="blue"
               onClick={() => {
+                const depart = new Date();
+                const arrive = new Date();
+                arrive.setDate(depart.getDate() + 1);
                 const form = new FormData();
                 form.append("receiverEmail", additional.receiver);
-                form.append("boardingTime", "123");
-                form.append("arrivalTime", "123");
+                form.append("boardingTime", depart.toLocaleDateString());
+                form.append("arrivalTime", arrive.toLocaleDateString());
                 form.append("departureCountry", additional.departCountry);
                 form.append("departureCity", additional.departCity);
                 form.append("arrivalCountry", additional.arriveCountry);
@@ -68,18 +82,17 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
                 form.append("title", letter.title);
                 form.append("content", JSON.stringify(letter.body));
                 form.append("templateId", template.templateId);
-                form.append("transportationId", "1");
+                form.append("transportationId", transportationId.toString());
                 form.append("file", letter.file);
                 axios
                   .post(`${apiURL}/letters`, form, {
                     headers: {
-                      "X-AUTH-TOKEN": `${userToken}`,
                       "content-type": "multipart/form-data",
                     },
                   })
                   .then((res) => {
                     console.log(res);
-                    // router.push("/ticket");
+                    router.push("/ticket");
                   })
                   .catch((err) => {
                     console.log(err);
