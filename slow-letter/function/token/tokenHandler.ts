@@ -9,13 +9,13 @@ export function setToken(accessToken: string, refreshToken: string) {
   // 배포 시에는 httpOnly: true로 변경
   setCookies("accessToken", accessToken, {
     path: "/",
-    maxAge: 3600,
+    maxAge: 7200,
     httpOnly: false,
   });
 
   setCookies("refreshToken", refreshToken, {
     path: "/",
-    maxAge: 3600,
+    maxAge: 7200,
     httpOnly: false,
   });
 }

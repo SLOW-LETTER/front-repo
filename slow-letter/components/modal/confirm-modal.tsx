@@ -11,6 +11,8 @@ import { useStore } from "../zustand_stores/store";
 import { apiURL } from "../apiURL";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { koTimeHandler } from "../../function/timeHandler/koTime";
+import { usTimeHandler } from "../../function/timeHandler/usTime";
 
 interface Props {
   isOpen: boolean;
@@ -25,6 +27,10 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
   const additional = useStore((state: any) => state.additional);
   const [transportationId, setTransportationId] = useState(0);
   const [transportationVelocity, setTransportationVelocity] = useState(0);
+
+  const resetTemplate = useStore((state: any) => state.resetTemplate);
+  const resetLetter = useStore((state: any) => state.resetLetter);
+  const resetAdditional = useStore((state: any) => state.resetAdditional);
 
   useEffect(() => {
     axios.get(`${apiURL}/transportations`).then((res) => {
@@ -73,8 +79,8 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
                 arrive.setDate(depart.getDate() + 1);
                 const form = new FormData();
                 form.append("receiverEmail", additional.receiver);
-                form.append("boardingTime", depart.toLocaleDateString());
-                form.append("arrivalTime", arrive.toLocaleDateString());
+                form.append("boardingTime", koTimeHandler());
+                form.append("arrivalTime", usTimeHandler());
                 form.append("departureCountry", additional.departCountry);
                 form.append("departureCity", additional.departCity);
                 form.append("arrivalCountry", additional.arriveCountry);
@@ -91,8 +97,10 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
                     },
                   })
                   .then((res) => {
-                    console.log(res);
-                    router.push("/ticket");
+                    resetTemplate()
+                    resetLetter()
+                    resetAdditional()
+                    router.push("/mypage/tickets");
                   })
                   .catch((err) => {
                     console.log(err);

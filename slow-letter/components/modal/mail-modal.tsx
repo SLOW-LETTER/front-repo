@@ -145,7 +145,7 @@ export default function MailModal({ isOpen, onClose }: Props) {
                   }
                   saveLetter(
                     mailTitle,
-                    document.getElementById("mail-body")?.innerText.split("\n"),
+                    document.getElementById("mail-body")?.innerText.replaceAll('\n\n','\n').split("\n"),
                     mailAttachments
                   );
                   router.push("/letter/additional");

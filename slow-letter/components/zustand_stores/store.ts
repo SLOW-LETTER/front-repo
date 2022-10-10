@@ -71,6 +71,18 @@ export const useStore = create(
           transportation: transportation,
         },
       })),
+    resetAdditional: () =>
+      set(() => ({
+        additional: {
+          sender: "",
+          receiver: "",
+          departCountry: "",
+          departCity: "",
+          arriveCountry: "",
+          arriveCity: "",
+          transportation: "",
+        },
+      })),
 
     profile: {
       name: "",
