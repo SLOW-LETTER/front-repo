@@ -16,7 +16,6 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { apiURL } from "../../../components/apiURL";
 import { useRouter } from "next/router";
 import { useStore } from "../../../components/zustand_stores/store";
 
@@ -54,7 +53,9 @@ export default function Mypage() {
     const form = new FormData();
     form.append("X-AUTH-TOKEN", token);
     axios
-      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/users-info`, {
+        headers: { "X-AUTH-TOKEN": `${userToken}` },
+      })
       .then((res) => {
         setEmail(res.data.payload.email);
 
@@ -234,9 +235,11 @@ export default function Mypage() {
                               form.append("name", profile.name);
 
                               axios
-                                .patch(`${apiURL}/users-info`, {
-                                  headers: { "X-AUTH-TOKEN": userToken },
-                                  form,
+                                .patch(`${process.env.NEXT_PUBLIC_API_URL}/users-info`, form, {
+                                  headers: {
+                                    "X-AUTH-TOKEN": `${userToken}`,
+                                    "content-type": "multipart/form-data",
+                                  },
                                 })
                                 .then((res) => {
                                   toast({

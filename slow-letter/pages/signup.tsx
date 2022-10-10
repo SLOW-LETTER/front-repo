@@ -12,7 +12,6 @@ import {
   emailValid,
 } from "../function/validation";
 import axios from "axios";
-import { apiURL } from "../components/apiURL";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useStore } from "../components/zustand_stores/store";
@@ -308,7 +307,11 @@ export default function Signup() {
                     form.append("name", userName);
                     form.append("phone", phoneNum);
                     axios
-                      .post(`${apiURL}/users/join`, form)
+                      .post(`${process.env.NEXT_PUBLIC_API_URL}/users/join`, form, {
+                        headers: {
+                          "content-type": "multipart/form-data",
+                        },
+                      })
                       .then((res) => {
                         alert("Sign in sucessful");
                         router.push("/signin");

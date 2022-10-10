@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useStore } from "../zustand_stores/store";
-import { apiURL } from "../apiURL";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { koTimeHandler } from "../../function/timeHandler/koTime";
@@ -33,7 +32,7 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
   const resetAdditional = useStore((state: any) => state.resetAdditional);
 
   useEffect(() => {
-    axios.get(`${apiURL}/transportations`).then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/transportations`).then((res) => {
       res.data.payload.map((item: any) => {
         if (item.name === additional.transportation) {
           setTransportationId(item.id);
@@ -91,7 +90,7 @@ export default function ConfirmModal({ isOpen, onClose }: Props) {
                 form.append("transportationId", transportationId.toString());
                 form.append("file", letter.file);
                 axios
-                  .post(`${apiURL}/letters`, form, {
+                  .post(`${process.env.NEXT_PUBLIC_API_URL}/letters`, form, {
                     headers: {
                       "content-type": "multipart/form-data",
                     },
