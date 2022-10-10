@@ -134,28 +134,28 @@ export default function Additional() {
               </GridItem>
               <GridItem rowSpan={1} colSpan={1}>
                 <FormControl isRequired>
-                  <AdditionalFormLabel name="Receiver"/>
+                  <AdditionalFormLabel name="Receiver" />
                   <div className="email-check-button-container">
                     <button
                       type="button"
-                      onClick={() =>{
+                      onClick={() => {
                         const form = new FormData();
-                        form.append("email", receiver)
+                        form.append("email", receiver);
                         axios
                           .post(`${apiURL}/users/email/validation`, form)
                           .then((res) => {
                             if (res.data.payload.validation) {
                               setReceiver("");
-                              alert("No user existed")
+                              alert("No user existed");
                             } else {
-                              alert("Find User")
+                              alert("Find User");
                             }
                           })
                           .catch((err) => {
                             setReceiver("");
                             console.log(err);
-                          })}
-                      }
+                          });
+                      }}
                     >
                       Check
                     </button>
@@ -243,16 +243,28 @@ export default function Additional() {
               text="Next"
               onClick={(event) => {
                 event.preventDefault();
-                saveAdditional(
-                  sender,
-                  receiver,
-                  departCountry,
-                  departCity,
-                  arriveCountry,
-                  arriveCity,
-                  transportation
-                );
-                router.push("/letter/sending");
+                if (
+                  receiver === "" ||
+                  departCountry === "" ||
+                  departCity === "" ||
+                  arriveCountry === "" ||
+                  arriveCity === "" ||
+                  transportation === ""
+                ) {
+                  alert("Fill the additional info");
+                  return;
+                } else {
+                  saveAdditional(
+                    sender,
+                    receiver,
+                    departCountry,
+                    departCity,
+                    arriveCountry,
+                    arriveCity,
+                    transportation
+                  );
+                  router.push("/letter/sending");
+                }
               }}
               form="additional-form"
             />
@@ -307,7 +319,10 @@ export default function Additional() {
             font-size: 12.8px;
             background: #2563eb;
             color: white;
-            padding: 0.2rem;
+            padding-top: 0.2rem;
+            padding-bottom: 0.2rem;
+            padding-left: 0.3rem;
+            padding-right: 0.3rem;
             border-radius: 10px;
           }
           .button-container {
