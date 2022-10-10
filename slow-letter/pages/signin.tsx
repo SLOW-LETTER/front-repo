@@ -2,7 +2,6 @@ import ProjectTitle from "../components/main-title/project-title";
 import TypeIn from "../components/input/inputitem";
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
-import { apiURL } from "../components/apiURL";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { setToken } from "../function/token/tokenHandler";
@@ -72,7 +71,7 @@ export default function Login() {
                   form.append("email", email);
                   form.append("password", password);
                   axios
-                    .post(`${apiURL}/users/login`, form, {
+                    .post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, form, {
                       headers: {
                         "content-type": "multipart/form-data",
                       },

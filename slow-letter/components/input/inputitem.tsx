@@ -10,7 +10,6 @@ import {
   KeyboardEventHandler,
   useState,
 } from "react";
-import { apiURL } from "../apiURL";
 import Buttondefault from "../button/button";
 import PwCheck from "../signup/pswCheck";
 
@@ -63,7 +62,7 @@ export default function TypeIn({
                 const form = new FormData();
                 form.append("email", values);
                 axios
-                  .post(`${apiURL}/users/email/validation`, form, {
+                  .post(`${process.env.NEXT_PUBLIC_API_URL}/users/email/validation`, form, {
                     headers: {
                       "content-type": "multipart/form-data",
                     },
