@@ -74,3 +74,24 @@ Myapp.getInitialProps = async (appContext: AppContext) => {
 
   return { pageProps };
 };
+
+export async function getServerSideProps(appContext: AppContext) {
+  let pageProps = {};
+
+  const { ctx } = appContext;
+  const allCookies = cookies(ctx);
+  if (
+    allCookies["accessToken"] !== undefined &&
+    allCookies["refreshToken"] !== undefined
+  ) {
+    setToken(allCookies["accessToken"], allCookies["refreshToken"]);
+  }
+
+  pageProps = {
+    ...pageProps,
+    accessToken: allCookies["accessToken"],
+    refreshToken: allCookies["refreshToken"],
+  };
+
+  return { pageProps };
+}

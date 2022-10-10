@@ -104,7 +104,7 @@ export default function TypeIn({
             onChange={onChange}
             maxLength={16}
           />
-        ) : label === "Phone Number" ? (
+        ) : label === "Phone" ? (
           <input
             id={id}
             className="input-value"
@@ -163,6 +163,10 @@ export default function TypeIn({
           .input-value::placeholder {
             color: grey;
             font-size: ${placeholderFontSize};
+          }
+          .emailCheckBtn {
+            position: relative;
+            padding-left
           }
         `}
       </style>

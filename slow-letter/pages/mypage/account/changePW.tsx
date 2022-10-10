@@ -3,13 +3,30 @@ import Sidebar from "../../../components/sidebar";
 import SettingItems from "../../../components/setting-Items";
 import SettingModal from "../../../components/setting-modal";
 import { Button, useToast } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useStore } from "../../../components/zustand_stores/store";
+import { apiURL } from "../../../components/apiURL";
+import { StringLiteral } from "typescript";
+import { stringify } from "querystring";
+import axios from "axios";
+
 export default function ChangePw() {
   const toast = useToast();
   const [pswValue, setpswInput] = useState("");
   const [confirmPsw, setconfirmPsw] = useState("");
   const [newPsw, setNewPsw] = useState("");
   const [pswMatch, setpsMatch] = useState(true);
+  const [profile, setProfile] = useState<{
+    Email: string;
+    name: string;
+    Pic: File | string;
+  }>({
+    Email: "Example@Example.com",
+    name: "Example",
+    Pic: "/defaultProfile.svg",
+  });
+
+  const userToken = useStore((state: any) => state.userToken);
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     const values = e.target;
@@ -32,10 +49,30 @@ export default function ChangePw() {
       }
     }
   }
+  useEffect(() => {
+    const form = new FormData();
+    axios
+      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+      .then((res) => {
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            Email: res.data.payload.email,
+          };
+        });
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            name: res.data.payload.name,
+          };
+        });
+      })
+      .catch((err) => console.log(err));
+  });
 
   return (
     <>
-      <div className="notifcation-page flex h-5/6">
+      <div className="pswChange-page flex h-5/6">
         <div className="modal-container bg-white w-full h-full shadow drop-shadow-lg rounded-lg">
           <div className="Page flex flex-col items-center ">
             <div className="Profile-container flex flex-row py-8">
@@ -47,8 +84,8 @@ export default function ChangePw() {
                 border-radius="30%"
               ></Image>
               <div className="ProfileID flex flex-col py-5 px-7">
-                <span>Email</span>
-                <span>Example@example.com</span>
+                <span>{profile.name}</span>
+                <span>{profile.Email}</span>
               </div>
             </div>
             <div className="input-container items-center py-8">
@@ -82,25 +119,41 @@ export default function ChangePw() {
             </div>
             <Button
               className="Changebtn px-10"
-              onClick={() => {
-                toast({
-                  title: "You have Successfully Changed your password!",
-                  status: "success",
-                  position: "bottom",
-                  isClosable: true,
-                  duration: 2000,
-                });
+              colorScheme="red"
+              width="40"
+              background="red"
+              variant={"solid"}
+              onClick={(event) => {
+                event.preventDefault();
 
                 if (pswMatch === false) {
                   alert(
                     "Your Password does not match with the confirm password"
                   );
+                } else {
+                  const form = new FormData();
+                  form.append("oldPassword", pswValue);
+                  form.append("newPassword", newPsw);
+                  form.append("X-AUTH-TOKEN", userToken);
+                  axios
+                    .patch(`${apiURL}/users-info/password`, {
+                      header: { "X-AUTH-TOKEN": userToken },
+                      form,
+                    })
+                    .then((res) => {
+                      toast({
+                        title: "You have Successfully Changed your password!",
+                        status: "success",
+                        position: "bottom",
+                        isClosable: true,
+                        duration: 2000,
+                      });
+                    })
+                    .catch((err) => {
+                      console.log(err), console.log(userToken);
+                    });
                 }
               }}
-              colorScheme="red"
-              width="40"
-              background="red"
-              variant={"solid"}
             >
               Change Password
             </Button>

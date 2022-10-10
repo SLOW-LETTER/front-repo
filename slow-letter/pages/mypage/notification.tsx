@@ -1,16 +1,72 @@
-import SettingModal from "../../components/setting-modal";
 import Image from "next/image";
 import Checkbox from "../../components/input/checkbox";
-import { useState } from "react";
+import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
+import { useStore } from "../../components/zustand_stores/store";
 import Buttondefault from "../../components/button/button";
+import axios from "axios";
+import { apiURL } from "../../components/apiURL";
 export default function Notification() {
   const [checkBox1, setcheckBox1] = useState(false);
   const [checkBox2, setcheckBox2] = useState(false);
   const [checkBox3, setcheckBox3] = useState(false);
   const [checkBox4, setcheckBox4] = useState(false);
 
-  function onClick1() {}
-  function onClick() {}
+  const [Email, setEmail] = useState("Example@Example.com");
+  const [name, setName] = useState("Example");
+  const [pic, setPic] = useState("/defaultProfile.svg");
+  const userToken: string = useStore((state: any) => state.userToken);
+
+  type InputEvent = ChangeEvent<HTMLInputElement>;
+
+  // useEffect(() => {
+  //   const form = new FormData();
+  //   form.append("X-AUTH-TOKEN", userToken);
+  //   axios
+  //     .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+  //     .then((res) => {
+  //       setEmail(res.data.payload.email);
+  //       setName(res.data.payload.name);
+  //       //setPic(res.data.payload.profileImageUrl)
+  //       //체크되어있는지 가져와야됨?
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
+  const onClickCheck1 = () => {
+    if (checkBox1 === true) {
+      setcheckBox1(false);
+    } else {
+      setcheckBox1(true);
+    }
+  };
+
+  const onClickCheck2 = () => {
+    if (checkBox1 === true) {
+      setcheckBox2(false);
+    } else {
+      setcheckBox2(true);
+    }
+  };
+
+  const onClickCheck3 = () => {
+    if (checkBox1 === true) {
+      setcheckBox3(false);
+    } else {
+      setcheckBox3(true);
+    }
+  };
+
+  const onClickCheck4 = () => {
+    if (checkBox1 === true) {
+      setcheckBox4(false);
+    } else {
+      setcheckBox4(true);
+    }
+  };
+
   return (
     <>
       <div className="notifcation-page flex h-5/6">
@@ -19,14 +75,14 @@ export default function Notification() {
             <div className="Profile-container flex flex-row py-12">
               <Image
                 className="Profile-pic round rounded-full "
-                src="/defaultProfile.svg"
+                src={pic}
                 width="100"
                 height="100"
                 border-radius="30%"
               ></Image>
               <div className="ProfileID flex flex-col py-5 px-7">
-                <span>Email</span>
-                <span>Example@example.com</span>
+                <span>{name}</span>
+                <span>{Email}</span>
               </div>
             </div>
 
@@ -35,13 +91,53 @@ export default function Notification() {
 
               <hr className="line py-2" />
             </div>
-            <Checkbox Label="when others send you tickets" />
 
-            <Checkbox Label="when you recieve tickets " />
+            <div className="checkbox-container flex flex-row w-96 justify-between">
+              <div className="label font-semibold p-3 w-56 text-start">
+                When others send you tickets
+              </div>
+              <input
+                id=""
+                type="checkbox"
+                onClick={onClickCheck1}
+                className="checkbox flex border-blue-300 w-32 h-8 mr-2 mt-2  rounded-lg cursor-pointer hover:bg-blue-100  border-3 border-blue-600 "
+              />
+            </div>
 
-            <Checkbox Label="when you send tickets " />
+            <div className="checkbox-container flex flex-row w-96 justify-between">
+              <div className="label font-semibold p-3 w-56 text-start">
+                When you recieve tckets
+              </div>
+              <input
+                id=""
+                type="checkbox"
+                onClick={onClickCheck2}
+                className="checkbox flex border-blue-300 w-32 h-8 mr-2 mt-2  rounded-lg cursor-pointer hover:bg-blue-100  border-3 border-blue-600 "
+              />
+            </div>
+            <div className="checkbox-container flex flex-row w-96 justify-between">
+              <div className="label font-semibold p-3 w-56 text-start">
+                When you send tickets
+              </div>
+              <input
+                id=""
+                type="checkbox"
+                onClick={onClickCheck3}
+                className="checkbox flex border-blue-300 w-32 h-8 mr-2 mt-2  rounded-lg cursor-pointer hover:bg-blue-100  border-3 border-blue-600 "
+              />
+            </div>
 
-            <Checkbox Label="when your letter arrive to others" />
+            <div className="checkbox-container flex flex-row w-96 justify-between">
+              <div className="label font-semibold p-3 w-56 text-start">
+                When you letter arrive to others
+              </div>
+              <input
+                id=""
+                type="checkbox"
+                onClick={onClickCheck4}
+                className="checkbox flex border-blue-300 w-32 h-8 mr-2 mt-2  rounded-lg cursor-pointer hover:bg-blue-100  border-3 border-blue-600 "
+              />
+            </div>
 
             <Buttondefault text={"Save"} btnWidth={"10em"} btnColor={"blue"} />
           </div>
@@ -49,13 +145,6 @@ export default function Notification() {
       </div>
       <style jsx>
         {`
-           {
-            /* .Page-container {
-            position: absolute;
-            top: 6em;
-            right: 23em;
-          } */
-          }
           .modal-container {
             position: relative;
             margin-left: 45vh;

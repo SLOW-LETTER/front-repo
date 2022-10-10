@@ -1,13 +1,71 @@
 import Link from "next/link";
-import { useRef } from "react";
-import Popover from "../porfilepop";
+import Buttondefault from "../button/button";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import Custom_Popover from "../porfilepop";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Button,
+  ButtonGroup,
+  Box,
+} from "@chakra-ui/react";
+import React from "react";
+import { useRouter } from "next/router";
+//import { removeCookies } from "../../function/cookie-handler/cookieHandler";
+import { useStore } from "../zustand_stores/store";
+import { removeCookies } from "../../function/cookie-handler/cookieHandler";
+import axios from "axios";
+import { apiURL } from "../apiURL";
 
 export default function NavItems() {
-  let display="visible";  
-    const handleFocus = ()=>{
-          display="visible"
-    }
-  
+  const router = useRouter();
+  let userToken: string = useStore((state: any) => state.userToken);
+  const [Email, setEmail] = useState("Example@Example.com");
+  const [profilePop, setProfilePop] = useState<{
+    pic: File | string;
+    name: string;
+  }>({
+    name: "Username",
+    pic: "/defaultProfile.svg",
+  });
+
+  function mySetting() {
+    console.log("clicked");
+
+    router.push("/mypage/account/accountinfo");
+  }
+
+  function signOut() {
+    removeCookies("accessToken", { path: "/" });
+    removeCookies("refreshToken", { path: "/" });
+    router.push("/");
+
+    // const resetToken = useStore(() => state.resetUserToken);
+    // userToken = resetToken;
+  }
+
+  useEffect(() => {
+    const form = new FormData();
+    axios
+      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+      .then((res) => {
+        setEmail(res.data.payload.email);
+        setProfilePop({ ...profilePop, name: res.data.payload.name });
+
+        //setProfile({ ...profilePop, pic: res.data.payload.profileImageUrl });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userToken]);
   return (
     <>
       <nav className="nav-items-container">
@@ -25,11 +83,72 @@ export default function NavItems() {
         <div className="ticket-container">
           <div className="ticket-icon"></div>
         </div>
-        <div className="profile-container flex flex-col">
+        {/* <button
+          className="profile-container flex flex-col"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        >
           <div className="profile-icon"></div>
-          <div className="profilePopover" ><Popover/></div>
-        </div>
+        </button> */}
+        <Popover placement="bottom-end" closeOnBlur={false}>
+          <PopoverTrigger>
+            <Button></Button>
+          </PopoverTrigger>
+
+          <PopoverContent
+            color="teal.100"
+            bg="white"
+            width="110%"
+            borderRadius={"5%"}
+            borderWidth={"2px"}
+            borderColor="blue.800"
+          >
+            <PopoverCloseButton bg="purple.500" />
+            <PopoverBody>
+              <div className="items-inside items-center justify-center">
+                <div className="pop-over flex flex-col  items-center justify-center  rounded-3xl p-8 ">
+                  <div>
+                    <Image
+                      src="/defaultProfile.svg"
+                      width="100px"
+                      height="100px"
+                    />
+                  </div>
+                  <span className="text-center text-black font-semibold ">
+                    {profilePop.name}
+                  </span>
+                  <span className="text-center text-black font-semibold ">
+                    {Email}
+                  </span>
+                  <div className="btn-Container space-y-4 mt-4">
+                    <Buttondefault
+                      text="My Account"
+                      btnWidth="150px"
+                      btnHeight="35px"
+                      btnColor="gray"
+                      radius="30px"
+                      onClick={mySetting}
+                    ></Buttondefault>
+                    <Buttondefault
+                      text="Sign Out"
+                      btnWidth="150px"
+                      btnHeight="35px"
+                      btnColor="red"
+                      radius="30px"
+                      onClick={signOut}
+                    ></Buttondefault>
+                  </div>
+                </div>
+              </div>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+
+        {/* <Link href={"/mypage/account/accountinfo"}>
+          <a className="profile-container flex flex-col"></a>
+        </Link> */}
       </nav>
+      <Popover />
       <style jsx>
         {`
           .nav-items-container {
@@ -135,10 +254,6 @@ export default function NavItems() {
             background-position: center center;
             background-size: cover;
           }
-          .profilePopover{
-            
-          }
-          
         `}
       </style>
     </>

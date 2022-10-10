@@ -25,7 +25,7 @@ export default function Buttondefault({
         }
         onClick={onClick}
       >
-        <span className="text-white text-lg ">{text}</span>
+        <span className="btnText text-white text-lg ">{text}</span>
       </button>
       <style jsx>
         {`
@@ -34,6 +34,8 @@ export default function Buttondefault({
             height: ${btnHeight};
             background-color: ${btnColor};
             border-radius: ${radius};
+          }
+          .btnText {
             font-size: ${fontSize};
           }
         `}

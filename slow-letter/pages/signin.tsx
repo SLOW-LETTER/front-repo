@@ -49,18 +49,20 @@ export default function Login() {
                 values={email}
                 onChange={onChange}
               />
-              <TypeIn
-                width="20rem"
-                height="3rem"
-                id="Password"
-                placeholderFontSize="16px"
-                labelFontSize="1rem"
-                hint="Password"
-                label="Password"
-                iconImg="/PasswordIcon.svg"
-                values={password}
-                onChange={onChange}
-              />
+              <form>
+                <TypeIn
+                  width="20rem"
+                  height="3rem"
+                  id="Password"
+                  placeholderFontSize="16px"
+                  labelFontSize="1rem"
+                  hint="Password"
+                  label="Password"
+                  iconImg="/PasswordIcon.svg"
+                  values={password}
+                  onChange={onChange}
+                />
+              </form>
 
               <button
                 className="bg-blue-600 hover:bg-blue-900 text-white font-bold w-80 py-2 px-4 rounded"
@@ -83,7 +85,10 @@ export default function Login() {
                       );
                       router.push("/");
                     })
-                    .catch((err) => console.log(err));
+                    .catch((err) => {
+                      console.log(err),
+                        alert("Your email or your password is not valiable");
+                    });
                 }}
               >
                 Sign In

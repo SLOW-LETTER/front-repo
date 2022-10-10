@@ -17,7 +17,7 @@ export default function Layout({ children }: Props) {
           <Sidebar />
         ) : null}
         {router.pathname === "/mypage/notification" ? <Sidebar /> : null}
-        {router.pathname === "/mypage/tickets" ? <Sidebar /> : null}
+        {router.pathname === "/mypage/myTickets" ? <Sidebar /> : null}
       </section>
 
       <style jsx>{``}</style>

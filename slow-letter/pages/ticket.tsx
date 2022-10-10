@@ -50,7 +50,7 @@ function TicketBodyItem({
   );
 }
 
-function Ticket() {
+export function Ticket() {
   const additional = useStore((state: any) => state.additional);
   return (
     <>
