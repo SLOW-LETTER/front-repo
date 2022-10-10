@@ -15,6 +15,8 @@ import axios from "axios";
 import { apiURL } from "../components/apiURL";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useStore } from "../components/zustand_stores/store";
+
 type InputEvent = ChangeEvent<HTMLInputElement>;
 
 export default function Signup() {
@@ -25,8 +27,11 @@ export default function Signup() {
   const [emailInput, setemailInput] = useState("");
   const [phoneNum, setphoneNum] = useState("");
   const [userName, setuserName] = useState("");
-  const [emailCheck, setemailCheck] = useState(true);
+  const [emailCheck, setemailCheck] = useState(false); // this is to check if user pass the email test  "@"
   const [focus, setFocus] = useState("hidden");
+  const [msgHide, setmsgHide] = useState(true);
+  const [emailDuplicate, setemailDuplicate] = useState(false); //this is to check if email duplicate
+  const userToken: string = useStore((state: any) => state.userToken);
 
   const router = useRouter();
 
@@ -52,7 +57,13 @@ export default function Signup() {
   const onEmailChange = (evnt: InputEvent) => {
     const emailInput = evnt?.target.value.trim();
     setemailInput(emailInput);
-    emailValid(emailInput) ? setemailCheck(true) : setemailCheck(false);
+    {
+      emailInput !== ""
+        ? emailValid(emailInput)
+          ? (setemailCheck(true), setmsgHide(true))
+          : (setemailCheck(false), setmsgHide(false))
+        : alert("Please enter valid Email Address");
+    }
   };
 
   const onPhoneChange = (evnt: InputEvent) => {
@@ -84,7 +95,7 @@ export default function Signup() {
 
   return (
     <>
-      <div className="page-conatiner flex w-full h-full ">
+      <div className="Signuppage-conatiner flex w-full h-full ">
         <div className="page-subleft flex w-full h-full items-center place-items-center justify-center">
           <ProjectTitle />
         </div>
@@ -100,6 +111,40 @@ export default function Signup() {
             </div>
 
             <div className="signup-list flex flex-col  space-y-3 py-1">
+              <div className="emailCheckBtn">
+                <Buttondefault
+                  text={"Check!"}
+                  btnWidth={"60px"}
+                  btnColor={""}
+                  fontSize={"13px"}
+                  btnHeight={"27px"}
+                  onClick={() => {
+                    if (emailInput === "") {
+                      alert("Please enter valid email address");
+                    } else {
+                      const form = new FormData();
+                      form.append("email", emailInput);
+                      axios
+                        .post(`${apiURL}/users/email/validation`, form)
+                        .then((res) => {
+                          setemailDuplicate(res.data.payload?.validation);
+                        })
+                        .catch((err) => console.log(err));
+                      {
+                        emailDuplicate
+                          ? emailCheck
+                            ? alert("This means it passed the duplicate test")
+                            : alert(
+                                "this means that it didnot pass email valid test"
+                              )
+                          : alert(
+                              "This is means it did no pass the duplicate test"
+                            );
+                      }
+                    }
+                  }}
+                />
+              </div>
               <TypeIn
                 width="16rem"
                 height="2rem"
@@ -112,7 +157,7 @@ export default function Signup() {
                 values={emailInput}
                 onChange={onEmailChange}
               />
-              {emailCheck ? (
+              {msgHide ? (
                 <></>
               ) : (
                 <div className="flex px-4 text-xs text-red-600">
@@ -132,25 +177,39 @@ export default function Signup() {
                 onChange={onUserNameChange}
               />
               <div className="signinPsw-container">
-                <TypeIn
-                  width="16rem"
-                  height="2rem"
-                  id="Password"
-                  hint="Password"
-                  label="Password"
-                  placeholderFontSize="14px"
-                  labelFontSize=".9rem"
-                  iconImg="/PasswordIcon.svg"
-                  values={pswInput}
-                  onChange={onPasswordChange}
-                  onFocus={onFocus}
-                  onBlur={onBlur}
-                />
+                <form>
+                  <TypeIn
+                    width="16rem"
+                    height="2rem"
+                    id="Password"
+                    hint="Password"
+                    label="Password"
+                    placeholderFontSize="14px"
+                    labelFontSize=".9rem"
+                    iconImg="/PasswordIcon.svg"
+                    values={pswInput}
+                    onChange={onPasswordChange}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                  />
+                </form>
 
                 <div
-                  className={`pswValid-container w-72 p-4 flex flex-col text-align ${focus} justify-evenly gap-y-2 bg-slate-300  div-3 text-black rounded-lg drop-shadow-2xl border-2  border-slate-500`}
+                  className={
+                    pwValid
+                      ? `pswValid-container w-72 p-4 flex flex-col text-align ${focus} justify-evenly gap-y-2 bg-white div-3 text-black rounded-lg drop-shadow-3xl border-4  border-teal-600`
+                      : `pswValid-container w-72 p-4 flex flex-col text-align ${focus} justify-evenly gap-y-2 bg-white div-3 text-black rounded-lg drop-shadow-3xl border-4  border-red-600`
+                  }
                 >
-                  <span className="text-white"> Requirements!</span>
+                  <span
+                    className={
+                      pwValid
+                        ? "text-green-600 font-bold "
+                        : "text-red-600 font-bold"
+                    }
+                  >
+                    Requirements!
+                  </span>
                   {capCheck(pswInput) ? (
                     <PwCheck
                       validationMsg="Contains an uppercase letter"
@@ -158,7 +217,7 @@ export default function Signup() {
                     />
                   ) : (
                     <PwCheck
-                      validationMsg="Contains an uppercase letter"
+                      validationMsg="Contains an uppercase   letter"
                       valid={false}
                     />
                   )}
@@ -223,7 +282,7 @@ export default function Signup() {
                 height="2rem"
                 id="Phonenum"
                 hint="xxx-xxxx-xxxx"
-                label="Phone Number"
+                label="Phone"
                 placeholderFontSize="14px"
                 labelFontSize=".9rem"
                 iconImg="/PhoneIcon.svg"
@@ -236,9 +295,11 @@ export default function Signup() {
                 btnColor={"#2563eb"}
                 fontSize=""
                 onClick={() => {
-                  if (pwValid === false) {
+                  if (emailCheck === false) {
+                    alert("You have to pass the email valid test");
+                  } else if (pwValid === false) {
                     alert(
-                      "You have to fill in all the space with valid information"
+                      "You have to fill in all the space with valid information\n Please check if the Password is valid"
                     );
                   } else {
                     const form = new FormData();
@@ -247,14 +308,10 @@ export default function Signup() {
                     form.append("name", userName);
                     form.append("phone", phoneNum);
                     axios
-                      .post(`${apiURL}/users/join`, form, {
-                        headers: {
-                          "content-type": "multipart/form-data",
-                        },
-                      })
+                      .post(`${apiURL}/users/join`, form)
                       .then((res) => {
-                        alert("Sign up sucessful");
-                        router.push("/");
+                        alert("Sign in sucessful");
+                        router.push("/signin");
                       })
                       .catch((err) => console.log(err));
                   }

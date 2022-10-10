@@ -71,5 +71,31 @@ export const useStore = create(
           transportation: transportation,
         },
       })),
+
+    profile: {
+      name: "",
+      phone: "",
+      bio: "",
+    },
+
+    changeProfile: (name: string, phone: string, bio: string) =>
+      set(() => ({
+        profile: {
+          name: name,
+          phone: phone,
+          bio: bio,
+        },
+      })),
+
+    changePassword: {
+      newPsw: "",
+    },
+
+    changePsw: (newPsw: string) =>
+      set(() => ({
+        changePassword: {
+          newPsw: newPsw,
+        },
+      })),
   }))
 );

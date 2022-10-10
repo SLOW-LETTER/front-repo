@@ -14,7 +14,6 @@ import { apiURL } from "../apiURL";
 import Buttondefault from "../button/button";
 import PwCheck from "../signup/pswCheck";
 
-//test
 interface Props {
   id: string;
   hint: string;
@@ -53,36 +52,6 @@ export default function TypeIn({
         <div className="label-container flex flex-row space-x-1 pl-2">
           <Image src={iconImg} className="Icon" width={20} height={20} />
           <label>{label}</label>
-          {label === "Email" ? (
-            <Buttondefault
-              text={"Check!"}
-              btnWidth={"60px"}
-              btnColor={""}
-              fontSize={"15px"}
-              btnHeight={"27px"}
-              onClick={() => {
-                const form = new FormData();
-                form.append("email", values);
-                axios
-                  .post(`${apiURL}/users/email/validation`, form, {
-                    headers: {
-                      "content-type": "multipart/form-data",
-                    },
-                  })
-                  .then((res) => {
-                    setemailValidCheck(res.data.payload?.validation);
-                    router.push("");
-                    setemailValidCheck(res.data.payload?.validation);
-                  })
-                  .catch((err) => console.log(err));
-                {
-                  emailValidCheck
-                    ? alert("This is valid Email Address")
-                    : alert("This is invalid Email Address");
-                }
-              }}
-            />
-          ) : null}
         </div>
         {label === "Password" ? (
           <input
@@ -106,7 +75,7 @@ export default function TypeIn({
             onChange={onChange}
             maxLength={16}
           />
-        ) : label === "Phone Number" ? (
+        ) : label === "Phone" ? (
           <input
             id={id}
             className="input-value"
@@ -165,6 +134,10 @@ export default function TypeIn({
           .input-value::placeholder {
             color: grey;
             font-size: ${placeholderFontSize};
+          }
+          .emailCheckBtn {
+            position: relative;
+            padding-left
           }
         `}
       </style>

@@ -22,8 +22,6 @@ import { useStore } from "../../../components/zustand_stores/store";
 
 type InputEvent = ChangeEvent<HTMLInputElement>;
 
-let Email = "";
-
 export default function Mypage() {
   const {
     isOpen: isSaveOpen,
@@ -38,36 +36,59 @@ export default function Mypage() {
   const toast = useToast();
   const router = useRouter();
   const userToken: string = useStore((state: any) => state.userToken);
-  console.log(userToken);
+  const token = userToken;
+  const [Email, setEmail] = useState("Example@Example.com");
+  const [profile, setProfile] = useState<{
+    phone: string;
+    bio: string;
+    pic: File | string;
+    name: string;
+  }>({
+    phone: "",
+    bio: "",
+    name: "Username",
+    pic: "/defaultProfile.svg",
+  });
+
   useEffect(() => {
+    const form = new FormData();
+    form.append("X-AUTH-TOKEN", token);
     axios
-      .get(`${apiURL}/users-info`, {
-        headers: { "X-AUTH-TOKEN": `${userToken}` },
-      })
+      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
       .then((res) => {
-        console.log(res);
-        router.push("/mypage/account/accountinfo");
-        profile.Phone = res.data.payload.phone;
-        profile.Bio = res.data.payload.bio;
-        profile.Pic = res.data.payload.profileImageUrl;
-        console.log(profile.Bio);
-        console.log(profile.Pic);
-        Email = res.data.payload.email;
-        console.log(Email);
+        setEmail(res.data.payload.email);
+
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            phone: res.data.payload.phone,
+          };
+        });
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            name: res.data.payload.name,
+          };
+        });
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            bio: res.data.payload.bio,
+          };
+        });
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            pic: res.data.payload.profileImageUrl,
+          };
+        });
+        console.log(token);
+        console.log(userToken);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  const [profile, setProfile] = useState<{
-    Phone: string;
-    Bio: string;
-    Pic: File | string;
-  }>({
-    Phone: "",
-    Bio: "",
-    Pic: "/defaultProfile.svg",
-  });
+  }, [token]);
 
   function eventread(e: InputEvent) {
     if (e.target.files === null) {
@@ -76,26 +97,36 @@ export default function Mypage() {
       const file = e.target.files[0];
       setProfile({
         ...profile,
-        Pic: file,
+        pic: file,
       });
     }
-    console.log(profile.Pic);
   }
-  function onEmailChange() {}
+
+  function onNameChange(e: InputEvent) {
+    const nameValue = e?.target.value;
+    setProfile({
+      ...profile,
+      name: nameValue,
+    });
+  }
+
   function onPhoneChange(e: InputEvent) {
     const value = e?.target.value;
     setProfile({
       ...profile,
-      Phone: value,
+      phone: value,
     });
   }
   function onBioChange(e: ChangeEvent<HTMLTextAreaElement>) {
     const biovalue = e?.target.value;
     setProfile({
       ...profile,
-      Bio: biovalue,
+      bio: biovalue,
     });
   }
+
+  console.log(profile.pic);
+
   return (
     <>
       <link
@@ -103,7 +134,6 @@ export default function Mypage() {
         href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.2/css/fontawesome.min.css"
       />
       {/* background modal */}
-
       <div className="accountinfo-page flex h-5/6">
         <div className="modal-container bg-white w-full h-full shadow drop-shadow-lg rounded-lg flex flex-col p-3">
           <div className="Account-Header w-40 text-bold italic text-5xl text-blue-600">
@@ -113,7 +143,7 @@ export default function Mypage() {
           <div className="Setting-Items flex flex-col mt-28 items-center justify-content">
             <div className="Profilepic-container">
               <input
-                className="Pic-input w-10 h-10"
+                className="Pic-input w-10 h-2"
                 type="file"
                 id="Profilce_pics"
                 name="Profile_pics"
@@ -128,18 +158,30 @@ export default function Mypage() {
               <span className="email flex text-black fixed-email font-semibold ">
                 Email
               </span>
-              <span className="flex text-black fixed-email px-2">{Email}</span>
+              <span className="userEmail flex text-black fixed-email z-50 px-2">
+                {Email}
+              </span>
             </div>
 
             <hr className="line" />
 
             <SettingItems
-              ID="Editphone"
+              ID="Username"
+              Hint="Username"
+              Label="Username"
+              Types="text"
+              onChange={onNameChange}
+              values={profile.name}
+            />
+            <hr className="line" />
+
+            <SettingItems
+              ID="Phone"
               Hint="000-0000-0000"
               Label="Phone"
               Types="text"
               onChange={onPhoneChange}
-              values={profile.Phone}
+              values={profile.phone}
             />
             <hr className="line" />
 
@@ -149,7 +191,7 @@ export default function Mypage() {
               Label="Your Bio"
               Types="string"
               onChangetext={onBioChange}
-              values={profile.Bio}
+              values={profile.bio || ""}
             />
 
             <div className="flex items-end justify-end">
@@ -183,31 +225,43 @@ export default function Mypage() {
                         <Stack direction="row" spacing={4}>
                           <Button
                             onClick={() => {
-                              toast({
-                                title: "Successfully Done!",
-                                description: "Changes has susseccfully saved",
-                                status: "success",
-                                position: "bottom",
-                                isClosable: true,
-                                duration: 2000,
-                              });
                               onSaveClose();
                               const form = new FormData();
-                              form.append("file", profile.Pic);
-                              form.append("phone", profile.Phone);
-                              form.append("bio", profile.Bio);
+                              form.append("X-AUTH-TOKEN", userToken);
+                              form.append("file", profile.pic);
+                              form.append("phone", profile.phone);
+                              form.append("bio", profile.bio);
+                              form.append("name", profile.name);
+
                               axios
-                                .patch(`${apiURL}/users-info`, form, {
-                                  headers: {
-                                    "X-AUTH-TOKEN": `${userToken}`,
-                                    "content-type": "multipart/form-data",
-                                  },
+                                .patch(`${apiURL}/users-info`, {
+                                  headers: { "X-AUTH-TOKEN": userToken },
+                                  form,
                                 })
                                 .then((res) => {
-                                  console.log(res.data.payload?.token);
+                                  toast({
+                                    title: "Successfully Done!",
+                                    description:
+                                      "Changes has susseccfully saved",
+                                    status: "success",
+                                    position: "bottom",
+                                    isClosable: true,
+                                    duration: 2000,
+                                  });
                                   router.push("/mypage/account/accountinfo");
                                 })
-                                .catch((err) => console.log(err));
+                                .catch((err) => {
+                                  console.log(err);
+                                  console.log(userToken);
+                                  toast({
+                                    title: "Something went Wrong!",
+                                    description: "Your change have not saved",
+                                    status: "error",
+                                    position: "bottom",
+                                    isClosable: true,
+                                    duration: 2000,
+                                  });
+                                });
                             }}
                             colorScheme="blue"
                             background="blue"
@@ -299,7 +353,7 @@ export default function Mypage() {
           }
           .Profilepic-container {
             position: relative;
-            background-image: url(${profile.Pic});
+            background-image: readURL(${profile.pic});
             background-size: 100% 100%;
             border-radius: 30%;
           }

@@ -10,10 +10,14 @@ import {
   Button,
   useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { useRouter } from "next/router";
+import { ChangeEvent, useEffect, useState } from "react";
+import { apiURL } from "../../../components/apiURL";
 import SettingItems from "../../../components/setting-Items";
-import SettingModal from "../../../components/setting-modal";
+import { useStore } from "../../../components/zustand_stores/store";
+import { removeCookies } from "../../../function/cookie-handler/cookieHandler";
 
 export default function DeleteAcc() {
   const {
@@ -23,6 +27,68 @@ export default function DeleteAcc() {
   } = useDisclosure();
   const toast = useToast();
 
+  const [feedBack, setfeedBack] = useState("");
+  const [pswCheck, setpswCheck] = useState("");
+  const [savedPsw, setsavedPsw] = useState("");
+  const [pswValid, setpswValid] = useState(false);
+  const router = useRouter();
+  const [Email, setEmail] = useState("Example@Example.com");
+  const [profileMin, setProfileMin] = useState<{
+    pic: string;
+    name: string;
+  }>({
+    name: "Username",
+    pic: "/defaultProfile.svg",
+  });
+
+  const userToken: string = useStore((state: any) => state.userToken);
+
+  function getFeed(e: ChangeEvent<HTMLTextAreaElement>) {
+    setfeedBack(e.target.value.trim());
+  }
+  function checkPsw(e: ChangeEvent<HTMLInputElement>) {
+    setpswCheck(e.target.value.trim());
+  }
+  useEffect(() => {
+    axios
+      .get(`${apiURL}/users-info`, {
+        headers: { "X-AUTH-TOKEN": userToken },
+      })
+      .then((res) => {
+        setEmail(res.data.payload.email);
+        setProfileMin((prevState) => {
+          return {
+            ...prevState,
+            name: res.data.payload.name,
+          };
+        });
+
+        // setProfileMin((prevState) => {
+        //   return {
+        //     ...prevState,
+        //     pic: res.data.payload.profileImageUrl,
+        //   };
+        // });
+      })
+      .catch((err) => {
+        console.log(userToken), console.log(err);
+      });
+  }, [userToken]);
+  console.log(profileMin.pic);
+
+  // function deleteClick() {
+  //   const form = new FormData();
+  //   form.append("password", pswCheck);
+  //   form.append("withdrawFeedback", feedBack);
+  //   axios
+  //     .delete(`${apiURL}/users-info`)
+  //     .then((res) => setsavedPsw(res.data.payload.password))
+  //     .catch((err) => console.log(err));
+
+  //   {
+  //     savedPsw === pswCheck ? onCheckOpen() : alert("This is invalid password");
+  //   }
+  // }
   return (
     <>
       <div className="deletaAccount-page flex h-5/6">
@@ -31,14 +97,14 @@ export default function DeleteAcc() {
             <div className="Profile-container flex flex-row py-8">
               <Image
                 className="Profile-pic round rounded-full "
-                src="/defaultProfile.svg"
+                src={profileMin.pic}
                 width="100"
                 height="100"
                 border-radius="30%"
               ></Image>
               <div className="ProfileID flex flex-col py-5 px-7">
-                <span>Email</span>
-                <span>Example@example.com</span>
+                <span>{profileMin.name}</span>
+                <span>{Email}</span>
               </div>
             </div>
             <span>Are you sure you want to delete your account?</span>
@@ -48,14 +114,16 @@ export default function DeleteAcc() {
             <span>If you want to continue with deleting your account</span>
             <span>please enter your password below</span>
             <hr className="line py-2" />
-
-            <SettingItems
-              ID="Checkpsw"
-              Hint="*************"
-              Label="Password"
-              Types="Password"
-              values={""}
-            />
+            <form>
+              <SettingItems
+                ID="Checkpsw"
+                Hint="*************"
+                Label="Password"
+                Types="Password"
+                values={pswCheck}
+                onChange={checkPsw}
+              />
+            </form>
             <hr className="line py-2" />
             <Button
               onClick={onCheckOpen}
@@ -85,22 +153,48 @@ export default function DeleteAcc() {
                   <textarea
                     className="feedback p-3  h-52 bg-gray-200 border-4 border-blue-300 rounded-lg"
                     maxLength={100}
+                    value={feedBack}
+                    onChange={getFeed}
                     placeholder="Please provide us with the feedback (Your can write upto 200 letters)  "
                   ></textarea>
                 </ModalBody>
                 <ModalFooter>
                   <Button
                     onClick={() => {
-                      toast({
-                        title: "Successfully deleted!",
-                        description: "Thank you for giving up feedback",
-                        status: "success",
-                        position: "bottom",
-                        isClosable: true,
-                        duration: 2000,
-                      });
+                      event?.preventDefault();
+                      const form = new FormData();
+                      form.append("password", pswCheck);
+                      form.append("withdrawFeedback", feedBack);
+                      form.append("X-AUTH-TOKEN", userToken);
+                      console.log(userToken);
+                      axios
+                        .delete(`${apiURL}/users-info`, {
+                          data: {
+                            password: pswCheck,
+                            withdrawFeedback: feedBack,
+                          },
+                          headers: {
+                            "X-AUTH-TOKEN": userToken,
+                          },
+                        })
+                        .then((res) => {
+                          toast({
+                            title: "Successfully deleted!",
+                            description: "Thank you for giving up feedback",
+                            status: "success",
+                            position: "bottom",
+                            isClosable: true,
+                            duration: 2000,
+                          });
+
+                          removeCookies("accessToken", { path: "/" });
+                          removeCookies("refreshToken", { path: "/" });
+                          router.push("/");
+                        })
+                        .catch((err) => {
+                          console.log(err), console.log(userToken);
+                        });
                       onCheckClose();
-                      location.href = "/";
                     }}
                     color={"white"}
                     backgroundColor={"blue"}

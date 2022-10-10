@@ -83,11 +83,12 @@ export default function Sidebar() {
               </li>
             </ul>
           </li>
+
           <li>
             <a
-              href="/mypage/tickets"
+              href="/mypage/myTickets"
               className={
-                router.pathname === "/mypage/tickets"
+                router.pathname === "/mypage/myTickets"
                   ? "Tickets flex flex-row p-2 py-4 text-white  bg-blue-600  rounded-lg text-start text-xl"
                   : "Tickets flex flex-row p-2 py-4 text-black hover:text-blue bg-white hover:bg-blue-600  hover:text-white rounded-lg text-start text-xl"
               }
@@ -96,6 +97,7 @@ export default function Sidebar() {
               <span>Tickets</span>
             </a>
           </li>
+
           <li>
             <a
               href="/mypage/notification"
