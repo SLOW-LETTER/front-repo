@@ -4,7 +4,6 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   // Getting cookies from the request
   const accessToken = request.cookies.get("accessToken");
-  const refreshToken = request.cookies.get("refreshToken");
 
   const { pathname } = request.nextUrl;
 
