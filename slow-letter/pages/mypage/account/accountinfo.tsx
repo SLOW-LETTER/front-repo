@@ -21,7 +21,7 @@ import { useRouter } from "next/router";
 import { useStore } from "../../../components/zustand_stores/store";
 
 type InputEvent = ChangeEvent<HTMLInputElement>;
-
+//this
 let Email = "";
 
 export default function Mypage() {
