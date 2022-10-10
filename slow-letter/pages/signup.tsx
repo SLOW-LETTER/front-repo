@@ -124,7 +124,7 @@ export default function Signup() {
                       const form = new FormData();
                       form.append("email", emailInput);
                       axios
-                        .post(`${apiURL}/users/email/validation`, form)
+                        .post(`${process.env.NEXT_PUBLIC_API_URL}/users/email/validation`, form)
                         .then((res) => {
                           setemailDuplicate(res.data.payload?.validation);
                         })
