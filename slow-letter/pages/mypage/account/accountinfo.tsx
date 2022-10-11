@@ -13,11 +13,9 @@ import {
   useDisclosure,
   Stack,
 } from "@chakra-ui/react";
-
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useStore } from "../../../components/zustand_stores/store";
-import { userInfoStore } from "../../../components/zustand_stores/userSave";
 
 type InputEvent = ChangeEvent<HTMLInputElement>;
 
@@ -51,9 +49,7 @@ export default function Mypage() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/users-info`, {
-        headers: { "X-AUTH-TOKEN": `${userToken}` },
-      })
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/users-info`)
       .then((res) => {
         setEmail(res.data.payload.email);
 
@@ -87,7 +83,6 @@ export default function Mypage() {
       });
   }, []);
 
-  console.log(profile.pic);
   function eventread(e: InputEvent) {
     if (e.target.files === null) {
       return;
@@ -231,12 +226,15 @@ export default function Mypage() {
                               form.append("name", profile.name);
 
                               axios
-                                .patch(`${process.env.NEXT_PUBLIC_API_URL}/users-info`, form, {
-                                  headers: {
-                                    "X-AUTH-TOKEN": `${userToken}`,
-                                    "content-type": "multipart/form-data",
-                                  },
-                                })
+                                .patch(
+                                  `${process.env.NEXT_PUBLIC_API_URL}/users-info`,
+                                  form,
+                                  {
+                                    headers: {
+                                      "content-type": "multipart/form-data",
+                                    },
+                                  }
+                                )
                                 .then((res) => {
                                   toast({
                                     title: "Successfully Done!",
@@ -247,7 +245,8 @@ export default function Mypage() {
                                     isClosable: true,
                                     duration: 2000,
                                   });
-                                  router.push("/mypage/account/accountinfo");
+
+                                  //router.push("/mypage/account/accountinfo");
                                 })
                                 .catch((err) => {
                                   console.log(err);

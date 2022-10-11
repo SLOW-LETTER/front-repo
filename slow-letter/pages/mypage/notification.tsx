@@ -4,7 +4,7 @@ import { ChangeEvent, MouseEventHandler, useEffect, useState } from "react";
 import { useStore } from "../../components/zustand_stores/store";
 import Buttondefault from "../../components/button/button";
 import axios from "axios";
-import { apiURL } from "../../components/apiURL";
+
 import { useRouter } from "next/router";
 export default function Notification() {
   const [checkBox1, setcheckBox1] = useState(false);
@@ -23,7 +23,7 @@ export default function Notification() {
     const form = new FormData();
     form.append("X-AUTH-TOKEN", userToken);
     axios
-      .get(`${apiURL}/users-info`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/users-info`)
       .then((res) => {
         setEmail(res.data.payload.email);
         setName(res.data.payload.name);
@@ -155,14 +155,17 @@ export default function Notification() {
                 // form.append("isCheckedmysend", checkBox3);
                 // form.append("isCheckedOtherReceive", checkBox4);
                 axios
-                  .patch(`${apiURL}/users-info/settings`, {
-                    params: {
-                      isCheckedOtherSend: checkBox1,
-                      isCheckedMyRecieve: checkBox2,
-                      isCheckedmysend: checkBox3,
-                      isCheckedOtherReceive: checkBox4,
-                    },
-                  })
+                  .patch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/users-info/settings`,
+                    {
+                      params: {
+                        isCheckedOtherSend: checkBox1,
+                        isCheckedMyRecieve: checkBox2,
+                        isCheckedmysend: checkBox3,
+                        isCheckedOtherReceive: checkBox4,
+                      },
+                    }
+                  )
                   .then((res) => {
                     alert("succesfully changed");
                     router.push("/mypage/notification");

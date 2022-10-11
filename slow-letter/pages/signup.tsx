@@ -91,7 +91,7 @@ export default function Signup() {
   const onBlur = () => {
     setFocus("hidden");
   };
-
+  const Api = process.env.NEXT_PUBLIC_API_URL;
   return (
     <>
       <div className="Signuppage-conatiner flex w-full h-full ">
@@ -124,11 +124,16 @@ export default function Signup() {
                       const form = new FormData();
                       form.append("email", emailInput);
                       axios
-                        .post(`${process.env.NEXT_PUBLIC_API_URL}/users/email/validation`, form)
+                        .post(
+                          `${process.env.NEXT_PUBLIC_API_URL}/users/email/validation`,
+                          form
+                        )
                         .then((res) => {
                           setemailDuplicate(res.data.payload?.validation);
                         })
-                        .catch((err) => console.log(err));
+                        .catch((err) => {
+                          console.log(err), console.log(process.env);
+                        });
                       {
                         emailDuplicate
                           ? emailCheck
@@ -308,11 +313,15 @@ export default function Signup() {
                     form.append("name", userName);
                     form.append("phone", phoneNum);
                     axios
-                      .post(`${process.env.NEXT_PUBLIC_API_URL}/users/join`, form, {
-                        headers: {
-                          "content-type": "multipart/form-data",
-                        },
-                      })
+                      .post(
+                        `${process.env.NEXT_PUBLIC_API_URL}/users/join`,
+                        form,
+                        {
+                          headers: {
+                            "content-type": "multipart/form-data",
+                          },
+                        }
+                      )
                       .then((res) => {
                         alert("Sign in sucessful");
                         router.push("/signin");

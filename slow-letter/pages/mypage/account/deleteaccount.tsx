@@ -14,7 +14,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
-import { apiURL } from "../../../components/apiURL";
+
 import SettingItems from "../../../components/setting-Items";
 import { useStore } from "../../../components/zustand_stores/store";
 import { removeCookies } from "../../../function/cookie-handler/cookieHandler";
@@ -49,7 +49,7 @@ export default function DeleteAcc() {
   }
   useEffect(() => {
     axios
-      .get(`${apiURL}/users-info`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/users-info`)
       .then((res) => {
         setEmail(res.data.payload.email);
         setProfileMin((prevState) => {
@@ -149,12 +149,15 @@ export default function DeleteAcc() {
                       form.append("withdrawFeedback", feedBack);
 
                       axios
-                        .delete(`${apiURL}/users-info`, {
-                          params: {
-                            password: pswCheck,
-                            withdrawFeedback: feedBack,
-                          },
-                        })
+                        .delete(
+                          `${process.env.NEXT_PUBLIC_API_URL}/users-info`,
+                          {
+                            params: {
+                              password: pswCheck,
+                              withdrawFeedback: feedBack,
+                            },
+                          }
+                        )
                         .then((res) => {
                           toast({
                             title: "Successfully deleted!",
