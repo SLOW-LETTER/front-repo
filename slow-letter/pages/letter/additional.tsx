@@ -23,7 +23,6 @@ import {
 } from "../../components/type/type";
 import { useStore } from "../../components/zustand_stores/store";
 import axios from "axios";
-import { apiURL } from "../../components/apiURL";
 
 const FONT_SIZE = "0.8rem";
 const INPUT_WIDTH = "15rem";
@@ -77,7 +76,7 @@ export default function Additional() {
 
   useEffect(() => {
     axios
-      .get(`${apiURL}/users-info`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/users-info`)
       .then((res) => setSender(res.data.payload.username))
       .catch((err) => console.log(err));
   }, []);
@@ -142,7 +141,7 @@ export default function Additional() {
                         const form = new FormData();
                         form.append("email", receiver);
                         axios
-                          .post(`${apiURL}/users/email/validation`, form)
+                          .post(`${process.env.NEXT_PUBLIC_API_URL}/users/email/validation`, form)
                           .then((res) => {
                             if (res.data.payload.validation) {
                               setReceiver("");

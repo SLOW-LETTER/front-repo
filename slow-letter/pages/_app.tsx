@@ -9,7 +9,6 @@ import { setToken } from "../function/token/tokenHandler";
 import { useStore } from "../components/zustand_stores/store";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { getCookies } from "../function/cookie-handler/cookieHandler";
 
 export default function Myapp({ Component, pageProps }: AppProps) {
   const router = useRouter();

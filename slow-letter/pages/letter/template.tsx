@@ -4,7 +4,6 @@ import ProgressBar from "../../components/progressbar/progressbar";
 import ProgressBarItem from "../../components/progressbar/progressbar-item";
 import { useDisclosure } from "@chakra-ui/react";
 import MailModal from "../../components/modal/mail-modal";
-import { apiURL } from "../../components/apiURL";
 import { LetterTemplate, TemplateProps } from "../../components/type/type";
 
 export default function Template({ templatesArr }: TemplateProps) {
@@ -41,7 +40,7 @@ export default function Template({ templatesArr }: TemplateProps) {
 }
 
 export async function getServerSideProps() {
-  const data = await (await fetch(`${apiURL}/templates`))
+  const data = await (await fetch(`http://backend:8080/api/v1/templates`))
     .json()
     .catch((error) => console.log("error:", error));
   const templatesArr: {templateUrl: string, templateId: number}[] = [];
