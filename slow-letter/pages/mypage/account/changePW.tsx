@@ -2,7 +2,7 @@ import Image from "next/image";
 import SettingItems from "../../../components/setting-Items";
 import { Button, useToast } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { apiURL } from "../../../components/apiURL";
+
 import axios from "axios";
 
 export default function ChangePw() {
@@ -41,7 +41,7 @@ export default function ChangePw() {
   }
   useEffect(() => {
     axios
-      .get(`${apiURL}/users-info`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/users-info`)
       .then((res) => {
         setProfile((prevState) => {
           return {
@@ -127,7 +127,10 @@ export default function ChangePw() {
                   form.append("newPassword", newPsw);
 
                   axios
-                    .patch(`${apiURL}/users-info/password`, form)
+                    .patch(
+                      `${process.env.NEXT_PUBLIC_API_URL}/users-info/password`,
+                      form
+                    )
                     .then((res) => {
                       toast({
                         title: "You have Successfully Changed your password!",

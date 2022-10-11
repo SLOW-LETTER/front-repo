@@ -73,11 +73,15 @@ export default function Login() {
                   form.append("email", email);
                   form.append("password", password);
                   axios
-                    .post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, form, {
-                      headers: {
-                        "content-type": "multipart/form-data",
-                      },
-                    })
+                    .post(
+                      `${process.env.NEXT_PUBLIC_API_URL}/users/login`,
+                      form,
+                      {
+                        headers: {
+                          "content-type": "multipart/form-data",
+                        },
+                      }
+                    )
                     .then((res) => {
                       setToken(
                         res.data.payload.token,
@@ -86,8 +90,8 @@ export default function Login() {
                       router.push("/");
                     })
                     .catch((err) => {
-                      console.log(err),
-                        alert("Your email or your password is not valiable");
+                      console.log(process.env.NEXT_PUBLIC_API_URL);
+                      alert("Your email or your password is not valiable");
                     });
                 }}
               >

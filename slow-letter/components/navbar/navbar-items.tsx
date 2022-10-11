@@ -25,7 +25,6 @@ import { MdAccountCircle } from "react-icons/md";
 import { useStore } from "../zustand_stores/store";
 import { removeCookies } from "../../function/cookie-handler/cookieHandler";
 import axios from "axios";
-import { apiURL } from "../apiURL";
 
 export default function NavItems() {
   const router = useRouter();
@@ -57,7 +56,7 @@ export default function NavItems() {
   useEffect(() => {
     const form = new FormData();
     axios
-      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/users-info`)
       .then((res) => {
         setEmail(res.data.payload.email);
         setProfilePop({ ...profilePop, name: res.data.payload.name });

@@ -32,8 +32,9 @@ export default function Sidebar() {
         x-show="asideOpen"
       >
         <ul className="flex flex-col gap-y-2 space-y-8 ">
-          <li onClick={onClickAccInfo} className="w-48">
+          <li className="w-48">
             <button
+              onClick={onClickAccInfo}
               className={
                 router.pathname ===
                 ("/mypage/account/accountinfo" ||
@@ -59,8 +60,9 @@ export default function Sidebar() {
               <span>Account</span>
             </button>
             <ul id="drop-menu">
-              <li onClick={onClickAccInfo}>
+              <li>
                 <button
+                  onClick={onClickAccInfo}
                   className={
                     router.pathname === "/mypage/account/accountinfo"
                       ? "Account-Info flex flex-col items-start w-full p-2 pl-10 text-sm underline text-blue-600"
@@ -71,28 +73,32 @@ export default function Sidebar() {
                 </button>
               </li>
               <li>
-                <button
-                  className={
-                    router.pathname === "/mypage/account/changePW"
-                      ? "Change-PW flex flex-col items-start w-full p-2 pl-10  text-sm text-blue-600 underline"
-                      : "Change-PW flex flex-col items-start w-full p-2 pl-10  text-sm text-black hover:text-blue-600 hover:underline"
-                  }
-                  onClick={onClickChangePW}
-                >
-                  Change Password
-                </button>
+                <div>
+                  <button
+                    className={
+                      router.pathname === "/mypage/account/changePW"
+                        ? "Change-PW flex flex-col items-start w-full p-2 pl-10  text-sm text-blue-600 underline"
+                        : "Change-PW flex flex-col items-start w-full p-2 pl-10  text-sm text-black hover:text-blue-600 hover:underline"
+                    }
+                    onClick={onClickChangePW}
+                  >
+                    Change Password
+                  </button>
+                </div>
               </li>
               <li>
-                <button
-                  className={
-                    router.pathname === "/mypage/account/deleteaccount"
-                      ? "Del-Acc flex flex-col items-start w-full p-2 pl-10 text-sm text-blue-600 underline"
-                      : "Del-Acc flex flex-col items-start w-full p-2 pl-10 text-sm text-black hover:text-blue-600 hover:underline"
-                  }
-                  onClick={onClickDelete}
-                >
-                  Delete Account
-                </button>
+                <div>
+                  <button
+                    className={
+                      router.pathname === "/mypage/account/deleteaccount"
+                        ? "Del-Acc flex flex-col items-start w-full p-2 pl-10 text-sm text-blue-600 underline"
+                        : "Del-Acc flex flex-col items-start w-full p-2 pl-10 text-sm text-black hover:text-blue-600 hover:underline"
+                    }
+                    onClick={onClickDelete}
+                  >
+                    Delete Account
+                  </button>
+                </div>
               </li>
             </ul>
           </li>
@@ -107,11 +113,9 @@ export default function Sidebar() {
                 }
               >
                 <Image
-                  src={
-                    router.pathname === "/mypage/myTickets"
-                      ? "/TicketActive.svg"
-                      : "/Tickets.svg"
-                  }
+                  src="/Tickets.svg"
+                  //router.pathname === "/mypage/myTickets"
+                  //? "/TicketActive.svg":
                   width="30"
                   height="30"
                 />
@@ -121,25 +125,27 @@ export default function Sidebar() {
           </li>
 
           <li onClick={onClickNotification}>
-            <button
-              className={
-                router.pathname === "/mypage/notification"
-                  ? "notification flex flex-row p-2 py-4 text-white bg-blue-600 rounded-lg text-start text-xl"
-                  : "notification flex flex-row p-2 py-4 text-black hover:text-white bg-white hover:bg-blue-600 rounded-lg text-start text-xl"
-              }
-            >
-              <Image
-                src={
-                  "/Notification.svg"
-                  // router.pathname === "/mypage/notification"
-                  //   ? "/NotificationAcitive.svg"
-                  //   : "/Notification.svg"
+            <div>
+              <button
+                className={
+                  router.pathname === "/mypage/notification"
+                    ? "notification flex flex-row p-2 py-4 text-white bg-blue-600 rounded-lg text-start text-xl"
+                    : "notification flex flex-row p-2 py-4 text-black hover:text-white bg-white hover:bg-blue-600 rounded-lg text-start text-xl"
                 }
-                width="30"
-                height="30"
-              />
-              <span>Notification</span>
-            </button>
+              >
+                <Image
+                  src={
+                    "/Notification.svg"
+                    // router.pathname === "/mypage/notification"
+                    //   ? "/NotificationAcitive.svg"
+                    //   : "/Notification.svg"
+                  }
+                  width="30"
+                  height="30"
+                />
+                <span>Notification</span>
+              </button>
+            </div>
           </li>
         </ul>
       </aside>
