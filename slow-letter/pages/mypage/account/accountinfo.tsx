@@ -1,6 +1,4 @@
-import Sidebar from "../../../components/sidebar";
 import SettingItems from "../../../components/setting-Items";
-import SettingModal from "../../../components/setting-modal";
 import { ChangeEvent, useState, useEffect } from "react";
 import {
   Button,
@@ -15,10 +13,12 @@ import {
   useDisclosure,
   Stack,
 } from "@chakra-ui/react";
+
 import axios from "axios";
 import { apiURL } from "../../../components/apiURL";
 import { useRouter } from "next/router";
 import { useStore } from "../../../components/zustand_stores/store";
+import { userInfoStore } from "../../../components/zustand_stores/userSave";
 
 type InputEvent = ChangeEvent<HTMLInputElement>;
 
@@ -36,12 +36,12 @@ export default function Mypage() {
   const toast = useToast();
   const router = useRouter();
   const userToken: string = useStore((state: any) => state.userToken);
-  const token = userToken;
+
   const [Email, setEmail] = useState("Example@Example.com");
   const [profile, setProfile] = useState<{
     phone: string;
     bio: string;
-    pic: File | string;
+    pic: string | File;
     name: string;
   }>({
     phone: "",
@@ -51,10 +51,8 @@ export default function Mypage() {
   });
 
   useEffect(() => {
-    const form = new FormData();
-    form.append("X-AUTH-TOKEN", token);
     axios
-      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+      .get(`${apiURL}/users-info`)
       .then((res) => {
         setEmail(res.data.payload.email);
 
@@ -82,19 +80,19 @@ export default function Mypage() {
             pic: res.data.payload.profileImageUrl,
           };
         });
-        console.log(token);
-        console.log(userToken);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [token]);
+  }, []);
 
+  console.log(profile.pic);
   function eventread(e: InputEvent) {
     if (e.target.files === null) {
       return;
     } else {
       const file = e.target.files[0];
+      console.log(file);
       setProfile({
         ...profile,
         pic: file,
@@ -124,9 +122,6 @@ export default function Mypage() {
       bio: biovalue,
     });
   }
-
-  console.log(profile.pic);
-
   return (
     <>
       <link
@@ -164,35 +159,36 @@ export default function Mypage() {
             </div>
 
             <hr className="line" />
+            <form>
+              <SettingItems
+                ID="Username"
+                Hint="Username"
+                Label="Username"
+                Types="text"
+                onChange={onNameChange}
+                values={profile.name}
+              />
+              <hr className="line" />
 
-            <SettingItems
-              ID="Username"
-              Hint="Username"
-              Label="Username"
-              Types="text"
-              onChange={onNameChange}
-              values={profile.name}
-            />
-            <hr className="line" />
+              <SettingItems
+                ID="Phone"
+                Hint="000-0000-0000"
+                Label="Phone"
+                Types="text"
+                onChange={onPhoneChange}
+                values={profile.phone}
+              />
+              <hr className="line" />
 
-            <SettingItems
-              ID="Phone"
-              Hint="000-0000-0000"
-              Label="Phone"
-              Types="text"
-              onChange={onPhoneChange}
-              values={profile.phone}
-            />
-            <hr className="line" />
-
-            <SettingItems
-              ID="Editbio"
-              Hint="Place introduce yourself"
-              Label="Your Bio"
-              Types="string"
-              onChangetext={onBioChange}
-              values={profile.bio || ""}
-            />
+              <SettingItems
+                ID="Editbio"
+                Hint="Place introduce yourself"
+                Label="Your Bio"
+                Types="string"
+                onChangetext={onBioChange}
+                values={profile.bio || ""}
+              />
+            </form>
 
             <div className="flex items-end justify-end">
               <div className="btn-container flex flex-row space-x-8">
@@ -200,7 +196,7 @@ export default function Mypage() {
                   <Button
                     onClick={onSaveOpen}
                     colorScheme="blue"
-                    background="blue"
+                    background="#2563eb"
                     variant={"solid"}
                     width={"100px"}
                   >
@@ -234,10 +230,7 @@ export default function Mypage() {
                               form.append("name", profile.name);
 
                               axios
-                                .patch(`${apiURL}/users-info`, {
-                                  headers: { "X-AUTH-TOKEN": userToken },
-                                  form,
-                                })
+                                .patch(`${apiURL}/users-info`, form)
                                 .then((res) => {
                                   toast({
                                     title: "Successfully Done!",
@@ -252,7 +245,6 @@ export default function Mypage() {
                                 })
                                 .catch((err) => {
                                   console.log(err);
-                                  console.log(userToken);
                                   toast({
                                     title: "Something went Wrong!",
                                     description: "Your change have not saved",
@@ -353,7 +345,7 @@ export default function Mypage() {
           }
           .Profilepic-container {
             position: relative;
-            background-image: readURL(${profile.pic});
+            background-image: url({profile.pic});
             background-size: 100% 100%;
             border-radius: 30%;
           }
@@ -373,7 +365,7 @@ export default function Mypage() {
             visibility: hidden;
           }
           .Pic-input::before {
-            content: url("/Cameara.svg");
+            content: URL("/Cameara.svg");
             color: "blue";
 
             display: inline-block;

@@ -20,10 +20,6 @@ export default function Myapp({ Component, pageProps }: AppProps) {
       : saveUserToken("");
   }, [pageProps]);
 
-  useEffect(() => {
-    getCookies("accessToken") === undefined ? router.push("/signin") : null
-  }, [router.pathname])
-
   const theme = extendTheme({
     styles: {
       global: {

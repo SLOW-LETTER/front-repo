@@ -16,9 +16,11 @@ import {
   Button,
   ButtonGroup,
   Box,
+  IconButton,
 } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/router";
+import { MdAccountCircle } from "react-icons/md";
 //import { removeCookies } from "../../function/cookie-handler/cookieHandler";
 import { useStore } from "../zustand_stores/store";
 import { removeCookies } from "../../function/cookie-handler/cookieHandler";
@@ -66,6 +68,7 @@ export default function NavItems() {
         console.log(err);
       });
   }, [userToken]);
+
   return (
     <>
       <nav className="nav-items-container">
@@ -92,7 +95,14 @@ export default function NavItems() {
         </button> */}
         <Popover placement="bottom-end" closeOnBlur={false}>
           <PopoverTrigger>
-            <Button></Button>
+            <IconButton
+              variant="outline"
+              borderRadius={"60%"}
+              colorScheme="blue"
+              aria-label="Call Sage"
+              fontSize="33px"
+              icon={<MdAccountCircle />}
+            />
           </PopoverTrigger>
 
           <PopoverContent

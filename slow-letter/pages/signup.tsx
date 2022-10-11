@@ -256,19 +256,20 @@ export default function Signup() {
                   )}
                 </div>
               </div>
-
-              <TypeIn
-                width="16rem"
-                height="2rem"
-                placeholderFontSize="14px"
-                labelFontSize=".9rem"
-                id="pswCheck"
-                hint="Confirm Password"
-                label="Confirm Password"
-                iconImg="/PasswordIcon.svg"
-                values={cnfrmInput}
-                onChange={onConfirmPasswordChange}
-              />
+              <form>
+                <TypeIn
+                  width="16rem"
+                  height="2rem"
+                  placeholderFontSize="14px"
+                  labelFontSize=".9rem"
+                  id="pswCheck"
+                  hint="Confirm Password"
+                  label="Confirm Password"
+                  iconImg="/PasswordIcon.svg"
+                  values={cnfrmInput}
+                  onChange={onConfirmPasswordChange}
+                />
+              </form>
               <span
                 className={
                   cnfrmError ? "hidden" : "flex px-4 text-xs text-red-600"

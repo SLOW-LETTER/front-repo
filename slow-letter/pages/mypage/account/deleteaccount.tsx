@@ -29,8 +29,8 @@ export default function DeleteAcc() {
 
   const [feedBack, setfeedBack] = useState("");
   const [pswCheck, setpswCheck] = useState("");
-  const [savedPsw, setsavedPsw] = useState("");
-  const [pswValid, setpswValid] = useState(false);
+  //const [savedPsw, setsavedPsw] = useState("");
+  //const [pswValid, setpswValid] = useState(false);
   const router = useRouter();
   const [Email, setEmail] = useState("Example@Example.com");
   const [profileMin, setProfileMin] = useState<{
@@ -41,8 +41,6 @@ export default function DeleteAcc() {
     pic: "/defaultProfile.svg",
   });
 
-  const userToken: string = useStore((state: any) => state.userToken);
-
   function getFeed(e: ChangeEvent<HTMLTextAreaElement>) {
     setfeedBack(e.target.value.trim());
   }
@@ -51,9 +49,7 @@ export default function DeleteAcc() {
   }
   useEffect(() => {
     axios
-      .get(`${apiURL}/users-info`, {
-        headers: { "X-AUTH-TOKEN": userToken },
-      })
+      .get(`${apiURL}/users-info`)
       .then((res) => {
         setEmail(res.data.payload.email);
         setProfileMin((prevState) => {
@@ -70,25 +66,9 @@ export default function DeleteAcc() {
         //   };
         // });
       })
-      .catch((err) => {
-        console.log(userToken), console.log(err);
-      });
-  }, [userToken]);
-  console.log(profileMin.pic);
+      .catch((err) => console.log(err));
+  }, []);
 
-  // function deleteClick() {
-  //   const form = new FormData();
-  //   form.append("password", pswCheck);
-  //   form.append("withdrawFeedback", feedBack);
-  //   axios
-  //     .delete(`${apiURL}/users-info`)
-  //     .then((res) => setsavedPsw(res.data.payload.password))
-  //     .catch((err) => console.log(err));
-
-  //   {
-  //     savedPsw === pswCheck ? onCheckOpen() : alert("This is invalid password");
-  //   }
-  // }
   return (
     <>
       <div className="deletaAccount-page flex h-5/6">
@@ -128,7 +108,7 @@ export default function DeleteAcc() {
             <Button
               onClick={onCheckOpen}
               colorScheme="red"
-              background="red"
+              background="red.500"
               variant={"solid"}
             >
               Delete Account
@@ -150,13 +130,15 @@ export default function DeleteAcc() {
                   continue improving our service
                 </ModalHeader>
                 <ModalBody>
-                  <textarea
-                    className="feedback p-3  h-52 bg-gray-200 border-4 border-blue-300 rounded-lg"
-                    maxLength={100}
-                    value={feedBack}
-                    onChange={getFeed}
-                    placeholder="Please provide us with the feedback (Your can write upto 200 letters)  "
-                  ></textarea>
+                  <form>
+                    <textarea
+                      className="feedback p-3  h-52 bg-gray-200 border-4 border-blue-300 rounded-lg"
+                      maxLength={100}
+                      value={feedBack}
+                      onChange={getFeed}
+                      placeholder="Please provide us with the feedback (Your can write upto 200 letters)  "
+                    ></textarea>
+                  </form>
                 </ModalBody>
                 <ModalFooter>
                   <Button
@@ -165,16 +147,12 @@ export default function DeleteAcc() {
                       const form = new FormData();
                       form.append("password", pswCheck);
                       form.append("withdrawFeedback", feedBack);
-                      form.append("X-AUTH-TOKEN", userToken);
-                      console.log(userToken);
+
                       axios
                         .delete(`${apiURL}/users-info`, {
-                          data: {
+                          params: {
                             password: pswCheck,
                             withdrawFeedback: feedBack,
-                          },
-                          headers: {
-                            "X-AUTH-TOKEN": userToken,
                           },
                         })
                         .then((res) => {
@@ -186,14 +164,11 @@ export default function DeleteAcc() {
                             isClosable: true,
                             duration: 2000,
                           });
-
                           removeCookies("accessToken", { path: "/" });
                           removeCookies("refreshToken", { path: "/" });
                           router.push("/");
                         })
-                        .catch((err) => {
-                          console.log(err), console.log(userToken);
-                        });
+                        .catch((err) => console.log(err));
                       onCheckClose();
                     }}
                     color={"white"}

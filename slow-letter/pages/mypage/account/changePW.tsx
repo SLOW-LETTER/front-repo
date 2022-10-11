@@ -1,13 +1,8 @@
 import Image from "next/image";
-import Sidebar from "../../../components/sidebar";
 import SettingItems from "../../../components/setting-Items";
-import SettingModal from "../../../components/setting-modal";
 import { Button, useToast } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useStore } from "../../../components/zustand_stores/store";
 import { apiURL } from "../../../components/apiURL";
-import { StringLiteral } from "typescript";
-import { stringify } from "querystring";
 import axios from "axios";
 
 export default function ChangePw() {
@@ -25,18 +20,13 @@ export default function ChangePw() {
     name: "Example",
     Pic: "/defaultProfile.svg",
   });
-
-  const userToken = useStore((state: any) => state.userToken);
-
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     const values = e.target;
-
     values.id === "editPsw"
       ? setpswInput(values.value.trim())
       : values.id === "checkPsw"
       ? setconfirmPsw(values.value.trim())
       : setNewPsw(values.value.trim());
-
     pswMatchCheck();
   }
   function pswMatchCheck() {
@@ -50,9 +40,8 @@ export default function ChangePw() {
     }
   }
   useEffect(() => {
-    const form = new FormData();
     axios
-      .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
+      .get(`${apiURL}/users-info`)
       .then((res) => {
         setProfile((prevState) => {
           return {
@@ -68,8 +57,7 @@ export default function ChangePw() {
         });
       })
       .catch((err) => console.log(err));
-  });
-
+  }, []);
   return (
     <>
       <div className="pswChange-page flex h-5/6">
@@ -90,38 +78,41 @@ export default function ChangePw() {
             </div>
             <div className="input-container items-center py-8">
               <hr className="line py-2" />
-              <SettingItems
-                ID="editPsw"
-                Hint="*************"
-                Label="Password"
-                Types="Password"
-                values={pswValue}
-                onChange={onChange}
-              />
-              <hr className="line py-2" />
-              <SettingItems
-                ID="checkPsw"
-                Hint="*************"
-                Label="Confrim Password"
-                Types="Password"
-                values={confirmPsw}
-                onChange={onChange}
-              />
-              <hr className="line py-2" />
-              <SettingItems
-                ID="newPsw"
-                Hint="*************"
-                Label="New Password"
-                Types="Password"
-                values={newPsw}
-                onChange={onChange}
-              />
+              <form>
+                <SettingItems
+                  ID="editPsw"
+                  Hint="*************"
+                  Label="Password"
+                  Types="Password"
+                  values={pswValue}
+                  onChange={onChange}
+                />
+                <hr className="line py-2" />
+                <SettingItems
+                  ID="checkPsw"
+                  Hint="*************"
+                  Label="Confrim Password"
+                  Types="Password"
+                  values={confirmPsw}
+                  onChange={onChange}
+                />
+                <hr className="line py-2" />
+                <SettingItems
+                  ID="newPsw"
+                  Hint="*************"
+                  Label="New Password"
+                  Types="Password"
+                  values={newPsw}
+                  onChange={onChange}
+                />
+              </form>
             </div>
+
             <Button
               className="Changebtn px-10"
               colorScheme="red"
               width="40"
-              background="red"
+              background="red.500"
               variant={"solid"}
               onClick={(event) => {
                 event.preventDefault();
@@ -134,12 +125,9 @@ export default function ChangePw() {
                   const form = new FormData();
                   form.append("oldPassword", pswValue);
                   form.append("newPassword", newPsw);
-                  form.append("X-AUTH-TOKEN", userToken);
+
                   axios
-                    .patch(`${apiURL}/users-info/password`, {
-                      header: { "X-AUTH-TOKEN": userToken },
-                      form,
-                    })
+                    .patch(`${apiURL}/users-info/password`, form)
                     .then((res) => {
                       toast({
                         title: "You have Successfully Changed your password!",
@@ -148,9 +136,10 @@ export default function ChangePw() {
                         isClosable: true,
                         duration: 2000,
                       });
+                      alert("works");
                     })
                     .catch((err) => {
-                      console.log(err), console.log(userToken);
+                      console.log(err);
                     });
                 }
               }}

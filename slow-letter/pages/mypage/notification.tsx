@@ -5,6 +5,7 @@ import { useStore } from "../../components/zustand_stores/store";
 import Buttondefault from "../../components/button/button";
 import axios from "axios";
 import { apiURL } from "../../components/apiURL";
+import { useRouter } from "next/router";
 export default function Notification() {
   const [checkBox1, setcheckBox1] = useState(false);
   const [checkBox2, setcheckBox2] = useState(false);
@@ -15,25 +16,29 @@ export default function Notification() {
   const [name, setName] = useState("Example");
   const [pic, setPic] = useState("/defaultProfile.svg");
   const userToken: string = useStore((state: any) => state.userToken);
-
+  const router = useRouter();
   type InputEvent = ChangeEvent<HTMLInputElement>;
 
-  // useEffect(() => {
-  //   const form = new FormData();
-  //   form.append("X-AUTH-TOKEN", userToken);
-  //   axios
-  //     .get(`${apiURL}/users-info`, { headers: { "X-AUTH-TOKEN": userToken } })
-  //     .then((res) => {
-  //       setEmail(res.data.payload.email);
-  //       setName(res.data.payload.name);
-  //       //setPic(res.data.payload.profileImageUrl)
-  //       //체크되어있는지 가져와야됨?
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const form = new FormData();
+    form.append("X-AUTH-TOKEN", userToken);
+    axios
+      .get(`${apiURL}/users-info`)
+      .then((res) => {
+        setEmail(res.data.payload.email);
+        setName(res.data.payload.name);
+        //setPic(res.data.payload.profileImageUrl);
+        setcheckBox1(res.data.payload.isCheckedOtherSend);
+        setcheckBox2(res.data.payload.isCheckedMyReceive);
+        setcheckBox3(res.data.payload.isCheckedmysend);
+        setcheckBox4(res.data.payload.isCheckedOtherReceive);
+
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const onClickCheck1 = () => {
     if (checkBox1 === true) {
@@ -44,7 +49,7 @@ export default function Notification() {
   };
 
   const onClickCheck2 = () => {
-    if (checkBox1 === true) {
+    if (checkBox2 === true) {
       setcheckBox2(false);
     } else {
       setcheckBox2(true);
@@ -52,7 +57,7 @@ export default function Notification() {
   };
 
   const onClickCheck3 = () => {
-    if (checkBox1 === true) {
+    if (checkBox3 === true) {
       setcheckBox3(false);
     } else {
       setcheckBox3(true);
@@ -60,7 +65,7 @@ export default function Notification() {
   };
 
   const onClickCheck4 = () => {
-    if (checkBox1 === true) {
+    if (checkBox4 === true) {
       setcheckBox4(false);
     } else {
       setcheckBox4(true);
@@ -139,7 +144,32 @@ export default function Notification() {
               />
             </div>
 
-            <Buttondefault text={"Save"} btnWidth={"10em"} btnColor={"blue"} />
+            <Buttondefault
+              text={"Save"}
+              btnWidth={"10em"}
+              btnColor={"#2563eb"}
+              onClick={() => {
+                const form = new FormData();
+                // form.append("isCheckedOtherSend", checkBox1);
+                // form.append("isCheckedMyReceive", checkBox2);
+                // form.append("isCheckedmysend", checkBox3);
+                // form.append("isCheckedOtherReceive", checkBox4);
+                axios
+                  .patch(`${apiURL}/users-info/settings`, {
+                    params: {
+                      isCheckedOtherSend: checkBox1,
+                      isCheckedMyRecieve: checkBox2,
+                      isCheckedmysend: checkBox3,
+                      isCheckedOtherReceive: checkBox4,
+                    },
+                  })
+                  .then((res) => {
+                    alert("succesfully changed");
+                    router.push("/mypage/notification");
+                  })
+                  .catch((err) => console.log(err));
+              }}
+            />
           </div>
         </div>
       </div>
