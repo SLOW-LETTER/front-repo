@@ -9,10 +9,12 @@ import { setToken } from "../function/token/tokenHandler";
 import { useStore } from "../components/zustand_stores/store";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 export default function Myapp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const saveUserToken = useStore((state: any) => state.saveUserToken);
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     pageProps.accessToken !== undefined
       ? saveUserToken(pageProps.accessToken)

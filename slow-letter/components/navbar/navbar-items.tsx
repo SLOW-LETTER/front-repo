@@ -39,8 +39,6 @@ export default function NavItems() {
   });
 
   function mySetting() {
-    console.log("clicked");
-
     router.push("/mypage/account/accountinfo");
   }
 
@@ -85,13 +83,7 @@ export default function NavItems() {
         <div className="ticket-container">
           <div className="ticket-icon"></div>
         </div>
-        {/* <button
-          className="profile-container flex flex-col"
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-        >
-          <div className="profile-icon"></div>
-        </button> */}
+
         <Popover placement="bottom-end" closeOnBlur={false}>
           <PopoverTrigger>
             <IconButton
@@ -152,10 +144,6 @@ export default function NavItems() {
             </PopoverBody>
           </PopoverContent>
         </Popover>
-
-        {/* <Link href={"/mypage/account/accountinfo"}>
-          <a className="profile-container flex flex-col"></a>
-        </Link> */}
       </nav>
       <Popover />
       <style jsx>
